@@ -13,12 +13,11 @@
     ctx.fillStyle = "gray";
 
     borders.forEach((border) => {
-        ctx.stroke(border.path)
-    })
+      ctx.stroke(border.path);
+    });
   };
 
   onMount(() => {
-    console.log(map);
     drawBorders(map.borders);
   });
 </script>
@@ -26,4 +25,9 @@
 <canvas id="canvas" width="10000" height="10000" />
 
 <style>
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 </style>
