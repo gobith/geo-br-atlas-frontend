@@ -1,5 +1,6 @@
 <script lang="ts">
   import map from "./map-store";
+  import world from "./world-store";
   import Borders from "./Borders.svelte";
   import AreaSelection from "./AreaSelection.svelte";
   import Info from "./Info.svelte";
@@ -12,11 +13,13 @@
 </script>
 
 {#if $map}
-  <div class="map-container">
-    <Borders map={$map} />
-    <AreaSelection map={$map} />
+  {#if $world}
+    <div class="map-container">
+      <Borders map={$map} />
+      <AreaSelection map={$map} />
+    </div>
     <Info />
-  </div>
+  {/if}
 {/if}
 
 <style>

@@ -1,15 +1,60 @@
 <script lang="ts">
   import areaSelection from "./area-selection-store";
+  import world from "./world-store";
+
+  let province;
+
+  areaSelection.subscribe((area) => {
+    if (area) {
+      province = $world.provinces.find((province) => {
+        return province.areaId === area.id;
+      });
+    } else {
+      province = null;
+    }
+  });
 </script>
 
-{#if $areaSelection}
-  <h1>{$areaSelection.id}</h1>
-{/if}
+<div>
+  {#if $areaSelection}
+    <p>{$areaSelection.id}</p>
+  {/if}
+  {#if province}
+    <h1>{province.name} {province.level}/{province.sourceRating}</h1>
+    <p>Owner: {$world.regents[province.ownership.owner].name}</p>
+    <p>Ruler: {$world.regents[province.ownership.ruler].name}</p>
+    <p></p>
+    <h3>Law: {province.law}</h3>
+
+    {#each province.lawHoldings as each}
+    <p>owner: {$world.regents[each.owner].name} ruler: {$world.regents[each.ruler].name} level: {each.level}</p>
+    {/each}
+
+    <h3>Guild: {province.guild}</h3>
+
+    {#each province.guildHoldings as each}
+    <p>owner: {$world.regents[each.owner].name} ruler: {$world.regents[each.ruler].name} level: {each.level}</p>
+    {/each}
+
+    <h3>Temple: {province.temple}</h3>
+
+    {#each province.templeHoldings as each}
+    <p>owner: {$world.regents[each.owner].name} ruler: {$world.regents[each.ruler].name} level: {each.level}</p>
+    {/each}
+
+    <h3>Source: {province.source}</h3>
+
+    {#each province.sourceHoldings as each}
+    <p>owner: {$world.regents[each.owner].name} ruler: {$world.regents[each.ruler].name} level: {each.level}</p>
+    {/each}
+
+  {/if}
+</div>
 
 <style>
-  h1 {
+  div {
     position: fixed;
     top: 20px;
-    left: 20px;
+    left: 560px;
   }
 </style>

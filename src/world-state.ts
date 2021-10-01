@@ -4,7 +4,7 @@ export const resize = writable({height: window.innerHeight , width: window.inner
 
 
 const handleWheelEvent = (event) => {
-  console.log(event);
+  // console.log(event);
 };
 
 const handleResizeEvent = (event) => {
@@ -12,15 +12,15 @@ const handleResizeEvent = (event) => {
 };
 
 const handleMousedownEvent = (event) => {
-  console.log(event);
+  // console.log(event);
 };
 
 const handleMouseupEvent = (event) => {
-  console.log(event);
+ // console.log(event);
 };
 
 const handleMousemoveEvent = (event) => {
-  console.log(event);
+ // console.log(event);
 };
 
 export const attachEvents = () => {

@@ -42,14 +42,14 @@
   onMount(() => {
     const canvas = document.getElementById("areas-canvas") as HTMLCanvasElement;
     canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+    canvas.width = 550;
 
     resize.subscribe((resize) => {
       const canvas = document.getElementById(
         "areas-canvas"
       ) as HTMLCanvasElement;
       canvas.height = resize.height;
-      canvas.width = resize.width;
+      canvas.width = 550;
       updateAreaSelection($areaSelection);
     });
 

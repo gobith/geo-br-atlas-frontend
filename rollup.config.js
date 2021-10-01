@@ -64,7 +64,8 @@ export default {
 			// this will route all traffic starting with
 			// `/api` to http://localhost:8181/api
 			proxy: {
-				map: "http://localhost:8101"
+				map: "http://localhost:8101" ,
+				world: "http://localhost:8101"
 			},
 		}),
 	],
