@@ -8,7 +8,7 @@
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.scale(0.3 , 0.3);
+    ctx.scale(1 , 1);
     ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
     ctx.strokeStyle = "gray";

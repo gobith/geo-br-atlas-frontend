@@ -10,7 +10,7 @@
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
-    ctx.scale(0.3, 0.3);
+    ctx.scale(1, 1);
 
     map.areas.forEach((area) => {
       if (ctx.isPointInPath(area.path, event.offsetX, event.offsetY)) {
@@ -24,10 +24,6 @@
     const canvas = document.getElementById("areas-canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
    
-    
-   
-   
-
     let area = map.areas.find((area) => {
       return area === selection;
     });

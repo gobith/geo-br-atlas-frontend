@@ -1,4 +1,5 @@
-import { writable } from "svelte/store";
+import { writable , get } from "svelte/store";
+
 
 const world = writable(null);
 
@@ -9,3 +10,13 @@ fetch("/world")
   });
 
 export default world;
+
+
+
+export const provinceStatsForArea = (area) => {
+
+  if (!world) {return ''};
+  const province = get(world).provinces.find((province) => {return province.areaId === area.id});
+  return `${province.level}/${province.sourceRating}`
+
+}

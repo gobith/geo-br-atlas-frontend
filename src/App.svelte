@@ -3,6 +3,7 @@
   import world from "./world-store";
   import Borders from "./Borders.svelte";
   import AreaSelection from "./AreaSelection.svelte";
+  import AreaDescriptions from "./AreaDescriptions.svelte";
   import Info from "./Info.svelte";
   import { onMount } from "svelte";
   import { attachEvents } from "./world-state";
@@ -15,6 +16,7 @@
 {#if $map}
   {#if $world}
     <div class="map-container">
+      <AreaDescriptions map={$map} />
       <Borders map={$map} />
       <AreaSelection map={$map} />
     </div>
