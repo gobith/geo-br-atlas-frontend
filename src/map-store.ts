@@ -20,5 +20,7 @@ const mapFor = (mapData) => {
     let path = new Path2D(area.d);
     return {...area , path};
   });
-  return {borders , areas}
+
+  const realmBorders = mapData.realmBorders;
+  return {borders , areas, realmBorders}
 };
