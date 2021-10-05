@@ -1,29 +1,35 @@
 <script lang="ts">
   import areaSelection from "./area-selection-store";
   import { onMount } from "svelte";
-  import { resize } from "./world-state";
+  import { resize, scale } from "./world-state";
 
   export let map;
 
   const mouseclick = (event) => {
+    let selectedArea;
     const canvas = document.getElementById("areas-canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.save();
-    ctx.scale(1, 1);
+    ctx.scale($scale, $scale);
 
     map.areas.forEach((area) => {
       if (ctx.isPointInPath(area.path, event.offsetX, event.offsetY)) {
-        areaSelection.set(area);
+        selectedArea = area;
       }
     });
     ctx.restore();
+    areaSelection.set(selectedArea);
   };
 
   const updateAreaSelection = (selection) => {
     const canvas = document.getElementById("areas-canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
-   
+    ctx.scale(1, 1);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.scale($scale, $scale);
+
     let area = map.areas.find((area) => {
       return area === selection;
     });
@@ -32,7 +38,7 @@
       ctx.fillStyle = "rgba(44, 50, 134, 0.37)";
       ctx.fill(area.path);
     }
-   
+    ctx.restore();
   };
 
   onMount(() => {
@@ -46,6 +52,10 @@
       ) as HTMLCanvasElement;
       canvas.height = resize.height;
       canvas.width = 550;
+      updateAreaSelection($areaSelection);
+    });
+
+    scale.subscribe((scaleNumber) => {
       updateAreaSelection($areaSelection);
     });
 

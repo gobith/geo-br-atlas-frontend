@@ -1,6 +1,7 @@
 <script lang="ts">
   import areaSelection from "./area-selection-store";
   import world from "./world-store";
+  import { scale } from "./world-state";
 
   let province;
 
@@ -16,6 +17,7 @@
 </script>
 
 <div>
+ <p>Scale: {$scale}</p>
   {#if $areaSelection}
     <p>{$areaSelection.id}</p>
   {/if}

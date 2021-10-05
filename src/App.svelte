@@ -5,6 +5,7 @@
   import AreaSelection from "./AreaSelection.svelte";
   import AreaDescriptions from "./AreaDescriptions.svelte";
   import Info from "./Info.svelte";
+  import Scale from "./Scale.svelte";
   import { onMount } from "svelte";
   import { attachEvents } from "./world-state";
 
@@ -20,6 +21,7 @@
       <Borders map={$map} />
       <AreaSelection map={$map} />
     </div>
+    <Scale />
     <Info />
   {/if}
 {/if}

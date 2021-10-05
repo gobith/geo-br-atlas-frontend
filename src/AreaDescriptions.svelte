@@ -1,21 +1,30 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { resize } from "./world-state";
-  import {provinceStatsForArea} from "./world-store";
+  import { resize , scale } from "./world-state";
+  import {provinceInfoForArea} from "./world-store";
 
   export let map;
 
   const drawDescriptions = () => {
-      console.log("test");
+     
     const canvas = document.getElementById("description-canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
+   
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.scale(1 , 1);
+    ctx.save()
+    ctx.scale($scale, $scale);
     ctx.strokeStyle = 'black';
     map.areas.forEach((area) => {
-      const provinceStats = provinceStatsForArea(area);
-      ctx.strokeText(provinceStats, area.center.x, area.center.y);
+      const provinceInfo = provinceInfoForArea(area);
+
+ 
+      const halfStatsWidth = ctx.measureText(provinceInfo.stats).width / 2;
+      const halfTextWidth = ctx.measureText(provinceInfo.name).width / 2;
+
+      ctx.strokeText(provinceInfo.stats, area.center.x - halfStatsWidth, area.center.y +10);
+      ctx.strokeText(provinceInfo.name, area.center.x - halfTextWidth, area.center.y - 5);
     });
+    ctx.restore()
   };
 
   onMount(() => {
@@ -31,6 +40,11 @@
       canvas.width = 550;
       drawDescriptions();
     });
+
+    scale.subscribe((scaleNumber) => {
+      drawDescriptions();
+    });
+
   });
 </script>
 

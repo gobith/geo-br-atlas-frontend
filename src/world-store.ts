@@ -13,10 +13,14 @@ export default world;
 
 
 
-export const provinceStatsForArea = (area) => {
+export const provinceInfoForArea = (area) => {
 
-  if (!world) {return ''};
+
+
   const province = get(world).provinces.find((province) => {return province.areaId === area.id});
-  return `${province.level}/${province.sourceRating}`
+
+  if (!province) {return {stats: '' , name: ''}};
+
+  return {stats: `${province.level}/${province.sourceRating}` , name: province.name}
 
 }

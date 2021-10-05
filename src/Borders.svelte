@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { resize } from "./world-state";
+  import { resize , scale } from "./world-state";
 
   export let map;
 
@@ -9,8 +9,12 @@
   const drawBorders = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.scale(1 , 1);
+    ctx.save()
+    ctx.scale($scale , $scale);
+    console.log("test");
+    
 
     ctx.setLineDash([0, 0]);
     ctx.lineWidth = 4;
@@ -23,14 +27,6 @@
       })
     })
 
-    // ctx.setLineDash([0, 0]);
-    // ctx.lineWidth = 2;
-   
-
-    // map.borders.forEach((border) => {
-    //   ctx.stroke(border.path);
-    // });
-
     ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
     // ctx.strokeStyle = "gray";
@@ -39,6 +35,7 @@
     map.borders.forEach((border) => {
       ctx.stroke(border.path);
     });
+    ctx.restore()
   };
 
   onMount(() => {
@@ -54,6 +51,11 @@
       canvas.width = 550;
       drawBorders();
     });
+
+    scale.subscribe((scaleNumber) => {
+      drawBorders();
+    });
+
   });
 </script>
 

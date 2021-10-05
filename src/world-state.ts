@@ -1,14 +1,26 @@
 import { writable } from "svelte/store";
 
-export const resize = writable({height: window.innerHeight , width: window.innerWidth});
+export const resize = writable({
+  height: window.innerHeight,
+  width: window.innerWidth,
+});
 
+export const scale = writable(1);
 
 const handleWheelEvent = (event) => {
-  // console.log(event);
+  if (event.wheelDelta > 0) {
+    scale.update((scaleNumber) => {
+      return scaleNumber * 2;
+    });
+  } else {
+    scale.update((scaleNumber) => {
+      return scaleNumber / 2;
+    });
+  };
 };
 
 const handleResizeEvent = (event) => {
-  resize.set({height: window.innerHeight , width: window.innerWidth})
+  resize.set({ height: window.innerHeight, width: window.innerWidth });
 };
 
 const handleMousedownEvent = (event) => {
@@ -16,11 +28,11 @@ const handleMousedownEvent = (event) => {
 };
 
 const handleMouseupEvent = (event) => {
- // console.log(event);
+  // console.log(event);
 };
 
 const handleMousemoveEvent = (event) => {
- // console.log(event);
+  // console.log(event);
 };
 
 export const attachEvents = () => {
