@@ -7,6 +7,10 @@ export const resize = writable({
 
 export const scale = writable(1);
 
+export const offset = writable({ x: 100, y: 100 });
+
+let isMouseDown = false;
+
 const handleWheelEvent = (event) => {
   if (event.wheelDelta > 0) {
     scale.update((scaleNumber) => {
@@ -16,7 +20,7 @@ const handleWheelEvent = (event) => {
     scale.update((scaleNumber) => {
       return scaleNumber / 2;
     });
-  };
+  }
 };
 
 const handleResizeEvent = (event) => {
@@ -24,15 +28,17 @@ const handleResizeEvent = (event) => {
 };
 
 const handleMousedownEvent = (event) => {
-  // console.log(event);
+  isMouseDown = true;
 };
 
 const handleMouseupEvent = (event) => {
-  // console.log(event);
+  isMouseDown = false;
 };
 
 const handleMousemoveEvent = (event) => {
-  // console.log(event);
+  if (isMouseDown) {
+    offset.update((offsetPoint) => { return {x: offsetPoint.x + event.movementX , y: offsetPoint.y + event.movementY })
+  }
 };
 
 export const attachEvents = () => {

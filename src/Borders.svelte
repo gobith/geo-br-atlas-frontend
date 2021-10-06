@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { resize , scale } from "./world-state";
+  import { resize , scale , offset} from "./world-state";
 
   export let map;
 
@@ -12,6 +12,7 @@
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save()
+    ctx.translate($offset.x, $offset.y);
     ctx.scale($scale , $scale);
     console.log("test");
     
@@ -41,18 +42,22 @@
   onMount(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     canvas.height = window.innerHeight;
-    canvas.width = 550;
+    canvas.width = window.innerWidth;
 
     drawBorders();
 
     resize.subscribe((resize) => {
       const canvas = document.getElementById("canvas") as HTMLCanvasElement;
       canvas.height = resize.height;
-      canvas.width = 550;
+      canvas.width = window.innerWidth;
       drawBorders();
     });
 
     scale.subscribe((scaleNumber) => {
+      drawBorders();
+    });
+
+    offset.subscribe((offsetPoint) => {
       drawBorders();
     });
 

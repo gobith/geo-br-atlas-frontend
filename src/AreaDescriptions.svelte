@@ -1,17 +1,19 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { resize , scale } from "./world-state";
+  import { resize , scale , offset} from "./world-state";
   import {provinceInfoForArea} from "./world-store";
 
   export let map;
 
   const drawDescriptions = () => {
-     
+    
     const canvas = document.getElementById("description-canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
     ctx.save()
+    ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
     ctx.strokeStyle = 'black';
     map.areas.forEach((area) => {
@@ -30,18 +32,22 @@
   onMount(() => {
     const canvas = document.getElementById("description-canvas") as HTMLCanvasElement;
     canvas.height = window.innerHeight;
-    canvas.width = 550;
+    canvas.width = window.innerWidth;
 
     drawDescriptions();
 
     resize.subscribe((resize) => {
       const canvas = document.getElementById("description-canvas") as HTMLCanvasElement;
       canvas.height = resize.height;
-      canvas.width = 550;
+      canvas.width = window.innerWidth;
       drawDescriptions();
     });
 
     scale.subscribe((scaleNumber) => {
+      drawDescriptions();
+    });
+
+    offset.subscribe((offsetPoint) => {
       drawDescriptions();
     });
 

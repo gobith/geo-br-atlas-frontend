@@ -1,7 +1,7 @@
 <script lang="ts">
   import areaSelection from "./area-selection-store";
   import { onMount } from "svelte";
-  import { resize, scale } from "./world-state";
+  import { resize, scale , offset} from "./world-state";
 
   export let map;
 
@@ -11,6 +11,7 @@
     const ctx = canvas.getContext("2d");
 
     ctx.save();
+    ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
     map.areas.forEach((area) => {
@@ -28,6 +29,7 @@
     ctx.scale(1, 1);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
+    ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
     let area = map.areas.find((area) => {
@@ -44,18 +46,22 @@
   onMount(() => {
     const canvas = document.getElementById("areas-canvas") as HTMLCanvasElement;
     canvas.height = window.innerHeight;
-    canvas.width = 550;
+    canvas.width = window.innerWidth;
 
     resize.subscribe((resize) => {
       const canvas = document.getElementById(
         "areas-canvas"
       ) as HTMLCanvasElement;
       canvas.height = resize.height;
-      canvas.width = 550;
+      canvas.width = window.innerWidth;
       updateAreaSelection($areaSelection);
     });
 
     scale.subscribe((scaleNumber) => {
+      updateAreaSelection($areaSelection);
+    });
+
+    offset.subscribe((offsetPoint) => {
       updateAreaSelection($areaSelection);
     });
 

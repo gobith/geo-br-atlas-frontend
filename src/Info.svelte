@@ -57,6 +57,10 @@
   div {
     position: fixed;
     top: 20px;
-    left: 560px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.99);
+    min-width: 300px;
+    border: 1px solid black;
+    padding: 20px
   }
 </style>
