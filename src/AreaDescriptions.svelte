@@ -23,6 +23,7 @@
       const halfStatsWidth = ctx.measureText(provinceInfo.stats).width / 2;
       const halfTextWidth = ctx.measureText(provinceInfo.name).width / 2;
 
+
       ctx.strokeText(provinceInfo.stats, area.center.x - halfStatsWidth, area.center.y +10);
       ctx.strokeText(provinceInfo.name, area.center.x - halfTextWidth, area.center.y - 5);
     });

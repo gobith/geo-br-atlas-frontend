@@ -17,8 +17,8 @@
 {#if $map}
   {#if $world}
     <div class="map-container">
-      <AreaDescriptions map={$map} />
       <Borders map={$map} />
+      <AreaDescriptions map={$map} />
       <AreaSelection map={$map} />
     </div>
     <Scale />
