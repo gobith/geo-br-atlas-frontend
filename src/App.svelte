@@ -5,13 +5,16 @@
   import Regents from "./components/regents/Regents.svelte";
   import NavBar from "./components/navigation/NavBar.svelte";
   import Router from "svelte-spa-router";
+  import { push } from "svelte-spa-router";
 
   const routes = {
-    "/": Map,
+    "/map": Map,
     "/provinces": Provinces,
     "/holdings": Holdings,
     "/regents": Regents,
   };
+
+  push("/map");
 </script>
 
 <NavBar />

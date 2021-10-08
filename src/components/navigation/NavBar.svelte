@@ -1,12 +1,28 @@
 <script lang="ts">
+  const activateItem = (event) => {
+
+    const anchors = document.getElementsByClassName("anchor");
+
+    for (var i = 0; i < anchors.length; i++) {
+      console.log(anchors[i]);
+      anchors[i].classList.remove("active");
+    }
+
+    event.target.classList.add("active");
+  };
 </script>
 
 <ul>
-  <li><a class="active" href="#/">Map</a></li>
-  <li><a href="#/provinces">Provinces</a></li>
-  <li><a href="#/holdings">Holdings</a></li>
-  <li><a href="#/regents">Regents</a></li>
-  
+  <li on:click={activateItem}><a class="anchor active" href="#/map">Map</a></li>
+  <li on:click={activateItem}>
+    <a class="anchor" href="#/provinces">Provinces</a>
+  </li>
+  <li on:click={activateItem}>
+    <a class="anchor" href="#/holdings">Holdings</a>
+  </li>
+  <li on:click={activateItem}>
+    <a class="anchor" href="#/regents">Regents</a>
+  </li>
 </ul>
 
 <style>
@@ -35,7 +51,7 @@
     background-color: #111;
   }
 
-  /* .active {
-  background-color: #04AA6D;
-} */
+  .active {
+    background-color: #04aa6d;
+  }
 </style>

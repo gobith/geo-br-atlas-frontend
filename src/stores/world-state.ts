@@ -48,3 +48,11 @@ export const attachEvents = () => {
   window.addEventListener("mouseup", handleMouseupEvent);
   window.addEventListener("mousemove", handleMousemoveEvent);
 };
+
+export const detachEvents = () => {
+  window.removeEventListener("wheel", handleWheelEvent );
+  window.removeEventListener("resize", handleResizeEvent );
+  window.removeEventListener("mousedown", handleMousedownEvent);
+  window.removeEventListener("mouseup", handleMouseupEvent);
+  window.removeEventListener("mousemove", handleMousemoveEvent);
+};
