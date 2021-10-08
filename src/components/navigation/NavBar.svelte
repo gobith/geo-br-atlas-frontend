@@ -32,7 +32,8 @@
     padding: 0;
     overflow: hidden;
     height: 40px;
-    background-color: #333;
+    background-color: rgba(26, 24, 26, 0.8);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 
   li {

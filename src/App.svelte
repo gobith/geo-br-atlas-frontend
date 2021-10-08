@@ -22,10 +22,21 @@
 
 <style>
   :global(body) {
-    width: 100vw;
+    
     height: 100vh;
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    background-color: #F2F2F2;  }
+
+  :global(table) {
+    border-collapse: collapse;
+    position: relative;
+  }
+
+  :global(table, th, td) {
+    border: 1px solid #63666a;
+    font-weight: normal;
+    padding: 10px;
   }
 </style>

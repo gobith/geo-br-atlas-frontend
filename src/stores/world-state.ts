@@ -23,8 +23,12 @@ const handleWheelEvent = (event) => {
   }
 };
 
-const handleResizeEvent = (event) => {
+export const resetResize = () => {
   resize.set({ height: window.innerHeight - 40, width: window.innerWidth });
+}
+
+const handleResizeEvent = (event) => {
+  resetResize()
 };
 
 const handleMousedownEvent = (event) => {
