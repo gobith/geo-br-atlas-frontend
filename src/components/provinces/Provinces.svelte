@@ -1,5 +1,5 @@
 <script lang="ts">
-  import world, { provinceInfoForArea } from "../../stores/world-store";
+  import world from "../../stores/world-store";
   import Province from "./Province.svelte";
 
   let selection;

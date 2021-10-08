@@ -4,7 +4,7 @@
     const anchors = document.getElementsByClassName("anchor");
 
     for (var i = 0; i < anchors.length; i++) {
-      console.log(anchors[i]);
+  
       anchors[i].classList.remove("active");
     }
 
