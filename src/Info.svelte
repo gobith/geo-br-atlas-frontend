@@ -16,11 +16,11 @@
   });
 </script>
 
+{#if $areaSelection}
 <div>
- <p>Scale: {$scale}</p>
-  {#if $areaSelection}
+ 
     <p>{$areaSelection.id}</p>
-  {/if}
+  
   {#if province}
     <h1>{province.name} {province.level}/{province.sourceRating}</h1>
     <p>Owner: {$world.regents[province.ownership.owner].name}</p>
@@ -57,15 +57,17 @@
 
   {/if}
 </div>
+{/if}
 
 <style>
   div {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: rgba(255, 255, 255, 0.9);
+    top: 0px;
+    right: 0px;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 1);
     min-width: 300px;
-    border: 1px solid black;
-    padding: 20px
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 30px
   }
 </style>
