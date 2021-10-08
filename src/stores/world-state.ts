@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 
 export const resize = writable({
-  height: window.innerHeight,
-  width: window.innerWidth,
+  height: window.innerHeight - 40,
+  width: window.innerWidth ,
 });
 
 export const scale = writable(1);
@@ -24,7 +24,7 @@ const handleWheelEvent = (event) => {
 };
 
 const handleResizeEvent = (event) => {
-  resize.set({ height: window.innerHeight, width: window.innerWidth });
+  resize.set({ height: window.innerHeight - 40, width: window.innerWidth });
 };
 
 const handleMousedownEvent = (event) => {

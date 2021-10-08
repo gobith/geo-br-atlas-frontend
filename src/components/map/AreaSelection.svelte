@@ -1,7 +1,8 @@
 <script lang="ts">
-  import areaSelection from "./area-selection-store";
   import { onMount } from "svelte";
-  import { resize, scale , offset} from "./world-state";
+
+  import areaSelection from "../../stores/area-selection-store";
+  import { resize, scale , offset} from "../../stores/world-state";
 
   export let map;
 

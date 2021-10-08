@@ -1,28 +1,21 @@
 <script lang="ts">
-  import map from "./map-store";
-  import world from "./world-store";
-  import Borders from "./Borders.svelte";
-  import AreaSelection from "./AreaSelection.svelte";
-  import AreaDescriptions from "./AreaDescriptions.svelte";
-  import Info from "./Info.svelte";
-  import { onMount } from "svelte";
-  import { attachEvents } from "./world-state";
+  import Map from "./components/map/Map.svelte";
+  import Provinces from "./components/provinces/Provinces.svelte";
+  import Holdings from "./components/holdings/Holdings.svelte";
+  import Regents from "./components/regents/Regents.svelte";
+  import NavBar from "./components/navigation/NavBar.svelte";
+  import Router from "svelte-spa-router";
 
-  onMount(() => {
-    attachEvents();
-  });
+  const routes = {
+    "/": Map,
+    "/provinces": Provinces,
+    "/holdings": Holdings,
+    "/regents": Regents,
+  };
 </script>
 
-{#if $map}
-  {#if $world}
-    <div class="map-container">
-      <Borders map={$map} />
-      <AreaDescriptions map={$map} />
-      <AreaSelection map={$map} />
-    </div>
-    <Info />
-  {/if}
-{/if}
+<NavBar />
+<Router {routes} />
 
 <style>
   :global(body) {
@@ -31,9 +24,5 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    
-  }
-  .map-container {
-    position: relative;
   }
 </style>

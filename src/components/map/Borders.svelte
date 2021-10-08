@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { resize, scale, offset } from "./world-state";
-  import { provinceForArea } from "./world-store";
+  import { resize, scale, offset } from "../../stores/world-state";
+  import { provinceForArea } from "../../stores/world-store";
 
   export let map;
 
@@ -57,8 +57,8 @@
 
   onMount(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 40;
+    canvas.width = window.innerWidth -40;
 
     drawBorders();
 
