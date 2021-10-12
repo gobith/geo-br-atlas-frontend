@@ -5,7 +5,7 @@ export const resize = writable({
   width: window.innerWidth ,
 });
 
-export const scale = writable(1);
+export const scale = writable(0.2);
 
 export const offset = writable({ x: 100, y: 100 });
 

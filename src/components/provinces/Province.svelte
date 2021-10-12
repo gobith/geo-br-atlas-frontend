@@ -1,5 +1,6 @@
 <script lang="ts">
   import world from "../../stores/world-store";
+  import LoyaltyScroller from "../loyalty/LoyaltyScroller.svelte";
   export let province;
 </script>
 
@@ -13,7 +14,7 @@
   <td>{province.guild}</td>
   <td>{province.temple}</td>
   <td>{province.source}</td>
-  <td>{province.loyalty}</td>
+  <td><LoyaltyScroller province={province} /></td>
   <td>{province.terrain.name}</td>
 
 <style>
