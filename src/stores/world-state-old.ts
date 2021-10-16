@@ -7,32 +7,48 @@ export const resize = writable({
 
 export const scale = writable(0.2);
 
-export const offset = writable({ x: 0, y: 0 });
+export const offset = writable({ x: 100, y: 100 });
 
 let isMouseDown = false;
 
+const zoomCap = 10;
+let zoom = 1;
+let x = 0;
+let y = 0;
+let worldViewX = 0;
+let worldViewY = 0;
+let worldX = 0;
+let worldY = 0;
+
 const handleWheelEvent = (event) => {
   if (event.wheelDelta > 0) {
-    scale.update((scaleNumber) => {
-      return scaleNumber * 2;
-    });
-    offset.update((offset) => {
-      return {
-        x: 2 * offset.x - event.clientX,
-        y: 2 * offset.y - (event.clientY - 40),
-      };
-    });
+    if (zoom !== 1) {
+      zoomTo(zoom - 1, x, y);
+    }
   } else {
-    scale.update((scaleNumber) => {
-      return scaleNumber / 2;
-    });
-    offset.update((offset) => {
-      return {
-        x: (offset.x + event.x) / 2,
-        y: (offset.y + (event.clientY - 40)) / 2,
-      };
-    });
+    if (zoom !== zoomCap) {
+      zoomTo(zoom + 1, x, y);
+    }
   }
+};
+
+const zoomTo = (newZoom, newX, newY) => {
+  if (zoom === newZoom) {
+    return;
+  }
+  let delta = newZoom - zoom;
+  zoom = newZoom;
+  worldViewX = worldViewX + newX * delta;
+  worldViewY = worldViewY + newY * delta;
+  scale.update((scaleNumber) => {
+    return 1 / zoom;
+  });
+  offset.update((offsetPoint) => {
+    return {
+      x: worldViewX,
+      y: worldViewY,
+    };
+  });
 };
 
 export const resetResize = () => {
@@ -52,6 +68,25 @@ const handleMouseupEvent = (event) => {
 };
 
 const handleMousemoveEvent = (event) => {
+  x = event.clientX;
+  y = event.clientY;
+  if (isMouseDown) {
+    worldViewX = worldViewX + event.movementX * zoom;
+    worldViewY = worldViewY + event.movementY * zoom;
+
+    offset.update((offsetPoint) => {
+      return {
+        x: worldViewX,
+        y: worldViewY,
+      };
+    });
+  } else {
+    worldX = 0 - worldViewX + x * zoom;
+    worldY = 0 - worldViewY + y * zoom;
+  }
+};
+
+const handleMousemoveEvent2 = (event) => {
   if (isMouseDown) {
     offset.update((offsetPoint) => {
       return {

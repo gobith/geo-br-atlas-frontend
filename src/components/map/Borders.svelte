@@ -46,7 +46,7 @@
       });
     });
 
-    ctx.setLineDash([10, 6]);
+    //ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
 
     map.borders.forEach((border) => {
