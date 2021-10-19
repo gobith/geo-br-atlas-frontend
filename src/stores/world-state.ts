@@ -9,7 +9,10 @@ export const scale = writable(0.2);
 
 export const offset = writable({ x: 0, y: 0 });
 
+export const clicked = writable({ x: 0, y: 0 });
+
 let isMouseDown = false;
+let isMouseDownMove = false;
 
 const handleWheelEvent = (event) => {
   if (event.wheelDelta > 0) {
@@ -48,11 +51,18 @@ const handleMousedownEvent = (event) => {
 };
 
 const handleMouseupEvent = (event) => {
+  if (!isMouseDownMove) {
+    clicked.update((point) => {
+      return { x: event.clientX, y: event.clientY };
+    });
+  }
   isMouseDown = false;
+  isMouseDownMove = false;
 };
 
 const handleMousemoveEvent = (event) => {
   if (isMouseDown) {
+    isMouseDownMove = true;
     offset.update((offsetPoint) => {
       return {
         x: offsetPoint.x + event.movementX,

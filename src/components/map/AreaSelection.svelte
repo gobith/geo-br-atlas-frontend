@@ -2,11 +2,12 @@
   import { onMount } from "svelte";
 
   import areaSelection from "../../stores/area-selection-store";
-  import { resize, scale , offset} from "../../stores/world-state";
+  import { resize, scale , offset , clicked} from "../../stores/world-state";
 
   export let map;
 
-  const mouseclick = (event) => {
+
+  const updateSelection = (point) => {
     let selectedArea;
     const canvas = document.getElementById("areas-canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
@@ -16,7 +17,7 @@
     ctx.scale($scale, $scale);
 
     map.areas.forEach((area) => {
-      if (ctx.isPointInPath(area.path, event.offsetX, event.offsetY)) {
+      if (ctx.isPointInPath(area.path, point.x , point.y - 40)) {
         selectedArea = area;
       }
     });
@@ -66,7 +67,10 @@
       updateAreaSelection($areaSelection);
     });
 
-    canvas.addEventListener("click", mouseclick);
+    clicked.subscribe((point) => {
+      updateSelection(point)
+    });
+
     areaSelection.subscribe((selection) => {
       updateAreaSelection(selection);
     });
