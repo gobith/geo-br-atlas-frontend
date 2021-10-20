@@ -24,6 +24,12 @@
       const halfTextWidth = ctx.measureText(provinceInfo.name).width / 2;
 
       ctx.strokeText(
+        area.id,
+        area.center.x ,
+        area.center.y
+      );
+
+      ctx.strokeText(
         provinceInfo.stats,
         area.center.x - halfStatsWidth,
         area.center.y + 10
