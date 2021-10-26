@@ -65,7 +65,8 @@ export default {
 			// `/api` to http://localhost:8181/api
 			proxy: {
 				map: "http://localhost:8101" ,
-				world: "http://localhost:8101"
+				world: "http://localhost:8101",
+				singledots: "http://localhost:8101"
 			},
 		}),
 	],

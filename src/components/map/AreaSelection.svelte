@@ -42,6 +42,15 @@
       ctx.fillStyle = "rgba(44, 50, 134, 0.37)";
       ctx.fill(area.path);
     }
+
+    // ctx.fillStyle = "rgba(44, 50, 134, 0.37)";
+
+    // map.areas.forEach((area) => {
+    //   ctx.fill(area.path);
+    // })
+
+
+
     ctx.restore();
   };
 

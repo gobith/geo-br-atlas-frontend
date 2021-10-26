@@ -4,6 +4,7 @@
   import { provinceForArea } from "../../stores/world-store";
 
   export let map;
+  export let singledots;
 
   console.log(map);
 
@@ -24,13 +25,11 @@
       }
     });
 
-
     ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
     ctx.lineWidth = 4;
     map.borders.forEach((border) => {
       ctx.stroke(border.path);
     });
-
 
     ctx.fillStyle = "black";
     ctx.setLineDash([0, 0]);
@@ -52,13 +51,24 @@
     map.borders.forEach((border) => {
       ctx.stroke(border.path);
     });
+
+    ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+
+    singledots.forEach((dot) => {
+      console.log(dot);
+
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, 20, 0, 2 * Math.PI);
+      ctx.fill();
+    });
+
     ctx.restore();
   };
 
   onMount(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     canvas.height = window.innerHeight - 40;
-    canvas.width = window.innerWidth -40;
+    canvas.width = window.innerWidth - 40;
 
     drawBorders();
 
