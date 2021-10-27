@@ -2,10 +2,9 @@
   import { onMount } from "svelte";
 
   import areaSelection from "../../stores/area-selection-store";
-  import { resize, scale , offset , clicked} from "../../stores/world-state";
+  import { resize, scale, offset, clicked } from "../../stores/world-state";
 
   export let map;
-
 
   const updateSelection = (point) => {
     let selectedArea;
@@ -16,8 +15,8 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
-    map.areas.forEach((area) => {
-      if (ctx.isPointInPath(area.path, point.x , point.y - 40)) {
+    map.provinceAreas.forEach((area) => {
+      if (ctx.isPointInPath(area.path, point.x, point.y - 40)) {
         selectedArea = area;
       }
     });
@@ -34,7 +33,7 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
-    let area = map.areas.find((area) => {
+    let area = map.provinceAreas.find((area) => {
       return area === selection;
     });
 
@@ -49,6 +48,33 @@
     //   ctx.fill(area.path);
     // })
 
+     //ctx.shadowColor = "red";
+     //ctx.shadowBlur = 15;
+
+   
+    // ctx.strokeStyle="rgba(255 , 255, 255 , 0.1)";
+    // ctx.lineWidth = 600;
+    // map.areas.forEach((area) => {
+    //   ctx.stroke(area.path)});
+
+    // ctx.strokeStyle="rgba(255 , 255, 255 , 0.1)";
+    // ctx.lineWidth = 200;
+    // map.areas.forEach((area) => {
+    //   ctx.stroke(area.path)});
+    
+   // ctx.strokeStyle="rgba(255 , 255, 255 , 0.1)";
+    // ctx.lineWidth = 50;
+    // map.areas.forEach((area) => {
+     //  ctx.stroke(area.path)});
+
+  ctx.shadowColor = "rgba(255 , 255, 255 , 0.6)";
+    ctx.shadowBlur = 100;
+    ctx.fillStyle = "#F2F2F2";
+    map.provinceAreas.forEach((area) => {
+      ctx.fill(area.path);
+     
+      
+    });
 
 
     ctx.restore();
@@ -77,7 +103,7 @@
     });
 
     clicked.subscribe((point) => {
-      updateSelection(point)
+      updateSelection(point);
     });
 
     areaSelection.subscribe((selection) => {
@@ -90,6 +116,7 @@
 
 <style>
   canvas {
+    background-color: #006994;
     position: absolute;
     top: 0;
     left: 0;

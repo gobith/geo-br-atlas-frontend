@@ -16,11 +16,11 @@ const mapFor = (mapData) => {
     return { ...border, path };
   });
 
-  const areas = mapData.areas.map((area) => {
+  const provinceAreas = mapData.provinceAreas.map((area) => {
     let path = new Path2D(area.d);
     return {...area , path};
   });
 
   const realmBorders = mapData.realmBorders;
-  return {borders , areas, realmBorders}
+  return {borders , provinceAreas, realmBorders}
 };

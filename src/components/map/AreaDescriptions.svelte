@@ -17,7 +17,7 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
     ctx.strokeStyle = "black";
-    map.areas.forEach((area) => {
+    map.provinceAreas.forEach((area) => {
       const provinceInfo = provinceInfoForArea(area);
 
       const halfStatsWidth = ctx.measureText(provinceInfo.stats).width / 2;

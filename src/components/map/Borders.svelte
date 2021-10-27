@@ -17,7 +17,7 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
-    map.areas.forEach((area) => {
+    map.provinceAreas.forEach((area) => {
       const province = provinceForArea(area);
       if (province) {
         ctx.fillStyle = province.terrain.color;
