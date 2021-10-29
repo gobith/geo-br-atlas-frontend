@@ -11,16 +11,26 @@ fetch("/map")
 export default map;
 
 const mapFor = (mapData) => {
-  const borders = mapData.borders.map((border) => {
-    let path = new Path2D(border.d);
-    return { ...border, path };
+
+
+  const borders = new Path2D();
+
+  mapData.borders.forEach((border) => {
+    borders.addPath(new Path2D(border.d));
+  
   });
 
   const provinceAreas = mapData.provinceAreas.map((area) => {
     let path = new Path2D(area.d);
-    return {...area , path};
+    return { ...area, path };
   });
 
+  const islandAreas = mapData.islandAreas.map((area) => {
+    let path = new Path2D(area.d);
+    return { ...area, path };
+  });
+  
   const realmBorders = mapData.realmBorders;
-  return {borders , provinceAreas, realmBorders}
+
+  return { borders, provinceAreas, islandAreas, realmBorders };
 };

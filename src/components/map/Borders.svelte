@@ -4,7 +4,7 @@
   import { provinceForArea } from "../../stores/world-store";
 
   export let map;
-  export let singledots;
+  
 
   console.log(map);
 
@@ -52,16 +52,7 @@
       ctx.stroke(border.path);
     });
 
-    ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
-
-    singledots.forEach((dot) => {
-      console.log(dot);
-
-      ctx.beginPath();
-      ctx.arc(dot.x, dot.y, 20, 0, 2 * Math.PI);
-      ctx.fill();
-    });
-
+    
     ctx.restore();
   };
 
@@ -93,6 +84,7 @@
 
 <style>
   canvas {
+    background-color: #006994;
     position: absolute;
     top: 0;
     left: 0;

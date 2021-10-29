@@ -68,13 +68,12 @@
      //  ctx.stroke(area.path)});
 
   ctx.shadowColor = "rgba(255 , 255, 255 , 0.6)";
-    ctx.shadowBlur = 100;
-    ctx.fillStyle = "#F2F2F2";
-    map.provinceAreas.forEach((area) => {
-      ctx.fill(area.path);
-     
-      
-    });
+    ctx.shadowBlur = 50;
+    ctx.fillStyle = "rgba(255 , 255, 255 , 0.8)";
+    //ctx.fillStyle = "green";
+     map.islandAreas.forEach((area) => {
+      ctx.fill(area.path)
+     });
 
 
     ctx.restore();
@@ -116,7 +115,7 @@
 
 <style>
   canvas {
-    background-color: #006994;
+  
     position: absolute;
     top: 0;
     left: 0;
