@@ -27,18 +27,9 @@
 
 {#if $map}
   {#if $world}
-    <div class="map-container">
-      <Background map={$map} />
-      <!-- <Borders map={$map} />
-      <AreaDescriptions map={$map} />
-      <AreaSelection map={$map} /> -->
-    </div>
-   <!-- <Info /> -->
+    <Background map={$map} />
   {/if}
 {/if}
 
 <style>
-  .map-container {
-    position: relative;
-  }
 </style>

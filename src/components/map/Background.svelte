@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import areaSelection from "../../stores/area-selection-store";
-  import { resize, scale, offset, clicked } from "../../stores/world-state";
+  import { resize, scale, offset, clicked , settings } from "../../stores/world-state";
   import { provinceForArea } from "../../stores/world-store";
 
   export let map;
+  const heightDelta = 0;
 
 
   onMount(() => {
@@ -29,6 +30,10 @@
     areaSelection.subscribe((selection) => {
       drawBackground();
     });
+
+    settings.subscribe((selection) => {
+      drawBackground();
+    });
   });
 
   const drawBackground = () => {
@@ -44,7 +49,7 @@
     ctx.scale($scale, $scale);
 
     drawIslands(ctx);
-    drawBorders(ctx);
+    if ($settings.showProvinces) {drawBorders(ctx)};
     drawSelection(ctx);
 
     ctx.restore();
@@ -76,8 +81,11 @@
     });
 
     if (area) {
-      ctx.fillStyle = "rgba(44, 50, 134, 0.37)";
+      ctx.lineWidth = 3;
+      ctx.fillStyle = "rgba(44, 50, 134, 0.1)";
+      ctx.strokeStyle = "rgba(44, 50, 134, 0.8)";
       ctx.fill(area.path);
+      ctx.stroke(area.path);
     }
   };
 
@@ -91,7 +99,7 @@
     ctx.scale($scale, $scale);
 
     map.provinceAreas.forEach((area) => {
-      if (ctx.isPointInPath(area.path, point.x, point.y - 40)) {
+      if (ctx.isPointInPath(area.path, point.x, point.y - heightDelta)) {
         selectedArea = area;
       }
     });
@@ -106,7 +114,7 @@
   canvas {
     background-color: #006994;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
   }
 </style>

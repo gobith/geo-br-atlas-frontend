@@ -4,6 +4,7 @@
   import Holdings from "./components/holdings/Holdings.svelte";
   import Regents from "./components/regents/Regents.svelte";
   import NavBar from "./components/navigation/NavBar.svelte";
+  import Navigation from "./components/navigation/Navigation.svelte";
   import Router from "svelte-spa-router";
   import { push } from "svelte-spa-router";
 
@@ -15,10 +16,13 @@
   };
 
   push("/map");
+
 </script>
 
-<NavBar />
-<Router {routes} />
+<!-- <NavBar /> -->
+
+<Map />
+<Navigation />
 
 <style>
   :global(body) {
@@ -27,7 +31,9 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    background-color: #F2F2F2;  }
+    background-color: #006994;
+    position: relative;
+     }
 
   :global(table) {
     border-collapse: collapse;
