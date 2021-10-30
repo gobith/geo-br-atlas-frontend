@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import areaSelection from "../../stores/area-selection-store";
   import {
     resize,
     scale,
     offset,
     clicked,
     settings,
+    provinceSelection,
   } from "../../stores/world-state";
   import { provinceForArea } from "../../stores/world-store";
 
@@ -32,7 +32,7 @@
       updateSelection(point);
     });
 
-    areaSelection.subscribe((selection) => {
+    provinceSelection.subscribe((selection) => {
       drawBackground();
     });
 
@@ -78,7 +78,7 @@
 
   const drawSelection = (ctx) => {
     let area = map.provinceAreas.find((area) => {
-      return area === $areaSelection;
+      return area === $provinceSelection;
     });
 
     if (area) {
@@ -91,7 +91,7 @@
   };
 
   const updateSelection = (point) => {
-    let selectedArea;
+    let selectedProvince;
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
 
@@ -101,11 +101,11 @@
 
     map.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y - heightDelta)) {
-        selectedArea = area;
+        selectedProvince = area;
       }
     });
     ctx.restore();
-    areaSelection.set(selectedArea);
+    provinceSelection.set(selectedProvince);
   };
 </script>
 

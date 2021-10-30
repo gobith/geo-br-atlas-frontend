@@ -9,10 +9,6 @@
   } from "../../stores/world-state";
 
   import Background from "./Background.svelte";
-  import Borders from "./Borders.svelte";
-  import AreaSelection from "./AreaSelection.svelte";
-  import AreaDescriptions from "./AreaDescriptions.svelte";
-  import Info from "./Info.svelte";
   import { onMount, onDestroy } from "svelte";
 
   onMount(() => {
