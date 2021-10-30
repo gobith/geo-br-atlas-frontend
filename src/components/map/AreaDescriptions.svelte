@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { resize, scale, offset } from "../../stores/world-state";
+  import { resize, scale, offset, settings } from "../../stores/world-state";
   import { provinceInfoForArea } from "../../stores/world-store";
 
   export let map;
@@ -13,6 +13,11 @@
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    console.log($settings);
+    if (!$settings.showProvinceInfo) {
+      return;
+    }
+
     ctx.save();
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
@@ -23,11 +28,7 @@
       const halfStatsWidth = ctx.measureText(provinceInfo.stats).width / 2;
       const halfTextWidth = ctx.measureText(provinceInfo.name).width / 2;
 
-      ctx.strokeText(
-        area.id,
-        area.center.x ,
-        area.center.y
-      );
+      ctx.strokeText(area.id, area.center.x, area.center.y);
 
       ctx.strokeText(
         provinceInfo.stats,
@@ -66,6 +67,10 @@
     });
 
     offset.subscribe((offsetPoint) => {
+      drawDescriptions();
+    });
+
+    settings.subscribe((settingsObject) => {
       drawDescriptions();
     });
   });

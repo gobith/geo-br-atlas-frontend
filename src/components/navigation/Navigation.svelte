@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settings , zoomIn , zoomOut} from "../../stores/world-state";
+  import { settings, zoomIn, zoomOut } from "../../stores/world-state";
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -20,13 +20,22 @@
     });
   };
 
+  const toggleProvinceInfo = () => {
+    settings.update((settingsObject) => {
+      return {
+        ...settingsObject,
+        showProvinceInfo: !settingsObject.showProvinceInfo,
+      };
+    });
+  };
 </script>
 
 <div class="navigation">
-<button on:click={zoomIn}>+</button>
-<button on:click={zoomOut}>-</button>
+  <button on:click={zoomIn}>+</button>
+  <button on:click={zoomOut}>-</button>
   <button on:click={toggleFullScreen}>#</button>
   <button on:click={toggleProvinces}>provinces</button>
+  <button on:click={toggleProvinceInfo}>info</button>
 </div>
 
 <style>

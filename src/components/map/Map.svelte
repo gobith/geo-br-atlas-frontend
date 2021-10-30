@@ -9,6 +9,7 @@
   } from "../../stores/world-state";
 
   import Background from "./Background.svelte";
+  import AreaDescriptions from "./AreaDescriptions.svelte";
   import { onMount, onDestroy } from "svelte";
 
   onMount(() => {
@@ -24,6 +25,7 @@
 {#if $map}
   {#if $world}
     <Background map={$map} />
+    <AreaDescriptions map={$map} />
   {/if}
 {/if}
 

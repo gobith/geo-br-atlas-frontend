@@ -13,7 +13,7 @@ export const offset = writable({ x: 0, y: 0 });
 
 export const clicked = writable({ x: 0, y: 0 });
 
-export const settings = writable({ showProvinces: true });
+export const settings = writable({ showProvinces: true, showProvinceInfo: true });
 
 export const provinceSelection = writable(null);
 

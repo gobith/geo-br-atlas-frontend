@@ -8,7 +8,6 @@
     settings,
     provinceSelection,
   } from "../../stores/world-state";
-  import { provinceForArea } from "../../stores/world-store";
 
   export let map;
   const heightDelta = 0;
