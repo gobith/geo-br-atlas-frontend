@@ -13,7 +13,7 @@ export const offset = writable({ x: 0, y: 0 });
 
 export const clicked = writable({ x: 0, y: 0 });
 
-export const settings = writable({showProvinces: true});
+export const settings = writable({ showProvinces: true });
 
 let isMouseDown = false;
 let isMouseDownMove = false;
@@ -107,12 +107,35 @@ const handleMousemoveEvent = (event) => {
   }
 };
 
+const handleTouchstartEvent = (event) => {
+  console.log("start", event)
+  handleMousedownEvent(event)
+}
+
+const handleTouchmoveEvent = (event) => {
+
+
+  console.log("move", event.movementX)
+
+  handleMousemoveEvent(event)
+}
+
+const handleTouchendEvent = (event) => {
+
+  console.log("end", event)
+
+  handleMouseupEvent(event)
+}
 export const attachEvents = () => {
   window.addEventListener("wheel", handleWheelEvent);
   window.addEventListener("resize", handleResizeEvent);
   window.addEventListener("mousedown", handleMousedownEvent);
   window.addEventListener("mouseup", handleMouseupEvent);
   window.addEventListener("mousemove", handleMousemoveEvent);
+
+  window.addEventListener("touchstart", handleTouchstartEvent);
+  window.addEventListener("touchmove", handleTouchmoveEvent);
+  window.addEventListener("touchend", handleTouchendEvent);
 };
 
 export const detachEvents = () => {
@@ -121,4 +144,8 @@ export const detachEvents = () => {
   window.removeEventListener("mousedown", handleMousedownEvent);
   window.removeEventListener("mouseup", handleMouseupEvent);
   window.removeEventListener("mousemove", handleMousemoveEvent);
+
+  window.removeEventListener("touchstart", handleTouchstartEvent);
+  window.removeEventListener("touchmove", handleTouchmoveEvent);
+  window.removeEventListener("touchend", handleTouchendEvent);
 };
