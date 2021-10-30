@@ -1,12 +1,17 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import areaSelection from "../../stores/area-selection-store";
-  import { resize, scale, offset, clicked , settings } from "../../stores/world-state";
+  import {
+    resize,
+    scale,
+    offset,
+    clicked,
+    settings,
+  } from "../../stores/world-state";
   import { provinceForArea } from "../../stores/world-store";
 
   export let map;
   const heightDelta = 0;
-
 
   onMount(() => {
     resize.subscribe((resize) => {
@@ -49,7 +54,9 @@
     ctx.scale($scale, $scale);
 
     drawIslands(ctx);
-    if ($settings.showProvinces) {drawBorders(ctx)};
+    if ($settings.showProvinces) {
+      drawBorders(ctx);
+    }
     drawSelection(ctx);
 
     ctx.restore();
@@ -59,20 +66,14 @@
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.6)";
     ctx.shadowBlur = 50 * $scale;
     ctx.fillStyle = "white";
-
-    map.islandAreas.forEach((area) => {
-      ctx.fill(area.path);
-    });
+    ctx.fill(map.islandsPath);
   };
 
   const drawBorders = (ctx) => {
     ctx.strokeStyle = "black";
-   //ctx.setLineDash([10, 6]);
+    //ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
-    ctx.stroke(map.borders);
-
-    
-
+    ctx.stroke(map.bordersPath);
   };
 
   const drawSelection = (ctx) => {

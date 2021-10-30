@@ -12,25 +12,26 @@ export default map;
 
 const mapFor = (mapData) => {
 
-
-  const borders = new Path2D();
-
-  mapData.borders.forEach((border) => {
-    borders.addPath(new Path2D(border.d));
-  
-  });
-
+  const borders = mapData.borders;
   const provinceAreas = mapData.provinceAreas.map((area) => {
     let path = new Path2D(area.d);
     return { ...area, path };
   });
-
-  const islandAreas = mapData.islandAreas.map((area) => {
-    let path = new Path2D(area.d);
-    return { ...area, path };
-  });
-  
+  const islandAreas = mapData.islandAreas;
   const realmBorders = mapData.realmBorders;
 
-  return { borders, provinceAreas, islandAreas, realmBorders };
+  const bordersPath = new Path2D();
+  const islandsPath = new Path2D();
+
+  mapData.borders.forEach((border) => {
+    bordersPath.addPath(new Path2D(border.d));
+
+  });
+
+  mapData.islandAreas.forEach((area) => {
+    islandsPath.addPath(new Path2D(area.d));
+
+  });
+
+  return { borders, provinceAreas, islandAreas, realmBorders, bordersPath, islandsPath };
 };

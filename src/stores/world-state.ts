@@ -109,23 +109,20 @@ const handleMousemoveEvent = (event) => {
 
 const handleTouchstartEvent = (event) => {
   console.log("start", event)
-  handleMousedownEvent(event)
 }
 
 const handleTouchmoveEvent = (event) => {
-
-
-  console.log("move", event.movementX)
-
-  handleMousemoveEvent(event)
+  console.log("move", event)
 }
 
 const handleTouchendEvent = (event) => {
-
   console.log("end", event)
-
-  handleMouseupEvent(event)
 }
+
+const handleTouchcancelEvent = (event) => {
+  console.log("cancel", event)
+}
+
 export const attachEvents = () => {
   window.addEventListener("wheel", handleWheelEvent);
   window.addEventListener("resize", handleResizeEvent);
@@ -136,6 +133,7 @@ export const attachEvents = () => {
   window.addEventListener("touchstart", handleTouchstartEvent);
   window.addEventListener("touchmove", handleTouchmoveEvent);
   window.addEventListener("touchend", handleTouchendEvent);
+  window.addEventListener("touchcancel", handleTouchcancelEvent);
 };
 
 export const detachEvents = () => {
@@ -148,4 +146,5 @@ export const detachEvents = () => {
   window.removeEventListener("touchstart", handleTouchstartEvent);
   window.removeEventListener("touchmove", handleTouchmoveEvent);
   window.removeEventListener("touchend", handleTouchendEvent);
+  window.removeEventListener("touchcancel", handleTouchcancelEvent);
 };
