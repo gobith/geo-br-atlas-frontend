@@ -13,11 +13,10 @@
   const heightDelta = 0;
 
   onMount(() => {
+
     resize.subscribe((resize) => {
       drawBackground();
     });
-
-    drawBackground();
 
     scale.subscribe((scaleNumber) => {
       drawBackground();
