@@ -52,6 +52,7 @@
     ctx.scale($scale, $scale);
 
     drawIslands(ctx);
+    drawWoods(ctx);
     if ($settings.showProvinces) {
       drawBorders(ctx);
     }
@@ -65,6 +66,17 @@
     ctx.shadowBlur = 50 * $scale;
     ctx.fillStyle = "white";
     ctx.fill(map.islandsPath);
+  };
+
+  const drawWoods = (ctx) => {
+  
+    ctx.clip(map.islandsPath);
+    ctx.fillStyle = "green";
+    ctx.strokeStyle = "darkgreen";
+    ctx.lineWidth = 3;
+    ctx.fill(map.woodsPath);
+    ctx.stroke(map.woodsPath);
+    
   };
 
   const drawBorders = (ctx) => {

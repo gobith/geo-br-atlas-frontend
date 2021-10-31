@@ -22,6 +22,7 @@ const mapFor = (mapData) => {
 
   const bordersPath = new Path2D();
   const islandsPath = new Path2D();
+  const woodsPath = new Path2D();
 
   mapData.borders.forEach((border) => {
     bordersPath.addPath(new Path2D(border.d));
@@ -33,5 +34,11 @@ const mapFor = (mapData) => {
 
   });
 
-  return { borders, provinceAreas, islandAreas, realmBorders, bordersPath, islandsPath };
+  mapData.woodAreas.forEach((area) => {
+    woodsPath.addPath(new Path2D(area.d));
+
+  });
+
+
+  return { borders, provinceAreas, islandAreas, realmBorders, bordersPath, islandsPath , woodsPath };
 };

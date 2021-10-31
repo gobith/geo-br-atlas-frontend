@@ -112,18 +112,22 @@ const handleMousemoveEvent = (event) => {
 };
 
 const handleTouchstartEvent = (event) => {
+  event.preventDefault();
   console.log("start", event)
 }
 
 const handleTouchmoveEvent = (event) => {
+  event.preventDefault();
   console.log("move", event)
 }
 
 const handleTouchendEvent = (event) => {
+  event.preventDefault();
   console.log("end", event)
 }
 
 const handleTouchcancelEvent = (event) => {
+  event.preventDefault();
   console.log("cancel", event)
 }
 
@@ -134,10 +138,10 @@ export const attachEvents = () => {
   window.addEventListener("mouseup", handleMouseupEvent);
   window.addEventListener("mousemove", handleMousemoveEvent);
 
-  window.addEventListener("touchstart", handleTouchstartEvent);
-  window.addEventListener("touchmove", handleTouchmoveEvent);
-  window.addEventListener("touchend", handleTouchendEvent);
-  window.addEventListener("touchcancel", handleTouchcancelEvent);
+  window.addEventListener("touchstart", handleTouchstartEvent , true);
+  window.addEventListener("touchmove", handleTouchmoveEvent , true);
+  window.addEventListener("touchend", handleTouchendEvent , true);
+  window.addEventListener("touchcancel", handleTouchcancelEvent , true);
 };
 
 export const detachEvents = () => {
