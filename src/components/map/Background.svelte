@@ -9,6 +9,8 @@
     provinceSelection,
   } from "../../stores/world-state";
 
+  import woodPattern from "./wood-pattern";
+
   export let map;
   const heightDelta = 0;
 
@@ -51,8 +53,12 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
+    ctx.lineCap = "round";
+
+
     drawIslands(ctx);
     drawWoods(ctx);
+    drawMountains(ctx);
     if ($settings.showProvinces) {
       drawBorders(ctx);
     }
@@ -64,24 +70,48 @@
   const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.6)";
     ctx.shadowBlur = 50 * $scale;
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#EEE8AA";
     ctx.fill(map.islandsPath);
   };
 
   const drawWoods = (ctx) => {
   
+    ctx.globalAlpha = 0.8;
+    ctx.shadowColor = "darkgreen";
+    ctx.shadowBlur = 300 * $scale;
     ctx.clip(map.islandsPath);
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "#228B22";
     ctx.strokeStyle = "darkgreen";
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     ctx.fill(map.woodsPath);
     ctx.stroke(map.woodsPath);
+    ctx.globalAlpha = 1;
     
   };
 
+  const drawMountains = (ctx) => {
+  
+  ctx.globalAlpha = 0.3;
+  ctx.shadowColor = "#654321";
+  ctx.shadowBlur = 200 * $scale;
+  ctx.fillStyle = "#796342";
+  ctx.strokeStyle = "#796342";
+  ctx.lineWidth = 2;
+  ctx.fill(map.mountainsPath);
+  //ctx.stroke(map.mountainsPath);
+  ctx.globalAlpha = 1;
+
+  
+};
+
   const drawBorders = (ctx) => {
-    ctx.strokeStyle = "black";
-    //ctx.setLineDash([10, 6]);
+    // ctx.strokeStyle = "rgba(255 , 255, 255 , 0.1)";
+    // ctx.lineWidth = 4;
+    // ctx.stroke(map.bordersPath);
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#654321";
+    ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
     ctx.stroke(map.bordersPath);
   };
