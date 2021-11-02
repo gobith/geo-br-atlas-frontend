@@ -1,25 +1,7 @@
 <script lang="ts">
   import Map from "./components/map/Map.svelte";
-  import Provinces from "./components/provinces/Provinces.svelte";
-  import Holdings from "./components/holdings/Holdings.svelte";
-  import Regents from "./components/regents/Regents.svelte";
-  import NavBar from "./components/navigation/NavBar.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
-  import Router from "svelte-spa-router";
-  import { push } from "svelte-spa-router";
-
-  const routes = {
-    "/map": Map,
-    "/provinces": Provinces,
-    "/holdings": Holdings,
-    "/regents": Regents,
-  };
-
-  push("/map");
-
 </script>
-
-<!-- <NavBar /> -->
 
 <Map />
 <Navigation />
@@ -33,6 +15,7 @@
     box-sizing: border-box;
     background-color: #006994;
     position: relative;
+    font-family: 'calibri';
      }
 
   :global(table) {
