@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settings, zoomIn, zoomOut , scale } from "../../stores/world-state";
+  import { settings, zoomIn, zoomOut , scale , zoom} from "../../stores/world-state";
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -36,7 +36,7 @@
   <button on:click={toggleFullScreen}>#</button>
   <button on:click={toggleProvinces}>provinces</button>
   <button on:click={toggleProvinceInfo}>info</button>
-  <div>{$scale}</div>
+  <div>{$zoom} - {$scale}</div>
 </div>
 
 <style>

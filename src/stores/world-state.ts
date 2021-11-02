@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable , get} from "svelte/store";
 
 export const resize = writable({
   height: window.innerHeight,
@@ -43,14 +43,18 @@ const handleWheelEvent = (event) => {
   }
 };
 
-const scaleIncrement = 2;
+const zoomValue = () => { return get(zoom)}
 
-const scaleIncrements = [0.05 , 0.1 , 0.2 , 0.4 , 0.8 , 1.6 , 3.2 , 6.4];
-const zoomCap = scaleIncrements.length;
+const scaleIncrement = 2;
+const zoomCap = 8
 
 
 const privateZoomIn = (x, y) => {
   
+  if (zoomValue() === zoomCap) {return};
+
+  zoom.update((zoomNumber) => {return zoomNumber + 1});
+
   scale.update((scaleNumber) => {
     return scaleNumber * scaleIncrement;
   });
@@ -63,6 +67,10 @@ const privateZoomIn = (x, y) => {
 };
 
 const privateZoomOut = (x, y) => {
+
+  if (zoomValue() === 1) {return};
+
+  zoom.update((zoomNumber) => {return zoomNumber - 1});
   scale.update((scaleNumber) => {
     return scaleNumber / scaleIncrement;
   });
