@@ -1,57 +1,59 @@
 import { writable } from "svelte/store";
 
-const heightDelta = 0;
-
 export const resize = writable({
-  height: window.innerHeight - heightDelta,
+  height: window.innerHeight,
   width: window.innerWidth,
 });
 
 export const scale = writable(0.2);
 
+export const zoom = writable(10);
+
 export const offset = writable({ x: 0, y: 0 });
 
 export const clicked = writable({ x: 0, y: 0 });
 
-export const settings = writable({ showProvinces: true, showProvinceInfo: true });
+export const settings = writable({
+  showProvinces: true,
+  showProvinceInfo: true,
+});
 
 export const provinceSelection = writable(null);
-
-
 
 let isMouseDown = false;
 let isMouseDownMove = false;
 
-
-
 export const zoomIn = () => {
+  privateZoomIn(window.innerWidth / 2 , window.innerHeight / 2)
+};
 
+export const zoomOut = () => {
+  privateZoomOut(window.innerWidth / 2 , window.innerHeight / 2)
+};
+
+const privateZoomIn = (x, y) => {
   scale.update((scaleNumber) => {
     return scaleNumber * 2;
   });
   offset.update((offset) => {
     return {
-      x: 2 * offset.x - (window.innerWidth / 2),
-      y: 2 * offset.y - (window.innerHeight / 2),
+      x: 2 * offset.x - x,
+      y: 2 * offset.y - y,
     };
   });
+};
 
-}
-
-export const zoomOut = () => {
-
+const privateZoomOut = (x, y) => {
   scale.update((scaleNumber) => {
     return scaleNumber / 2;
   });
   offset.update((offset) => {
     return {
-      x: (offset.x + (window.innerWidth / 2)) / 2,
-      y: (offset.y + (window.innerHeight / 2)) / 2,
+      x: (offset.x + x) / 2,
+      y: (offset.y + y) / 2,
     };
   });
-
-}
-
+};
 
 const handleWheelEvent = (event) => {
   if (event.wheelDelta > 0) {
@@ -61,7 +63,7 @@ const handleWheelEvent = (event) => {
     offset.update((offset) => {
       return {
         x: 2 * offset.x - event.clientX,
-        y: 2 * offset.y - (event.clientY - heightDelta),
+        y: 2 * offset.y - event.clientY,
       };
     });
   } else {
@@ -70,15 +72,15 @@ const handleWheelEvent = (event) => {
     });
     offset.update((offset) => {
       return {
-        x: (offset.x + event.x) / 2,
-        y: (offset.y + (event.clientY - heightDelta)) / 2,
+        x: (offset.x + event.clientX) / 2,
+        y: (offset.y + event.clientY) / 2,
       };
     });
   }
 };
 
 export const resetResize = () => {
-  resize.set({ height: window.innerHeight - heightDelta, width: window.innerWidth });
+  resize.set({ height: window.innerHeight, width: window.innerWidth });
 };
 
 const handleResizeEvent = (event) => {
@@ -113,23 +115,23 @@ const handleMousemoveEvent = (event) => {
 
 const handleTouchstartEvent = (event) => {
   event.preventDefault();
-  console.log("start", event)
-}
+  console.log("start", event);
+};
 
 const handleTouchmoveEvent = (event) => {
   event.preventDefault();
-  console.log("move", event)
-}
+  console.log("move", event);
+};
 
 const handleTouchendEvent = (event) => {
   event.preventDefault();
-  console.log("end", event)
-}
+  console.log("end", event);
+};
 
 const handleTouchcancelEvent = (event) => {
   event.preventDefault();
-  console.log("cancel", event)
-}
+  console.log("cancel", event);
+};
 
 export const attachEvents = () => {
   window.addEventListener("wheel", handleWheelEvent);
@@ -138,10 +140,10 @@ export const attachEvents = () => {
   window.addEventListener("mouseup", handleMouseupEvent);
   window.addEventListener("mousemove", handleMousemoveEvent);
 
-  window.addEventListener("touchstart", handleTouchstartEvent , true);
-  window.addEventListener("touchmove", handleTouchmoveEvent , true);
-  window.addEventListener("touchend", handleTouchendEvent , true);
-  window.addEventListener("touchcancel", handleTouchcancelEvent , true);
+  window.addEventListener("touchstart", handleTouchstartEvent, true);
+  window.addEventListener("touchmove", handleTouchmoveEvent, true);
+  window.addEventListener("touchend", handleTouchendEvent, true);
+  window.addEventListener("touchcancel", handleTouchcancelEvent, true);
 };
 
 export const detachEvents = () => {
