@@ -41,6 +41,10 @@
     });
   });
 
+  const shadowBlur = () => {
+    if ($settings.shadowBlur) {return $scale} else {0}
+  }
+
   const drawBackground = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
@@ -69,7 +73,7 @@
 
   const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.6)";
-    ctx.shadowBlur = 50 * $scale;
+    ctx.shadowBlur = 50 * shadowBlur();
     ctx.fillStyle = "#EEE8AA";
     ctx.fill(map.islandsPath);
   };
@@ -78,7 +82,7 @@
   
     ctx.globalAlpha = 0.8;
     ctx.shadowColor = "darkgreen";
-    ctx.shadowBlur = 300 * $scale;
+    ctx.shadowBlur = 100 * shadowBlur();
     ctx.clip(map.islandsPath);
     ctx.fillStyle = "#228B22";
     ctx.strokeStyle = "darkgreen";
@@ -93,7 +97,7 @@
   
   ctx.globalAlpha = 0.3;
   ctx.shadowColor = "#654321";
-  ctx.shadowBlur = 200 * $scale;
+  ctx.shadowBlur = 50 * shadowBlur();
   ctx.fillStyle = "#796342";
   ctx.strokeStyle = "#796342";
   ctx.lineWidth = 2;

@@ -16,6 +16,7 @@ export const clicked = writable({ x: 0, y: 0 });
 export const settings = writable({
   showProvinces: true,
   showProvinceInfo: true,
+  shadowBlur: true
 });
 
 export const provinceSelection = writable(null);

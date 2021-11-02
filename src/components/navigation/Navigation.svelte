@@ -28,6 +28,15 @@
       };
     });
   };
+
+  const toggleShadowBlur = () => {
+    settings.update((settingsObject) => {
+      return {
+        ...settingsObject,
+        shadowBlur: !settingsObject.shadowBlur,
+      };
+    });
+  };
 </script>
 
 <div class="navigation">
@@ -36,6 +45,7 @@
   <button on:click={toggleFullScreen}>#</button>
   <button on:click={toggleProvinces}>provinces</button>
   <button on:click={toggleProvinceInfo}>info</button>
+  <button on:click={toggleShadowBlur}>Shadow Blur</button>
   <div>{$zoom} - {$scale}</div>
 </div>
 
