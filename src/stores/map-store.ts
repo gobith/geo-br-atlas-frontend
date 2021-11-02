@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 
+import polylabel from "polylabel";
+
 const map = writable(null);
 
 fetch("/map")
@@ -11,11 +13,15 @@ fetch("/map")
 export default map;
 
 const mapFor = (mapData) => {
-
   const borders = mapData.borders;
   const provinceAreas = mapData.provinceAreas.map((area) => {
-    let path = new Path2D(area.d);
-    return { ...area, path };
+    const path = new Path2D(area.d);
+    const labelPoint = polylabel(area.polygon, 1.0);
+    return {
+      ...area,
+      path,
+      labelPoint: { x: labelPoint[0], y: labelPoint[1] },
+    };
   });
   const islandAreas = mapData.islandAreas;
   const realmBorders = mapData.realmBorders;
@@ -27,24 +33,28 @@ const mapFor = (mapData) => {
 
   mapData.borders.forEach((border) => {
     bordersPath.addPath(new Path2D(border.d));
-
   });
 
   mapData.islandAreas.forEach((area) => {
     islandsPath.addPath(new Path2D(area.d));
-
   });
 
   mapData.woodAreas.forEach((area) => {
     woodsPath.addPath(new Path2D(area.d));
-
   });
 
   mapData.mountainAreas.forEach((area) => {
     mountainsPath.addPath(new Path2D(area.d));
-
   });
 
-
-  return { borders, provinceAreas, islandAreas, realmBorders, bordersPath, islandsPath , woodsPath , mountainsPath};
+  return {
+    borders,
+    provinceAreas,
+    islandAreas,
+    realmBorders,
+    bordersPath,
+    islandsPath,
+    woodsPath,
+    mountainsPath,
+  };
 };

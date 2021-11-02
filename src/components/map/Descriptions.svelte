@@ -3,6 +3,7 @@
   import { resize, scale, offset, settings } from "../../stores/world-state";
   import { provinceInfoForArea } from "../../stores/world-store";
 
+
   export let map;
 
   const drawDescriptions = () => {
@@ -50,15 +51,13 @@
     ctx.strokeStyle = "black";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = 'bold 25px calibri';
+    ctx.font = "bold 25px calibri";
     map.provinceAreas.forEach((area) => {
       const provinceInfo = provinceInfoForArea(area);
 
-      ctx.fillText(
-        provinceInfo.stats,
-        area.center.x ,
-        area.center.y + 0
-      );
+
+  
+      ctx.fillText(provinceInfo.stats, area.labelPoint.x, area.labelPoint.y);
       // ctx.strokeText(
       //   provinceInfo.name,
       //   area.center.x ,
