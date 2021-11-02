@@ -22,8 +22,9 @@ export const provinceInfoForArea = (area) => {
     return { stats: "", name: "" };
   }
 
+  //  ${loyalty[province.loyalty]}
   return {
-    stats: `${province.level}/${province.sourceRating} ${loyalty[province.loyalty]}`,
+    stats: `${province.level}/${province.sourceRating}`,
     name: province.name,
   };
 };

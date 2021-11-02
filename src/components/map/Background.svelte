@@ -72,7 +72,7 @@
   };
 
   const drawIslands = (ctx) => {
-    ctx.shadowColor = "rgba(255 , 255, 255 , 0.6)";
+    ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
     ctx.shadowBlur = 50 * shadowBlur();
     ctx.fillStyle = "#EEE8AA";
     ctx.fill(map.islandsPath);
@@ -82,7 +82,7 @@
   
     ctx.globalAlpha = 0.8;
     ctx.shadowColor = "darkgreen";
-    ctx.shadowBlur = 100 * shadowBlur();
+    ctx.shadowBlur = 50 * shadowBlur();
     ctx.clip(map.islandsPath);
     ctx.fillStyle = "#228B22";
     ctx.strokeStyle = "darkgreen";
@@ -121,6 +121,7 @@
   };
 
   const drawSelection = (ctx) => {
+    ctx.setLineDash([0, 0]);
     let area = map.provinceAreas.find((area) => {
       return area === $provinceSelection;
     });

@@ -48,24 +48,27 @@
 
   const drawProvinceInfo = (ctx) => {
     ctx.strokeStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = 'bold 25px calibri';
     map.provinceAreas.forEach((area) => {
       const provinceInfo = provinceInfoForArea(area);
 
-      const halfStatsWidth = ctx.measureText(provinceInfo.stats).width / 2;
-      const halfTextWidth = ctx.measureText(provinceInfo.name).width / 2;
-
-      // ctx.strokeText(area.id, area.center.x, area.center.y);
-
-      ctx.strokeText(
+      ctx.fillText(
         provinceInfo.stats,
-        area.center.x - halfStatsWidth,
-        area.center.y + 10
+        area.center.x ,
+        area.center.y + 0
       );
-      ctx.strokeText(
-        provinceInfo.name,
-        area.center.x - halfTextWidth,
-        area.center.y - 5
-      );
+      // ctx.strokeText(
+      //   provinceInfo.name,
+      //   area.center.x ,
+      //   area.center.y - 5
+      // );
+      // ctx.fillText(
+      //   `${area.center.x}@${area.center.y}`,
+      //   area.center.x ,
+      //   area.center.y + 20
+      // );
     });
   };
 </script>
