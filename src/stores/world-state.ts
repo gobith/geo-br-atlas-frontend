@@ -7,7 +7,7 @@ export const resize = writable({
 
 export const scale = writable(0.2);
 
-export const zoom = writable(10);
+export const zoom = writable(3);
 
 export const offset = writable({ x: 0, y: 0 });
 
@@ -20,6 +20,10 @@ export const settings = writable({
 
 export const provinceSelection = writable(null);
 
+export const resetResize = () => {
+  resize.set({ height: window.innerHeight, width: window.innerWidth });
+};
+
 let isMouseDown = false;
 let isMouseDownMove = false;
 
@@ -31,30 +35,6 @@ export const zoomOut = () => {
   privateZoomOut(window.innerWidth / 2, window.innerHeight / 2);
 };
 
-const privateZoomIn = (x, y) => {
-  scale.update((scaleNumber) => {
-    return scaleNumber * 2;
-  });
-  offset.update((offset) => {
-    return {
-      x: 2 * offset.x - x,
-      y: 2 * offset.y - y,
-    };
-  });
-};
-
-const privateZoomOut = (x, y) => {
-  scale.update((scaleNumber) => {
-    return scaleNumber / 2;
-  });
-  offset.update((offset) => {
-    return {
-      x: (offset.x + x) / 2,
-      y: (offset.y + y) / 2,
-    };
-  });
-};
-
 const handleWheelEvent = (event) => {
   if (event.wheelDelta > 0) {
     privateZoomIn(event.clientX, event.clientY);
@@ -63,9 +43,40 @@ const handleWheelEvent = (event) => {
   }
 };
 
-export const resetResize = () => {
-  resize.set({ height: window.innerHeight, width: window.innerWidth });
+const scaleIncrement = 2;
+
+const scaleIncrements = [0.05 , 0.1 , 0.2 , 0.4 , 0.8 , 1.6 , 3.2 , 6.4];
+const zoomCap = scaleIncrements.length;
+
+
+const privateZoomIn = (x, y) => {
+  
+  scale.update((scaleNumber) => {
+    return scaleNumber * scaleIncrement;
+  });
+  offset.update((offset) => {
+    return {
+      x: scaleIncrement * offset.x - x,
+      y: scaleIncrement * offset.y - y,
+    };
+  });
 };
+
+const privateZoomOut = (x, y) => {
+  scale.update((scaleNumber) => {
+    return scaleNumber / scaleIncrement;
+  });
+  offset.update((offset) => {
+    return {
+      x: (offset.x + x) / scaleIncrement,
+      y: (offset.y + y) / scaleIncrement,
+    };
+  });
+};
+
+
+
+
 
 const handleResizeEvent = (event) => {
   resetResize();
