@@ -24,11 +24,11 @@ let isMouseDown = false;
 let isMouseDownMove = false;
 
 export const zoomIn = () => {
-  privateZoomIn(window.innerWidth / 2 , window.innerHeight / 2)
+  privateZoomIn(window.innerWidth / 2, window.innerHeight / 2);
 };
 
 export const zoomOut = () => {
-  privateZoomOut(window.innerWidth / 2 , window.innerHeight / 2)
+  privateZoomOut(window.innerWidth / 2, window.innerHeight / 2);
 };
 
 const privateZoomIn = (x, y) => {
@@ -57,25 +57,9 @@ const privateZoomOut = (x, y) => {
 
 const handleWheelEvent = (event) => {
   if (event.wheelDelta > 0) {
-    scale.update((scaleNumber) => {
-      return scaleNumber * 2;
-    });
-    offset.update((offset) => {
-      return {
-        x: 2 * offset.x - event.clientX,
-        y: 2 * offset.y - event.clientY,
-      };
-    });
+    privateZoomIn(event.clientX, event.clientY);
   } else {
-    scale.update((scaleNumber) => {
-      return scaleNumber / 2;
-    });
-    offset.update((offset) => {
-      return {
-        x: (offset.x + event.clientX) / 2,
-        y: (offset.y + event.clientY) / 2,
-      };
-    });
+    privateZoomOut(event.clientX, event.clientY);
   }
 };
 
