@@ -29,6 +29,24 @@
     });
   };
 
+  const toggleRealms = () => {
+    settings.update((settingsObject) => {
+      return {
+        ...settingsObject,
+        showRealms: !settingsObject.showRealms,
+      };
+    });
+  };
+
+  const toggleRealmInfo = () => {
+    settings.update((settingsObject) => {
+      return {
+        ...settingsObject,
+        showRealmInfo: !settingsObject.showRealmInfo,
+      };
+    });
+  };
+
   const toggleShadowBlur = () => {
     settings.update((settingsObject) => {
       return {
@@ -43,8 +61,10 @@
   <button on:click={zoomIn}>+</button>
   <button on:click={zoomOut}>-</button>
   <button on:click={toggleFullScreen}>#</button>
-  <button on:click={toggleProvinces}>provinces</button>
-  <button on:click={toggleProvinceInfo}>info</button>
+  <button on:click={toggleProvinces}>Provinces</button>
+  <button on:click={toggleProvinceInfo}>Province info</button>
+  <button on:click={toggleRealms}>Realms</button>
+  <button on:click={toggleRealmInfo}>Realm info</button>
   <button on:click={toggleShadowBlur}>Shadow Blur</button>
   <div>{$zoom} - {$scale}</div>
 </div>

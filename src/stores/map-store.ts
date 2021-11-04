@@ -13,7 +13,12 @@ fetch("/map")
 export default map;
 
 const mapFor = (mapData) => {
+  
   const borders = mapData.borders;
+  const provinceBorders = mapData.provinceBorders;
+  const islandAreas = mapData.islandAreas;
+  const realmBorders = mapData.realmBorders;
+  
   const provinceAreas = mapData.provinceAreas.map((area) => {
     const path = new Path2D(area.d);
     const labelPoint = polylabel([area.polygon], 1.0);
@@ -23,19 +28,12 @@ const mapFor = (mapData) => {
       labelPoint: { x: labelPoint[0], y: labelPoint[1] },
     };
   });
-  const islandAreas = mapData.islandAreas;
-  const realmBorders = mapData.realmBorders;
 
-  const bordersPath = new Path2D();
+  const provinceBordersPath = new Path2D();
   const islandsPath = new Path2D();
   const woodsPath = new Path2D();
   const mountainsPath = new Path2D();
   const realmBordersPath = new Path2D();
-
-
-  mapData.borders.forEach((border) => {
-    bordersPath.addPath(new Path2D(border.d));
-  });
 
   mapData.islandAreas.forEach((area) => {
     islandsPath.addPath(new Path2D(area.d));
@@ -52,17 +50,22 @@ const mapFor = (mapData) => {
   realmBorders.forEach((rbs) => {
     rbs.borders.forEach((rb) => {
       const border = borders.find((b) => {return b.id === rb});
-      console.log(border);
       realmBordersPath.addPath(new Path2D(border.d));
     })
   });
 
+  provinceBorders.forEach((pb) => {
+      const border = borders.find((b) => {return b.id === pb});
+      provinceBordersPath.addPath(new Path2D(border.d));
+  });
+
   return {
     borders,
+    provinceBorders;
     provinceAreas,
     islandAreas,
     realmBorders,
-    bordersPath,
+    provinceBordersPath,
     islandsPath,
     woodsPath,
     mountainsPath,

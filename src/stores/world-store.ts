@@ -8,14 +8,20 @@ fetch("/world")
     world.set(worldData);
   });
 
+const loyalty = { High: "🙂", Average: "😐", Poor: "🙁", Rebellious: "😠" };
 
-const loyalty = {'High': '🙂' , 'Average': '😐' , 'Poor': '🙁' , 'Rebellious': '😠'}
-
-  export default world;
+export default world;
 
 export const provinceInfoForArea = (area) => {
   const province = get(world).provinces.find((province) => {
-    return province.areaId === area.id;
+    if (province.areaId) {
+      return (
+        province.areaId.x === area.center.x &&
+        province.areaId.y === area.center.y
+      );
+    } else {
+      false;
+    }
   });
 
   if (!province) {

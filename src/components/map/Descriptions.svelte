@@ -81,27 +81,6 @@
     }
   };
 
-  const drawProvinceInfoZoom9 = (ctx) => {
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = "bold 25px calibri";
-    map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
-
-      ctx.fillText(provinceInfo.stats, area.labelPoint.x, area.labelPoint.y);
-      // ctx.strokeText(
-      //   provinceInfo.name,
-      //   area.center.x ,
-      //   area.center.y - 5
-      // );
-      // ctx.fillText(
-      //   `${area.center.x}@${area.center.y}`,
-      //   area.center.x ,
-      //   area.center.y + 20
-      // );
-    });
-  };
 
   const drawProvinceInfoZoom1 = (ctx) => {};
   const drawProvinceInfoZoom2 = (ctx) => {};
@@ -173,7 +152,35 @@
       );
     });
 
-    ctx.font = "bold 16px calibri";
+    ctx.font = "bold 8px calibri";
+    map.provinceAreas.forEach((area) => {
+      const provinceInfo = provinceInfoForArea(area);
+
+      ctx.fillText(
+        `${area.center.x} @ ${area.center.y}` ,
+        area.labelPoint.x,
+        area.labelPoint.y + 8
+      );
+    });
+    
+  };
+  const drawProvinceInfoZoom7 = (ctx) => {
+    ctx.strokeStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "bold 6px calibri";
+
+    map.provinceAreas.forEach((area) => {
+      const provinceInfo = provinceInfoForArea(area);
+
+      ctx.fillText(
+        provinceInfo.name,
+        area.labelPoint.x,
+        area.labelPoint.y - 8
+      );
+    });
+
+    ctx.font = "bold 12px calibri";
     map.provinceAreas.forEach((area) => {
       const provinceInfo = provinceInfoForArea(area);
 
@@ -183,10 +190,34 @@
         area.labelPoint.y + 8
       );
     });
-    
   };
-  const drawProvinceInfoZoom7 = (ctx) => {};
-  const drawProvinceInfoZoom8 = (ctx) => {};
+  const drawProvinceInfoZoom8 = (ctx) => {
+    ctx.strokeStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "bold 6px calibri";
+
+    map.provinceAreas.forEach((area) => {
+      const provinceInfo = provinceInfoForArea(area);
+
+      ctx.fillText(
+        provinceInfo.name,
+        area.labelPoint.x,
+        area.labelPoint.y - 8
+      );
+    });
+
+    ctx.font = "bold 12px calibri";
+    map.provinceAreas.forEach((area) => {
+      const provinceInfo = provinceInfoForArea(area);
+
+      ctx.fillText(
+        provinceInfo.stats,
+        area.labelPoint.x,
+        area.labelPoint.y + 8
+      );
+    });
+  };
 </script>
 
 <canvas id="description-canvas" />

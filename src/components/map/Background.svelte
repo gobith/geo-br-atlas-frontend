@@ -65,10 +65,15 @@
     drawIslands(ctx);
     drawWoods(ctx);
     drawMountains(ctx);
-    if ($settings.showProvinces) {
+    
+    if ($settings.showRealms) {
       drawRealmBorders(ctx);
-      drawBorders(ctx);
-    }
+    };
+    
+    if ($settings.showProvinces) {
+      drawProvinceBorders(ctx); 
+    };
+    
     drawSelection(ctx);
 
     ctx.restore();
@@ -79,6 +84,7 @@
     ctx.shadowBlur = 50 * shadowBlur();
     ctx.fillStyle = "#EEE8AA";
     ctx.fill(map.islandsPath);
+    ctx.shadowBlur = 0;
   };
 
   const drawWoods = (ctx) => {
@@ -92,6 +98,7 @@
     ctx.fill(map.woodsPath);
     ctx.stroke(map.woodsPath);
     ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
   };
 
   const drawMountains = (ctx) => {
@@ -102,33 +109,30 @@
     ctx.strokeStyle = "#796342";
     ctx.lineWidth = 2;
     ctx.fill(map.mountainsPath);
-    //ctx.stroke(map.mountainsPath);
     ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
   };
 
   const drawRealmBorders = (ctx) => {
 
-    ctx.globalAlpha = 0.3;
-    ctx.strokeStyle = "#d66e31";
-    ctx.shadowColor = "#654321";
-    ctx.shadowBlur = 4 * shadowBlur();
-
-    ctx.lineWidth = 4;
+    ctx.strokeStyle = "#654321";
+    ctx.lineWidth = 2;
     ctx.stroke(map.realmBordersPath);
-
-    ctx.globalAlpha = 1;
-    
-
+    ctx.lineWidth = 4;
+    ctx.stroke(map.islandsPath);
+    ctx.shadowBlur = 0;
+   
   };
 
-  const drawBorders = (ctx) => {
+  const drawProvinceBorders = (ctx) => {
     ctx.lineWidth = 1;
     ctx.strokeStyle = "#654321";
     ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
-    ctx.stroke(map.bordersPath);
+    ctx.stroke(map.provinceBordersPath);
     ctx.setLineDash([0, 0]);
     ctx.stroke(map.islandsPath);
+    ctx.shadowBlur = 0;
   };
 
   const drawSelection = (ctx) => {
@@ -144,7 +148,10 @@
       ctx.strokeStyle = "rgba(44, 50, 134, 0.8)";
       ctx.fill(area.path);
       ctx.stroke(area.path);
-    }
+      navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
+    };
+
+    
   };
 
   const updateSelection = (point) => {
