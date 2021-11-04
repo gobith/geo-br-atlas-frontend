@@ -16,7 +16,7 @@ const mapFor = (mapData) => {
   const borders = mapData.borders;
   const provinceAreas = mapData.provinceAreas.map((area) => {
     const path = new Path2D(area.d);
-    const labelPoint = polylabel(area.polygon, 1.0);
+    const labelPoint = polylabel([area.polygon], 1.0);
     return {
       ...area,
       path,
@@ -30,6 +30,8 @@ const mapFor = (mapData) => {
   const islandsPath = new Path2D();
   const woodsPath = new Path2D();
   const mountainsPath = new Path2D();
+  const realmBordersPath = new Path2D();
+
 
   mapData.borders.forEach((border) => {
     bordersPath.addPath(new Path2D(border.d));
@@ -47,6 +49,14 @@ const mapFor = (mapData) => {
     mountainsPath.addPath(new Path2D(area.d));
   });
 
+  realmBorders.forEach((rbs) => {
+    rbs.borders.forEach((rb) => {
+      const border = borders.find((b) => {return b.id === rb});
+      console.log(border);
+      realmBordersPath.addPath(new Path2D(border.d));
+    })
+  });
+
   return {
     borders,
     provinceAreas,
@@ -56,5 +66,6 @@ const mapFor = (mapData) => {
     islandsPath,
     woodsPath,
     mountainsPath,
+    realmBordersPath,
   };
 };

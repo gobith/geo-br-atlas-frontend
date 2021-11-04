@@ -15,7 +15,6 @@
   const heightDelta = 0;
 
   onMount(() => {
-
     resize.subscribe((resize) => {
       drawBackground();
     });
@@ -42,8 +41,12 @@
   });
 
   const shadowBlur = () => {
-    if ($settings.shadowBlur) {return $scale} else {0}
-  }
+    if ($settings.shadowBlur) {
+      return $scale;
+    } else {
+      0;
+    }
+  };
 
   const drawBackground = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -59,11 +62,11 @@
 
     ctx.lineCap = "round";
 
-
     drawIslands(ctx);
     drawWoods(ctx);
     drawMountains(ctx);
     if ($settings.showProvinces) {
+      drawRealmBorders(ctx);
       drawBorders(ctx);
     }
     drawSelection(ctx);
@@ -79,7 +82,6 @@
   };
 
   const drawWoods = (ctx) => {
-  
     ctx.globalAlpha = 0.8;
     ctx.shadowColor = "darkgreen";
     ctx.shadowBlur = 50 * shadowBlur();
@@ -90,38 +92,48 @@
     ctx.fill(map.woodsPath);
     ctx.stroke(map.woodsPath);
     ctx.globalAlpha = 1;
-    
   };
 
   const drawMountains = (ctx) => {
-  
-  ctx.globalAlpha = 0.3;
-  ctx.shadowColor = "#654321";
-  ctx.shadowBlur = 50 * shadowBlur();
-  ctx.fillStyle = "#796342";
-  ctx.strokeStyle = "#796342";
-  ctx.lineWidth = 2;
-  ctx.fill(map.mountainsPath);
-  //ctx.stroke(map.mountainsPath);
-  ctx.globalAlpha = 1;
+    ctx.globalAlpha = 0.3;
+    ctx.shadowColor = "#654321";
+    ctx.shadowBlur = 50 * shadowBlur();
+    ctx.fillStyle = "#796342";
+    ctx.strokeStyle = "#796342";
+    ctx.lineWidth = 2;
+    ctx.fill(map.mountainsPath);
+    //ctx.stroke(map.mountainsPath);
+    ctx.globalAlpha = 1;
+  };
 
-  
-};
+  const drawRealmBorders = (ctx) => {
+
+    ctx.globalAlpha = 0.3;
+    ctx.strokeStyle = "#d66e31";
+    ctx.shadowColor = "#654321";
+    ctx.shadowBlur = 4 * shadowBlur();
+
+    ctx.lineWidth = 4;
+    ctx.stroke(map.realmBordersPath);
+
+    ctx.globalAlpha = 1;
+    
+
+  };
 
   const drawBorders = (ctx) => {
-    // ctx.strokeStyle = "rgba(255 , 255, 255 , 0.1)";
-    // ctx.lineWidth = 4;
-    // ctx.stroke(map.bordersPath);
-
     ctx.lineWidth = 1;
     ctx.strokeStyle = "#654321";
     ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
     ctx.stroke(map.bordersPath);
+    ctx.setLineDash([0, 0]);
+    ctx.stroke(map.islandsPath);
   };
 
   const drawSelection = (ctx) => {
     ctx.setLineDash([0, 0]);
+    ctx.shadowBlur = 0;
     let area = map.provinceAreas.find((area) => {
       return area === $provinceSelection;
     });

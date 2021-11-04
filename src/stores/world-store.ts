@@ -19,7 +19,7 @@ export const provinceInfoForArea = (area) => {
   });
 
   if (!province) {
-    return { stats: "8/2", name: "" };
+    return { stats: "8/2", name: "XXX" };
   }
 
   //  ${loyalty[province.loyalty]}
