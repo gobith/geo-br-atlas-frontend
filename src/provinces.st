@@ -683,7 +683,7 @@ at: 'South Ibnoume' put:   nil  ;
 at: 'South Marten' put:   nil  ;
 at: 'Soutmoor' put:   928 @ 2249  ;
 at: 'Sovradaloy' put:   nil  ;
-at: 'Spiderfell' put:   916 @ 2616  ;
+at: 'The Spiderfell' put:   916 @ 2616  ;
 at: 'Spiritsend' put:   1437 @ 2678  ;
 at: 'Stangajord' put:   nil  ;
 at: 'Starkhundt' put:   nil  ;
