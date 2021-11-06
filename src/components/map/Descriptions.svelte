@@ -7,7 +7,7 @@
     settings,
     zoom,
   } from "../../stores/world-state";
-  import { provinceInfoForArea } from "../../stores/world-store";
+  import { world } from "../../stores/world-store";
 
   export let map;
 
@@ -91,7 +91,7 @@
     ctx.textBaseline = "middle";
     ctx.font = "bold 25px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(area.id, area.labelPoint.x, area.labelPoint.y);
     });
@@ -104,7 +104,7 @@
     ctx.textBaseline = "middle";
     ctx.font = "bold 25px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(provinceInfo.stats, area.labelPoint.x, area.labelPoint.y);
     });
@@ -116,7 +116,7 @@
     ctx.font = "bold 12px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.name,
@@ -127,7 +127,7 @@
 
     ctx.font = "bold 16px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.stats,
@@ -143,7 +143,7 @@
     ctx.font = "bold 8px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.name,
@@ -154,7 +154,7 @@
 
     ctx.font = "bold 8px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         `${area.center.x} @ ${area.center.y}` ,
@@ -171,7 +171,7 @@
     ctx.font = "bold 6px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.name,
@@ -182,7 +182,7 @@
 
     ctx.font = "bold 12px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.stats,
@@ -198,7 +198,7 @@
     ctx.font = "bold 6px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.name,
@@ -209,7 +209,7 @@
 
     ctx.font = "bold 12px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = provinceInfoForArea(area);
+      const provinceInfo = $world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.stats,
