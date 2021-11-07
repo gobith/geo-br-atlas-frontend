@@ -6,7 +6,9 @@ export const world = writable(null);
 fetch("/world")
   .then((response) => response.json())
   .then((worldData) => {
-    world.set(new World(worldData));
+    const worldObject = new World(worldData);
+    console.log(worldObject);
+    world.set(worldObject);
   });
 
 export default world;

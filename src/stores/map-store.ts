@@ -61,7 +61,7 @@ const mapFor = (mapData) => {
 
   return {
     borders,
-    provinceBorders;
+    provinceBorders,
     provinceAreas,
     islandAreas,
     realmBorders,

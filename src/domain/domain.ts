@@ -1,10 +1,12 @@
 export class Regent {
   id: string;
   name: string;
+  domains: any;
 
   constructor(object: any) {
     this.id = object.id;
     this.name = object.name;
+    this.domains = [];
   }
 
   printString() {
@@ -16,13 +18,16 @@ export class Domain {
   id: string;
   name: string;
   gold: number;
-  owner: string;
+  owner: any;
+  provinces: any;
+  holdings: any;
 
   constructor(object: any) {
     this.id = object.id;
     this.name = object.name;
     this.gold = object.gold;
-    this.owner = object.owner;
+    this.provinces = [];
+    this.holdings = [];
   }
 
   printString() {
@@ -38,7 +43,8 @@ export class Province {
   loyalty: string;
   sourceRating: number;
   terrain: any;
-  owner: string;
+  owner: any;
+  holdings: any;
 
   constructor(object: any) {
     this.id = object.id;
@@ -48,27 +54,28 @@ export class Province {
     this.loyalty = object.loyalty;
     this.sourceRating = object.sourceRating;
     this.terrain = object.terrain;
-    this.owner = object.owner;
+    this.holdings = [];
   }
 
   printString() {
     return "Province: " + this.name;
   }
-}
 
+  addHolding(holding) {
+    this.holdings.push(holding)
+  }
+}
 export class Holding {
   id: string;
-  province: string;
+  province: any;
   level: number;
   type: string;
-  owner: string;
+  owner: any;
 
   constructor(object: any) {
     this.id = object.id;
-    this.province = object.province;
     this.level = object.level;
     this.type = object.type;
-    this.owner = object.owner;
   }
 
   printString() {
@@ -117,6 +124,26 @@ export class World {
       const object = new Holding(data);
       this.uuidToObjectMapping[object.id] = object;
       this.holdings.push(object);
+    });
+
+    worldData.domains.forEach((data) => {
+      const object = this.uuidToObjectMapping[data.id];
+      object.owner = this.uuidToObjectMapping[data.owner];
+      if (object.owner) {object.owner.domains.push(object)};
+    });
+
+    worldData.provinces.forEach((data) => {
+      const object = this.uuidToObjectMapping[data.id];
+      object.owner = this.uuidToObjectMapping[data.owner];
+      object.owner.provinces.push(object)
+    });
+
+    worldData.holdings.forEach((data) => {
+      const object = this.uuidToObjectMapping[data.id];
+      object.owner = this.uuidToObjectMapping[data.owner];
+      object.owner.holdings.push(object);
+      object.province = this.uuidToObjectMapping[data.province];
+      object.province.holdings.push(object)
     });
   }
 
