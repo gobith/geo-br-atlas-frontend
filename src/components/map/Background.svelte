@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount , onDestroy} from "svelte";
   import {
     resize,
     scale,
@@ -7,14 +7,19 @@
     clicked,
     settings,
     provinceSelection,
+    attachEvents,
+    detachEvents,
   } from "../../stores/world-state";
 
-  import woodPattern from "./wood-pattern";
-
   export let map;
+  export let world;
+
   const heightDelta = 0;
 
   onMount(() => {
+    const canvas = document.getElementById("canvas");
+    attachEvents(canvas);
+
     resize.subscribe((resize) => {
       drawBackground();
     });
@@ -38,6 +43,11 @@
     settings.subscribe((selection) => {
       drawBackground();
     });
+  });
+
+  onDestroy(() => {
+    const canvas = document.getElementById("canvas");
+    detachEvents(canvas);
   });
 
   const shadowBlur = () => {
@@ -65,15 +75,15 @@
     drawIslands(ctx);
     drawWoods(ctx);
     drawMountains(ctx);
-    
+
     if ($settings.showRealms) {
       drawRealmBorders(ctx);
-    };
-    
+    }
+
     if ($settings.showProvinces) {
-      drawProvinceBorders(ctx); 
-    };
-    
+      drawProvinceBorders(ctx);
+    }
+
     drawSelection(ctx);
 
     ctx.restore();
@@ -114,14 +124,12 @@
   };
 
   const drawRealmBorders = (ctx) => {
-
     ctx.strokeStyle = "#654321";
     ctx.lineWidth = 2;
     ctx.stroke(map.realmBordersPath);
     ctx.lineWidth = 4;
     ctx.stroke(map.islandsPath);
     ctx.shadowBlur = 0;
-   
   };
 
   const drawProvinceBorders = (ctx) => {
@@ -149,9 +157,7 @@
       ctx.fill(area.path);
       ctx.stroke(area.path);
       navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
-    };
-
-    
+    }
   };
 
   const updateSelection = (point) => {
@@ -171,6 +177,7 @@
     ctx.restore();
     provinceSelection.set(selectedProvince);
   };
+
 </script>
 
 <canvas id="canvas" />

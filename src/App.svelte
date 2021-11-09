@@ -1,22 +1,30 @@
 <script lang="ts">
+  import map from "./stores/map-store";
+  import world from "./stores/world-store";
+
   import Map from "./components/map/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
+  import Searchlist from "./components/navigation/Searchlist.svelte";
 </script>
 
-<Map />
-<Navigation />
+{#if $map}
+  {#if $world}
+    <Map map={$map}  world={$world} />
+    <Navigation />
+    <Searchlist world={$world}/>
+  {/if}
+{/if}
 
 <style>
   :global(body) {
-    
     height: 100vh;
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
     background-color: #006994;
     position: relative;
-    font-family: 'calibri';
-     }
+    font-family: "calibri";
+  }
 
   :global(table) {
     border-collapse: collapse;

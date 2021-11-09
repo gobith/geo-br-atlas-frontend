@@ -1,33 +1,36 @@
 <script lang="ts">
-  import map from "../../stores/map-store";
 
-  import world from "../../stores/world-store";
   import {
-    attachEvents,
-    detachEvents,
+   
     resetResize,
+    attachResizeEvent ,
+    detachResizeEvent
   } from "../../stores/world-state";
+
+  import { onMount, onDestroy } from "svelte";
 
   import Background from "./Background.svelte";
   import Descriptions from "./Descriptions.svelte";
-  import { onMount, onDestroy } from "svelte";
 
-  onMount(() => {
-    attachEvents();
-    resetResize();
-  });
 
-  onDestroy(() => {
-    detachEvents();
-  });
+  export let map;
+  export let world;
+
+ 
+
+onMount(() => {
+  attachResizeEvent();
+  resetResize();
+});
+
+onDestroy(() => {
+  detachResizeEvent();
+});
+
 </script>
 
-{#if $map}
-  {#if $world}
-    <Background map={$map} />
-    <Descriptions map={$map} />
-  {/if}
-{/if}
+<Background map={map}  world={world} />
+<Descriptions map={map}  world={world} />
 
 <style>
 </style>

@@ -25,6 +25,7 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
+    "@sveltejs/svelte-virtual-list": "^3.0.1",
     "@types/polylabel": "^1.0.5",
     "polylabel": "^1.1.0",
     "rollup-plugin-serve-proxy": "^1.1.4",

@@ -1,4 +1,4 @@
-import { writable , get} from "svelte/store";
+import { writable, get } from "svelte/store";
 
 export const resize = writable({
   height: window.innerHeight,
@@ -18,7 +18,7 @@ export const settings = writable({
   showProvinceInfo: true,
   showRealms: true,
   showRealmInfo: true,
-  shadowBlur: true
+  shadowBlur: true,
 });
 
 export const provinceSelection = writable(null);
@@ -46,17 +46,21 @@ const handleWheelEvent = (event) => {
   }
 };
 
-const zoomValue = () => { return get(zoom)}
+const zoomValue = () => {
+  return get(zoom);
+};
 
 const scaleIncrement = 2;
-const zoomCap = 8
-
+const zoomCap = 8;
 
 const privateZoomIn = (x, y) => {
-  
-  if (zoomValue() === zoomCap) {return};
+  if (zoomValue() === zoomCap) {
+    return;
+  }
 
-  zoom.update((zoomNumber) => {return zoomNumber + 1});
+  zoom.update((zoomNumber) => {
+    return zoomNumber + 1;
+  });
 
   scale.update((scaleNumber) => {
     return scaleNumber * scaleIncrement;
@@ -70,10 +74,13 @@ const privateZoomIn = (x, y) => {
 };
 
 const privateZoomOut = (x, y) => {
+  if (zoomValue() === 1) {
+    return;
+  }
 
-  if (zoomValue() === 1) {return};
-
-  zoom.update((zoomNumber) => {return zoomNumber - 1});
+  zoom.update((zoomNumber) => {
+    return zoomNumber - 1;
+  });
   scale.update((scaleNumber) => {
     return scaleNumber / scaleIncrement;
   });
@@ -84,10 +91,6 @@ const privateZoomOut = (x, y) => {
     };
   });
 };
-
-
-
-
 
 const handleResizeEvent = (event) => {
   resetResize();
@@ -139,28 +142,36 @@ const handleTouchcancelEvent = (event) => {
   console.log("cancel", event);
 };
 
-export const attachEvents = () => {
-  window.addEventListener("wheel", handleWheelEvent);
+export const attachResizeEvent = () => {
   window.addEventListener("resize", handleResizeEvent);
-  window.addEventListener("mousedown", handleMousedownEvent);
-  window.addEventListener("mouseup", handleMouseupEvent);
-  window.addEventListener("mousemove", handleMousemoveEvent);
-
-  window.addEventListener("touchstart", handleTouchstartEvent, true);
-  window.addEventListener("touchmove", handleTouchmoveEvent, true);
-  window.addEventListener("touchend", handleTouchendEvent, true);
-  window.addEventListener("touchcancel", handleTouchcancelEvent, true);
 };
 
-export const detachEvents = () => {
-  window.removeEventListener("wheel", handleWheelEvent);
+export const detachResizeEvent = () => {
   window.removeEventListener("resize", handleResizeEvent);
-  window.removeEventListener("mousedown", handleMousedownEvent);
-  window.removeEventListener("mouseup", handleMouseupEvent);
-  window.removeEventListener("mousemove", handleMousemoveEvent);
+};
 
-  window.removeEventListener("touchstart", handleTouchstartEvent);
-  window.removeEventListener("touchmove", handleTouchmoveEvent);
-  window.removeEventListener("touchend", handleTouchendEvent);
-  window.removeEventListener("touchcancel", handleTouchcancelEvent);
+export const attachEvents = (canvas) => {
+  canvas.addEventListener("wheel", handleWheelEvent);
+
+  canvas.addEventListener("mousedown", handleMousedownEvent);
+  canvas.addEventListener("mouseup", handleMouseupEvent);
+  canvas.addEventListener("mousemove", handleMousemoveEvent);
+
+  canvas.addEventListener("touchstart", handleTouchstartEvent, true);
+  canvas.addEventListener("touchmove", handleTouchmoveEvent, true);
+  canvas.addEventListener("touchend", handleTouchendEvent, true);
+  canvas.addEventListener("touchcancel", handleTouchcancelEvent, true);
+};
+
+export const detachEvents = (canvas) => {
+  canvas.removeEventListener("wheel", handleWheelEvent);
+  canvas.removeEventListener("resize", handleResizeEvent);
+  canvas.removeEventListener("mousedown", handleMousedownEvent);
+  canvas.removeEventListener("mouseup", handleMouseupEvent);
+  canvas.removeEventListener("mousemove", handleMousemoveEvent);
+
+  canvas.removeEventListener("touchstart", handleTouchstartEvent);
+  canvas.removeEventListener("touchmove", handleTouchmoveEvent);
+  canvas.removeEventListener("touchend", handleTouchendEvent);
+  canvas.removeEventListener("touchcancel", handleTouchcancelEvent);
 };
