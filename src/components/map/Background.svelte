@@ -152,7 +152,7 @@
 
     if (area) {
       ctx.lineWidth = 3;
-      ctx.fillStyle = "rgba(44, 50, 134, 0.1)";
+      ctx.fillStyle = "rgba(44, 50, 134, 0.8)";
       ctx.strokeStyle = "rgba(44, 50, 134, 0.8)";
       ctx.fill(area.path);
       ctx.stroke(area.path);

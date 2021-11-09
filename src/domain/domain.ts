@@ -1,21 +1,44 @@
-export class Regent {
+export class Entity {
   id: string;
+
+  constructor(object: any) {
+    this.id = object.id;
+  }
+
+  isRegent() {
+    return false;
+  }
+  isDomain() {
+    return false;
+  }
+  isProvince() {
+    return false;
+  }
+  isHolding() {
+    return false;
+  }
+}
+
+export class Regent extends Entity {
   name: string;
   domains: any;
 
   constructor(object: any) {
-    this.id = object.id;
+    super(object);
     this.name = object.name;
     this.domains = [];
   }
 
-  printString() {
-    return "Regent: " + this.name;
+  typeString() {
+    return "Regent";
+  }
+
+  isRegent() {
+    return true;
   }
 }
 
-export class Domain {
-  id: string;
+export class Domain extends Entity {
   name: string;
   gold: number;
   owner: any;
@@ -23,20 +46,23 @@ export class Domain {
   holdings: any;
 
   constructor(object: any) {
-    this.id = object.id;
+    super(object);
     this.name = object.name;
     this.gold = object.gold;
     this.provinces = [];
     this.holdings = [];
   }
 
-  printString() {
-    return "Domain: " + this.name;
+  typeString() {
+    return "Domain";
+  }
+
+  isDomain() {
+    return true;
   }
 }
 
-export class Province {
-  id: string;
+export class Province extends Entity {
   areaId: any;
   name: string;
   level: number;
@@ -47,7 +73,7 @@ export class Province {
   holdings: any;
 
   constructor(object: any) {
-    this.id = object.id;
+    super(object);
     this.areaId = object.areaId;
     this.name = object.name;
     this.level = object.level;
@@ -57,35 +83,40 @@ export class Province {
     this.holdings = [];
   }
 
-  printString() {
-    return "Province: " + this.name;
+  typeString() {
+    return "Province";
   }
 
-  addHolding(holding) {
-    this.holdings.push(holding)
+  isProvince() {
+    return true;
   }
+
+  stats() {return `${this.level}/${this.sourceRating}`}
 }
-export class Holding {
-  id: string;
+export class Holding extends Entity {
   province: any;
   level: number;
   type: string;
   owner: any;
 
   constructor(object: any) {
-    this.id = object.id;
+    super(object);
     this.level = object.level;
     this.type = object.type;
   }
 
-  printString() {
-    return "Holding: " + this.type + " / " + this.level;
+  typeString() {
+    return "Holding";
+  }
+
+  isHolding() {
+    return true;
   }
 }
 
 export class World {
   uuidToObjectMapping: any;
-  nameToObjectMapping: any;
+  namedEntities: any;
   regents: any;
   domains: any;
   provinces: any;
@@ -93,7 +124,7 @@ export class World {
 
   constructor(worldData: any) {
     this.uuidToObjectMapping = {};
-    this.nameToObjectMapping = {};
+    this.namedEntities = [];
     this.regents = [];
     this.domains = [];
     this.provinces = [];
@@ -102,21 +133,21 @@ export class World {
     worldData.regents.forEach((data) => {
       const object = new Regent(data);
       this.uuidToObjectMapping[object.id] = object;
-      this.nameToObjectMapping[object.name] = object;
+      this.namedEntities.push(object);
       this.regents.push(object);
     });
 
     worldData.domains.forEach((data) => {
       const object = new Domain(data);
       this.uuidToObjectMapping[object.id] = object;
-      this.nameToObjectMapping[object.name] = object;
+      this.namedEntities.push(object);
       this.domains.push(object);
     });
 
     worldData.provinces.forEach((data) => {
       const object = new Province(data);
       this.uuidToObjectMapping[object.id] = object;
-      this.nameToObjectMapping[object.name] = object;
+      this.namedEntities.push(object);
       this.provinces.push(object);
     });
 
@@ -129,13 +160,15 @@ export class World {
     worldData.domains.forEach((data) => {
       const object = this.uuidToObjectMapping[data.id];
       object.owner = this.uuidToObjectMapping[data.owner];
-      if (object.owner) {object.owner.domains.push(object)};
+      if (object.owner) {
+        object.owner.domains.push(object);
+      }
     });
 
     worldData.provinces.forEach((data) => {
       const object = this.uuidToObjectMapping[data.id];
       object.owner = this.uuidToObjectMapping[data.owner];
-      object.owner.provinces.push(object)
+      object.owner.provinces.push(object);
     });
 
     worldData.holdings.forEach((data) => {
@@ -143,7 +176,19 @@ export class World {
       object.owner = this.uuidToObjectMapping[data.owner];
       object.owner.holdings.push(object);
       object.province = this.uuidToObjectMapping[data.province];
-      object.province.holdings.push(object)
+      object.province.holdings.push(object);
+    });
+
+    this.namedEntities.sort(function (a, b) {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
     });
   }
 

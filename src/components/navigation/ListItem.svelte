@@ -1,40 +1,46 @@
 <script lang="ts">
-	export let name;
-	
-const clicked = () => {
-	console.log("clicked" , name)
-}
+
+  import RegentItem from "./RegentItem.svelte";
+  import DomainItem from "./DomainItem.svelte";
+  import ProvinceItem from "./ProvinceItem.svelte";
+
+  export let object;
+
+  const component = {
+    Regent: RegentItem,
+    Domain: DomainItem,
+    Province: ProvinceItem,
+  }[object.typeString()];
+
 
 </script>
 
-<div class='card' on:click="{clicked}">
-	<h2>{name}</h2>
-	
+<div class="card" >
+  <svelte:component this={component} object={object}/>
 </div>
 
 <style>
-	.card {
-		position: relative;
-		margin: 0.5em;
-		padding: 10px;
-		border: 1px solid #eee;
-		border-radius: 4px;
-		box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-		min-height: 5em;
-        width: 200px;
-		
-	}
+  .card {
+    position: relative;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: 10px;
+    border: 1px solid #cd853f;
+    /* border-radius: 4px; */
+    /* box-shadow: 2px 2px 4px 	#CD853F; */
+    /* min-height: 3em; */
+    width: 250px;
+    background-color: #eeebe3;
+  }
 
-	.card::after {
-		clear: both;
-		display: block;
-	}
+  .card:hover {
+    outline: 2px solid #cd853f;
+  }
 
-	h2 {
-		margin: 0 0 0.5em 0;
-		font-size: 16px;
-		color: "blue";
-        background-color: "white";
-	}
-
+  .card::after {
+    clear: both;
+    display: block;
+  }
 </style>

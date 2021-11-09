@@ -62,10 +62,10 @@
         drawProvinceInfoZoom2(ctx);
         break;
       case 3:
-        drawProvinceInfoZoom3(ctx);
+        drawProvinceInfoZoom4(ctx);
         break;
       case 4:
-        drawProvinceInfoZoom3(ctx);
+        drawProvinceInfoZoom4(ctx);
         break;
       case 5:
         drawProvinceInfoZoom5(ctx);
@@ -110,6 +110,7 @@
       ctx.fillText(provinceInfo.stats, area.labelPoint.x, area.labelPoint.y);
     });
   };
+
   const drawProvinceInfoZoom5 = (ctx) => {
     ctx.strokeStyle = "black";
     ctx.textAlign = "center";
