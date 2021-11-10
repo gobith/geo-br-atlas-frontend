@@ -1,16 +1,44 @@
 <script lang="ts">
-  import VirtualList from "@sveltejs/svelte-virtual-list";
+
+  import VirtualList from 'svelte-tiny-virtual-list';
 
   import ListItem from "./ListItem.svelte";
 
+  import { resize , selection } from "../../stores/world-state";
+
   export let world;
+
+  let data = world.namedEntities;
+  let scrollIndex = 1;
+
+  selection.subscribe((sel) => {
+    scrollIndex = data.indexOf(sel)
+  })
+
+
 
 </script>
 
 <div>
-  <VirtualList items={world.namedEntities} let:item>
+
+  <VirtualList
+    width="300px"
+    height={$resize.height - 20}
+    itemCount={data.length}
+    itemSize={54}
+    scrollToIndex={scrollIndex}
+    scrollToAlignment="auto">
+    
+  <div slot="item" let:index let:style {style}>
+    <ListItem object={data[index]} />
+  </div>
+</VirtualList>
+
+
+
+  <!-- <VirtualList items={} let:item>
     <ListItem object={item} />
-  </VirtualList>
+  </VirtualList> -->
 </div>
 
 <style>
@@ -18,15 +46,8 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    
-    /* width: 295px; */
-    height: calc(100vh - 20px);
-    /* background-color: rgba(24, 26, 24, 0.8); */
-    /* margin: 10px; */
-    /* border-radius: 4px; */
+    height: calc(100vh - 20px); 
     border: 1px solid #cd853f; 
-
-     /* box-shadow: 2px 2px 4px 	#CD853F; */
   }
 
   /* :global(svelte-virtual-list-viewport) {
