@@ -12,7 +12,7 @@
   } from "../../stores/world-state";
 
   export let map;
-  export let world;
+
 
   const heightDelta = 0;
 
