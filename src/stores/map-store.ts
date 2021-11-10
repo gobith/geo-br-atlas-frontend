@@ -1,4 +1,5 @@
-import { writable } from "svelte/store";
+import { writable , get } from "svelte/store";
+import world from "./world-store";
 
 import polylabel from "polylabel";
 
@@ -13,20 +14,30 @@ fetch("/map")
 export default map;
 
 const mapFor = (mapData) => {
-  
+
+  const uuidToObjectMapping = get(world).uuidToObjectMapping;
+ 
   const borders = mapData.borders;
   const provinceBorders = mapData.provinceBorders;
   const islandAreas = mapData.islandAreas;
   const realmBorders = mapData.realmBorders;
-  
-  const provinceAreas = mapData.provinceAreas.map((area) => {
-    const path = new Path2D(area.d);
-    const labelPoint = polylabel([area.polygon], 1.0);
-    return {
-      ...area,
+
+  const provinceAreas = mapData.provinceAreas.map((areaData) => {
+    const path = new Path2D(areaData.d);
+    const labelPoint = polylabel([areaData.polygon], 1.0);
+    const province = uuidToObjectMapping[areaData.province];
+    
+    const area = {
+      ...areaData,
       path,
+      province,
       labelPoint: { x: labelPoint[0], y: labelPoint[1] },
     };
+
+    if (province) {province.area = area};
+
+    return area
+
   });
 
   const provinceBordersPath = new Path2D();
@@ -49,14 +60,18 @@ const mapFor = (mapData) => {
 
   realmBorders.forEach((rbs) => {
     rbs.borders.forEach((rb) => {
-      const border = borders.find((b) => {return b.id === rb});
+      const border = borders.find((b) => {
+        return b.id === rb;
+      });
       realmBordersPath.addPath(new Path2D(border.d));
-    })
+    });
   });
 
   provinceBorders.forEach((pb) => {
-      const border = borders.find((b) => {return b.id === pb});
-      provinceBordersPath.addPath(new Path2D(border.d));
+    const border = borders.find((b) => {
+      return b.id === pb;
+    });
+    provinceBordersPath.addPath(new Path2D(border.d));
   });
 
   return {

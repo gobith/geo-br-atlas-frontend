@@ -71,6 +71,7 @@ export class Province extends Entity {
   terrain: any;
   owner: any;
   holdings: any;
+  area: any;
 
   constructor(object: any) {
     super(object);

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount , onDestroy} from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import {
     resize,
     scale,
@@ -33,7 +33,7 @@
     });
 
     clicked.subscribe((point) => {
-      updateSelection(point);
+      pointClicked(point);
     });
 
     selection.subscribe((sel) => {
@@ -146,9 +146,9 @@
   const drawSelection = (ctx) => {
     ctx.setLineDash([0, 0]);
     ctx.shadowBlur = 0;
-    let area = map.provinceAreas.find((area) => {
-      return area === $selection;
-    });
+    let area;
+
+    if ($selection) {area = $selection.area};
 
     if (area) {
       ctx.lineWidth = 3;
@@ -160,8 +160,8 @@
     }
   };
 
-  const updateSelection = (point) => {
-    let selectedProvince;
+  const pointClicked = (point) => {
+    let selectedArea;
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
 
@@ -171,13 +171,17 @@
 
     map.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y - heightDelta)) {
-        selectedProvince = area;
+        selectedArea = area;
       }
     });
     ctx.restore();
-    selection.set(selectedProvince);
-  };
 
+    if (selectedArea) {
+      selection.set(selectedArea.province);
+    } else {
+      selection.set(selectedArea);
+    }
+  };
 </script>
 
 <canvas id="canvas" />

@@ -1,5 +1,5 @@
 import { writable, get } from "svelte/store";
-import { Regent, Domain, Province, Holding , World} from "../domain/domain";
+import { World} from "../domain/domain";
 
 export const world = writable(null);
 

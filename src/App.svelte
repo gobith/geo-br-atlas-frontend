@@ -1,6 +1,6 @@
 <script lang="ts">
-  import map from "./stores/map-store";
   import world from "./stores/world-store";
+  import map from "./stores/map-store";
 
   import Map from "./components/map/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
