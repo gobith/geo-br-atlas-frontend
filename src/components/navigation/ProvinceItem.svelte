@@ -1,6 +1,6 @@
 <script lang="ts">
   import map from "../../stores/map-store";
-  import { provinceSelection } from "../../stores/world-state";
+  import { selection } from "../../stores/world-state";
 
   export let object;
 
@@ -15,7 +15,7 @@
       }
     });
 
-    provinceSelection.set(area);
+    selection.set(area);
   };
 </script>
 

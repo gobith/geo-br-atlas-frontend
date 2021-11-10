@@ -6,7 +6,7 @@
     offset,
     clicked,
     settings,
-    provinceSelection,
+    selection,
     attachEvents,
     detachEvents,
   } from "../../stores/world-state";
@@ -36,11 +36,11 @@
       updateSelection(point);
     });
 
-    provinceSelection.subscribe((selection) => {
+    selection.subscribe((sel) => {
       drawBackground();
     });
 
-    settings.subscribe((selection) => {
+    settings.subscribe((sel) => {
       drawBackground();
     });
   });
@@ -147,7 +147,7 @@
     ctx.setLineDash([0, 0]);
     ctx.shadowBlur = 0;
     let area = map.provinceAreas.find((area) => {
-      return area === $provinceSelection;
+      return area === $selection;
     });
 
     if (area) {
@@ -175,7 +175,7 @@
       }
     });
     ctx.restore();
-    provinceSelection.set(selectedProvince);
+    selection.set(selectedProvince);
   };
 
 </script>

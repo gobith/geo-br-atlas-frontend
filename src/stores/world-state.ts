@@ -21,7 +21,7 @@ export const settings = writable({
   shadowBlur: true,
 });
 
-export const provinceSelection = writable(null);
+export const selection = writable(null);
 
 export const resetResize = () => {
   resize.set({ height: window.innerHeight, width: window.innerWidth });
