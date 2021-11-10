@@ -22,21 +22,14 @@
 <style>
   .card {
     position: relative;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-left: 8px;
-    margin-right: 8px;
-    padding: 10px;
-    border: 1px solid #cd853f;
-    /* border-radius: 4px; */
-    /* box-shadow: 2px 2px 4px 	#CD853F; */
-    /* min-height: 3em; */
-    width: 250px;
+    padding: 14px;
+    border-bottom: 1px solid rgba(151, 103, 56 , 1);
+    width: 260px;
     background-color: #eeebe3;
   }
 
   .card:hover {
-    outline: 2px solid #cd853f;
+   background-color: rgba(151, 103, 56 , 1);
   }
 
   .card::after {

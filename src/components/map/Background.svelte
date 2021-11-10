@@ -152,8 +152,8 @@
 
     if (area) {
       ctx.lineWidth = 3;
-      ctx.fillStyle = "rgba(44, 50, 134, 0.8)";
-      ctx.strokeStyle = "rgba(44, 50, 134, 0.8)";
+      ctx.fillStyle = "rgba(151, 103, 56 , 0.9);";
+      ctx.strokeStyle = "rgba(151, 103, 56 , 0.9);";
       ctx.fill(area.path);
       ctx.stroke(area.path);
       navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);

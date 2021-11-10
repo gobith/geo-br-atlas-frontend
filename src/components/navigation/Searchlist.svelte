@@ -18,13 +18,13 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    min-height: 200px;
-    width: 295px;
+    
+    /* width: 295px; */
     height: calc(100vh - 40px);
-    background-color: rgba(24, 26, 24, 0.8);
-    margin: 10px;
-    border-radius: 4px;
-    border: 3px solid #cd853f;
+    /* background-color: rgba(24, 26, 24, 0.8); */
+    /* margin: 10px; */
+    /* border-radius: 4px; */
+    border: 1px solid #cd853f; 
 
      /* box-shadow: 2px 2px 4px 	#CD853F; */
   }
