@@ -40,6 +40,16 @@ export class Regent extends Entity {
   isRegent() {
     return true;
   }
+
+  areas() {
+    const areas = [];
+
+    this.domains.forEach((domain) => {
+      domain.addToAreas(areas);
+    });
+
+    return areas;
+  }
 }
 
 export class Domain extends Entity {
@@ -63,6 +73,18 @@ export class Domain extends Entity {
 
   isDomain() {
     return true;
+  }
+
+  areas() {
+    const areas = [];
+    this.addToAreas(areas);
+    return areas;
+  }
+
+  addToAreas(areaCollection) {
+    this.provinces.forEach((province) => {
+      province.addToAreas(areaCollection);
+    });
   }
 }
 
@@ -101,10 +123,14 @@ export class Province extends Entity {
   }
 
   areas() {
+    const areas = [];
+    this.addToAreas(areas);
+    return areas;
+  }
+
+  addToAreas(areaCollection) {
     if (this.area) {
-      return [this.area];
-    } else {
-      return [];
+      areaCollection.push(this.area);
     }
   }
 }
