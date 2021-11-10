@@ -17,6 +17,10 @@ export class Entity {
   isHolding() {
     return false;
   }
+
+  areas() {
+    return [];
+  }
 }
 
 export class Regent extends Entity {
@@ -92,7 +96,17 @@ export class Province extends Entity {
     return true;
   }
 
-  stats() {return `${this.level}/${this.sourceRating}`}
+  stats() {
+    return `${this.level}/${this.sourceRating}`;
+  }
+
+  areas() {
+    if (this.area) {
+      return [this.area];
+    } else {
+      return [];
+    }
+  }
 }
 export class Holding extends Entity {
   province: any;

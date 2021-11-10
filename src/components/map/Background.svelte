@@ -144,20 +144,22 @@
   };
 
   const drawSelection = (ctx) => {
+    if (!$selection) {
+      return;
+    }
+
     ctx.setLineDash([0, 0]);
     ctx.shadowBlur = 0;
-    let area;
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "rgba(151, 103, 56 , 0.9);";
+    ctx.strokeStyle = "rgba(151, 103, 56 , 0.9);";
 
-    if ($selection) {area = $selection.area};
-
-    if (area) {
-      ctx.lineWidth = 3;
-      ctx.fillStyle = "rgba(151, 103, 56 , 0.9);";
-      ctx.strokeStyle = "rgba(151, 103, 56 , 0.9);";
+    $selection.areas().forEach((area) => {
       ctx.fill(area.path);
       ctx.stroke(area.path);
+
       navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
-    }
+    });
   };
 
   const pointClicked = (point) => {
