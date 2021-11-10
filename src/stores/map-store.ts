@@ -1,22 +1,33 @@
-import { writable , get } from "svelte/store";
+import { writable, get } from "svelte/store";
 import world from "./world-store";
 
 import polylabel from "polylabel";
 
 const map = writable(null);
 
-fetch("/map")
-  .then((response) => response.json())
-  .then((mapData) => {
-    map.set(mapFor(mapData));
-  });
+let doneFetch = false;
+world.subscribe((worldData) => {
+  if (!worldData) {
+    return;
+  }
+
+  if (doneFetch) {
+    return;
+  }
+  fetch("/map")
+    .then((response) => response.json())
+    .then((mapData) => {
+      map.set(mapFor(mapData));
+    });
+
+  doneFetch = true;
+});
 
 export default map;
 
 const mapFor = (mapData) => {
-
   const uuidToObjectMapping = get(world).uuidToObjectMapping;
- 
+
   const borders = mapData.borders;
   const provinceBorders = mapData.provinceBorders;
   const islandAreas = mapData.islandAreas;
@@ -26,7 +37,7 @@ const mapFor = (mapData) => {
     const path = new Path2D(areaData.d);
     const labelPoint = polylabel([areaData.polygon], 1.0);
     const province = uuidToObjectMapping[areaData.province];
-    
+
     const area = {
       ...areaData,
       path,
@@ -34,10 +45,11 @@ const mapFor = (mapData) => {
       labelPoint: { x: labelPoint[0], y: labelPoint[1] },
     };
 
-    if (province) {province.area = area};
+    if (province) {
+      province.area = area;
+    }
 
-    return area
-
+    return area;
   });
 
   const provinceBordersPath = new Path2D();
