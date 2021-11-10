@@ -20,7 +20,7 @@
     left: 10px;
     
     /* width: 295px; */
-    height: calc(100vh - 40px);
+    height: calc(100vh - 20px);
     /* background-color: rgba(24, 26, 24, 0.8); */
     /* margin: 10px; */
     /* border-radius: 4px; */

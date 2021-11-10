@@ -4,22 +4,10 @@
 
   export let object;
 
-  const clicked = () => {
-    const area = $map.provinceAreas.find((area) => {
-      if (object.areaId) {
-        return (
-          object.areaId.x === area.center.x && object.areaId.y === area.center.y
-        );
-      } else {
-        return false;
-      }
-    });
-
-    selection.set(area);
-  };
+ 
 </script>
 
-<div on:click={clicked}>
+<div>
   <div class="title">
     <h2>{object.name}</h2>
     <h2>{object.stats()}</h2>
