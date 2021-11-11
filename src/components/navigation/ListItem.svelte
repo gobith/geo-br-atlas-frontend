@@ -9,6 +9,7 @@
 
   const component = {
     Regent: RegentItem,
+    Realm: DomainItem,
     Domain: DomainItem,
     Province: ProvinceItem,
   }[object.typeString()];

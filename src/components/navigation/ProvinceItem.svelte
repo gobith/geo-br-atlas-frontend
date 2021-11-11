@@ -1,11 +1,14 @@
 <script lang="ts">
-  import map from "../../stores/map-store";
   import { selection } from "../../stores/world-state";
 
   export let object;
 
  const selectRegent = () => {
    selection.set(object.regent())
+ }
+
+ const selectDomain = () => {
+   selection.set(object.domain())
  }
 </script>
 
@@ -15,8 +18,8 @@
     <h2>{object.stats()}</h2>
     <h3>{object.typeString()}</h3>
     <div></div>
-    <div></div>
     <button on:click={selectRegent}>Regent</button>
+    <button on:click={selectDomain}>Domain</button>
   </div>
 </div>
 

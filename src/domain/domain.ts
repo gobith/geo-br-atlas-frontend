@@ -68,7 +68,11 @@ export class Domain extends Entity {
   }
 
   typeString() {
-    return "Domain";
+    if (this.hasProvinces()) {
+      return "Realm";
+    } else {
+      return "Domain";
+    }
   }
 
   isDomain() {
@@ -88,7 +92,11 @@ export class Domain extends Entity {
   }
 
   regent() {
-    return this.owner
+    return this.owner;
+  }
+
+  hasProvinces() {
+    return this.provinces.length > 0;
   }
 }
 
@@ -144,6 +152,10 @@ export class Province extends Entity {
     } else {
       return null;
     }
+  }
+
+  domain() {
+    return this.owner
   }
 }
 export class Holding extends Entity {

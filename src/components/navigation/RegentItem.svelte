@@ -11,6 +11,7 @@
   
   <style>
     .title {
+      padding: 14px; 
       display: grid;
       grid-template-columns: 4fr 1fr;
     }
