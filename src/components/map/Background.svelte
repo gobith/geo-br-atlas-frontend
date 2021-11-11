@@ -152,11 +152,11 @@
     ctx.shadowBlur = 0;
     ctx.lineWidth = 3;
     ctx.fillStyle = "rgba(151, 103, 56 , 0.8)";
-    ctx.strokeStyle = "rgba(151, 103, 56 , 0.9)";
+    ctx.strokeStyle = "rgba(151, 103, 56 , 0.2)";
 
     $selection.areas().forEach((area) => {
       ctx.fill(area.path);
-      // ctx.stroke(area.path);
+      ctx.stroke(area.path);
 
       navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
     });

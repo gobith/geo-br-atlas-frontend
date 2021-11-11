@@ -22,10 +22,10 @@
 <div>
 
   <VirtualList
-    width="300px"
+    width="280px"
     height={$resize.height - 20}
     itemCount={data.length}
-    itemSize={54}
+    itemSize={94}
     scrollToIndex={scrollIndex}
     scrollToAlignment="auto">
     

@@ -25,11 +25,11 @@
 <style>
   .card {
     position: relative;
-    padding: 14px;
     border-bottom: 1px solid rgba(151, 103, 56, 0.9);
     width: 260px;
     background-color: rgba(238, 235, 227, 0.9);
     cursor: pointer;
+    height: 100%
   }
 
   .card:hover {

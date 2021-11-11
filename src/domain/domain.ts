@@ -86,6 +86,10 @@ export class Domain extends Entity {
       province.addToAreas(areaCollection);
     });
   }
+
+  regent() {
+    return this.owner
+  }
 }
 
 export class Province extends Entity {
@@ -131,6 +135,14 @@ export class Province extends Entity {
   addToAreas(areaCollection) {
     if (this.area) {
       areaCollection.push(this.area);
+    }
+  }
+
+  regent() {
+    if (this.owner) {
+      return this.owner.regent();
+    } else {
+      return null;
     }
   }
 }

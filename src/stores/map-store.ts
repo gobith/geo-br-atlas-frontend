@@ -86,6 +86,8 @@ const mapFor = (mapData) => {
     provinceBordersPath.addPath(new Path2D(border.d));
   });
 
+  console.log(borders[0]);
+
   return {
     borders,
     provinceBorders,

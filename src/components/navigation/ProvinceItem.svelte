@@ -4,7 +4,9 @@
 
   export let object;
 
- 
+ const selectRegent = () => {
+   selection.set(object.regent())
+ }
 </script>
 
 <div>
@@ -12,11 +14,15 @@
     <h2>{object.name}</h2>
     <h2>{object.stats()}</h2>
     <h3>{object.typeString()}</h3>
+    <div></div>
+    <div></div>
+    <button on:click={selectRegent}>Regent</button>
   </div>
 </div>
 
 <style>
   .title {
+    padding: 14px; 
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
   }
