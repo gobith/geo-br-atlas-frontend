@@ -92,7 +92,7 @@
     ctx.textBaseline = "middle";
     ctx.font = "bold 25px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(area.id, area.labelPoint.x, area.labelPoint.y);
     });
@@ -100,26 +100,28 @@
   };
 
   const drawProvinceInfoZoom4 = (ctx) => {
+    
     ctx.strokeStyle = "black";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.font = "bold 25px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForAreaTwo(area);
 
       ctx.fillText(provinceInfo.stats, area.labelPoint.x, area.labelPoint.y);
     });
   };
 
   const drawProvinceInfoZoom5 = (ctx) => {
+   
     ctx.strokeStyle = "black";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.font = "bold 12px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
-
+      let provinceInfo = world.provinceInfoForArea(area);
+     
       ctx.fillText(
         provinceInfo.name,
         area.labelPoint.x,
@@ -129,7 +131,7 @@
 
     ctx.font = "bold 16px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.stats,
@@ -145,7 +147,7 @@
     ctx.font = "bold 8px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.name,
@@ -156,7 +158,7 @@
 
     ctx.font = "bold 8px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(
         `${area.center.x} @ ${area.center.y}` ,
@@ -173,7 +175,7 @@
     ctx.font = "bold 6px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.name,
@@ -184,7 +186,7 @@
 
     ctx.font = "bold 12px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.stats,
@@ -200,7 +202,7 @@
     ctx.font = "bold 6px calibri";
 
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.name,
@@ -211,7 +213,7 @@
 
     ctx.font = "bold 12px calibri";
     map.provinceAreas.forEach((area) => {
-      const provinceInfo = world.provinceInfoForArea(area);
+      let provinceInfo = world.provinceInfoForArea(area);
 
       ctx.fillText(
         provinceInfo.stats,

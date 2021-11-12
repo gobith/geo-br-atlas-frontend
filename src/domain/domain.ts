@@ -12,9 +12,8 @@ export class Border {
     this.a = data.a;
     this.b = data.b;
     this.path = new Path2D(data.d);
-    this.reversePath = new Path2D(utils.reverse(data.d))
+    this.reversePath = new Path2D(utils.reverse(data.d));
   }
-
 }
 
 export class Entity {
@@ -292,7 +291,7 @@ export class World {
     });
 
     if (!province) {
-      area.provinceInfo = { stats: "8/2", name: "XXX" };
+      area.provinceInfo = { stats: "XXX", name: "XXX" };
     } else {
       area.provinceInfo = {
         stats: `${province.level}/${province.sourceRating}`,
@@ -301,5 +300,34 @@ export class World {
     }
 
     return area.provinceInfo;
+  }
+
+  provinceInfoForAreaTwo(area) {
+    const province = this.provinces.find((province) => {
+      if (province.areaId) {
+        return (
+          province.areaId.x === area.center.x &&
+          province.areaId.y === area.center.y
+        );
+      } else {
+        return false;
+      }
+    });
+    let provinceInfo;
+    if (!province) {
+      provinceInfo = { stats: "XXX", name: "XXX" };
+    } else {
+      provinceInfo = {
+        stats: `${province.level}/${province.sourceRating}`,
+        name: province.name,
+      };
+
+      provinceInfo = {
+        stats: "",
+        name: "",
+      };
+    }
+
+    return provinceInfo;
   }
 }

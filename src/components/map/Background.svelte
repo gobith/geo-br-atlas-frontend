@@ -154,12 +154,14 @@
     ctx.fillStyle = "rgba(151, 103, 56 , 0.8)";
     ctx.strokeStyle = "rgba(151, 103, 56 , 0.2)";
 
-    $selection.areas().forEach((area) => {
+
+   // ctx.fill($selection.path);
+   // ctx.stroke($selection.path);
+
+     $selection.areas().forEach((area) => {
       ctx.fill(area.path);
       ctx.stroke(area.path);
-
-      navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
-    });
+     });
   };
 
   const pointClicked = (point) => {
@@ -174,6 +176,7 @@
     map.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y - heightDelta)) {
         selectedArea = area;
+        navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
       }
     });
     ctx.restore();
