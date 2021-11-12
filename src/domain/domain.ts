@@ -1,3 +1,22 @@
+import utils from "svg-path-reverse";
+
+export class Border {
+  id: number;
+  a: any;
+  b: any;
+  path: Path2D;
+  reversePath: Path2D;
+
+  constructor(data: any) {
+    this.id = data.id;
+    this.a = data.a;
+    this.b = data.b;
+    this.path = new Path2D(data.d);
+    this.reversePath = new Path2D(utils.reverse(data.d))
+  }
+
+}
+
 export class Entity {
   id: string;
 
@@ -155,7 +174,7 @@ export class Province extends Entity {
   }
 
   domain() {
-    return this.owner
+    return this.owner;
   }
 }
 export class Holding extends Entity {

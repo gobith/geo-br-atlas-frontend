@@ -7,7 +7,7 @@ fetch("/world")
   .then((response) => response.json())
   .then((worldData) => {
     const worldObject = new World(worldData);
-    console.log(worldObject);
+    // console.log(worldObject);
     world.set(worldObject);
   });
 

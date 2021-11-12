@@ -1,4 +1,5 @@
 <script lang="ts">
+  import session from "./stores/session-store";
   import world from "./stores/world-store";
   import map from "./stores/map-store";
 
