@@ -127,7 +127,7 @@ export class Province extends Entity {
   terrain: any;
   owner: any;
   holdings: any;
-  area: any;
+  provinceAreas: any;
 
   constructor(object: any) {
     super(object);
@@ -138,6 +138,7 @@ export class Province extends Entity {
     this.sourceRating = object.sourceRating;
     this.terrain = object.terrain;
     this.holdings = [];
+    this.provinceAreas = [];
   }
 
   typeString() {
@@ -153,15 +154,12 @@ export class Province extends Entity {
   }
 
   areas() {
-    const areas = [];
-    this.addToAreas(areas);
-    return areas;
+    return this.provinceAreas
   }
 
   addToAreas(areaCollection) {
-    if (this.area) {
-      areaCollection.push(this.area);
-    }
+    this.provinceAreas.forEach((area) => {
+      areaCollection.push(area)})
   }
 
   regent() {
@@ -276,26 +274,18 @@ export class World {
   }
 
   provinceInfoForArea(area) {
+  
     if (area.provinceInfo) {
       return area.provinceInfo;
     }
-    const province = this.provinces.find((province) => {
-      if (province.areaId) {
-        return (
-          province.areaId.x === area.center.x &&
-          province.areaId.y === area.center.y
-        );
-      } else {
-        return false;
-      }
-    });
+  
 
-    if (!province) {
+    if (!area.province) {
       area.provinceInfo = { stats: "XXX", name: "XXX" };
     } else {
       area.provinceInfo = {
-        stats: `${province.level}/${province.sourceRating}`,
-        name: province.name,
+        stats: `${area.province.level}/${area.province.sourceRating}`,
+        name: area.province.name,
       };
     }
 
@@ -303,23 +293,14 @@ export class World {
   }
 
   provinceInfoForAreaTwo(area) {
-    const province = this.provinces.find((province) => {
-      if (province.areaId) {
-        return (
-          province.areaId.x === area.center.x &&
-          province.areaId.y === area.center.y
-        );
-      } else {
-        return false;
-      }
-    });
+ 
     let provinceInfo;
-    if (!province) {
+    if (!area.province) {
       provinceInfo = { stats: "XXX", name: "XXX" };
     } else {
       provinceInfo = {
-        stats: `${province.level}/${province.sourceRating}`,
-        name: province.name,
+        stats: `${area.province.level}/${area.province.sourceRating}`,
+        name: area.province.name,
       };
 
       provinceInfo = {

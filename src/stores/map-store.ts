@@ -46,7 +46,7 @@ const mapFor = (mapData) => {
     };
 
     if (province) {
-      province.area = area;
+      province.provinceAreas.push(area);
     }
 
     return area;
