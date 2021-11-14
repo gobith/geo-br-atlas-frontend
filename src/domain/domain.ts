@@ -10,31 +10,42 @@ export class Node {
   }
 
   borderA(border) {
-    this.pathToNodeMapping.set(border.b, border.d);
+    this.pathToNodeMapping.set(border.b, {
+      border: border,
+      direction: "forward",
+    });
   }
 
   borderB(border) {
-    this.pathToNodeMapping.set(border.a, border.reverseD());
+    this.pathToNodeMapping.set(border.a, {
+      border: border,
+      direction: "reverse",
+    });
   }
 
-  initialFillPath(path, leftOver, nodes) {
+  initialFillPath(array, leftOver, nodes) {
     leftOver.delete(this.id);
     const [nextNodeId] = this.pathToNodeMapping.keys();
-    path.addPath(new Path2D(this.pathToNodeMapping.get(nextNodeId)));
+
+    const object = this.pathToNodeMapping.get(nextNodeId);
+    const d = object.border.initialD(object.direction);
+    array.push(d);
     const nextNode = nodes.get(nextNodeId);
-    nextNode.fillPath(path, this.id, leftOver, this.id, nodes);
+    nextNode.fillPath(array, this.id, leftOver, this.id, nodes);
   }
 
-  fillPath(path, prevNodeId, leftOver, beginNodeId, nodes) {
+  fillPath(array, prevNodeId, leftOver, beginNodeId, nodes) {
     if (this.id === beginNodeId) {
       return;
     }
     leftOver.delete(this.id);
-    this.pathToNodeMapping.forEach((d, nextNodeId) => {
+    this.pathToNodeMapping.forEach((object, nextNodeId) => {
       if (nextNodeId !== prevNodeId) {
-        path.addPath(new Path2D(d));
+        const d = object.border.followingD(object.direction);
+        array.push(d);
+
         const nextNode = nodes.get(nextNodeId);
-        nextNode.fillPath(path, this.id, leftOver, beginNodeId, nodes);
+        nextNode.fillPath(array, this.id, leftOver, beginNodeId, nodes);
       }
     });
   }
@@ -53,8 +64,20 @@ export class Border {
     this.d = data.d;
   }
 
-  reverseD() {
-    return utils.reverse(this.d);
+  initialD(direction) {
+    if (direction === "forward") {
+      return this.d;
+    } else {
+      return utils.reverse(this.d);
+    }
+  }
+
+  followingD(direction) {
+    if (direction === "forward") {
+      return this.d.replace("M", "L");
+    } else {
+      return utils.reverse(this.d).replace("M", "L");
+    }
   }
 }
 

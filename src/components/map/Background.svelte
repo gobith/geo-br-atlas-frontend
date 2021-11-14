@@ -76,12 +76,12 @@
 
     ctx.lineCap = "round";
 
-    drawSessionIslands(ctx);
+     drawSessionIslands(ctx);
 
 
-   if ($settings.showRealms) {
-      drawRealmBorders(ctx);
-   }
+   // if ($settings.showRealms) {
+   //    drawRealmBorders(ctx);
+   // }
 
     // drawIslands(ctx);
     // drawWoods(ctx);

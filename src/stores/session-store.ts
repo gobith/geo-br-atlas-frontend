@@ -92,10 +92,6 @@ const createSession = (worldData, mapData) => {
     return 0;
   });
 
-  mapData.islandAreas.forEach((area) => {
-    data.islandsPath.addPath(new Path2D(area.d));
-  });
-
   mapData.woodAreas.forEach((area) => {
     data.woodsPath.addPath(new Path2D(area.d));
   });

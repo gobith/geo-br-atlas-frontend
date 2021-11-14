@@ -7,9 +7,6 @@ export const storeBorders = (borderData) => {
   borderData.forEach((border) => {
     borders.set(border.id, new Border(border));
   });
-
-  console.log(borders.get(1).d )
-  console.log(borders.get(1).reverseD())
 };
 
 const createNodes = (borderData) => {
@@ -66,9 +63,10 @@ const borderPathForNodes = (nodes) => {
 
   nodes.forEach((node, nodeId) => {
     if (leftOver.has(nodeId)) {
-      const path = new Path2D();
+      const array = []; 
+      node.initialFillPath(array , leftOver, nodes);
+      const path = new Path2D(array.join(" "));
       paths.push(path);
-      node.initialFillPath(path, leftOver, nodes);
     }
   });
 

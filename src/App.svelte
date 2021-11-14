@@ -12,7 +12,7 @@
   {#if $world}
     <Map map={$map}  world={$world} />
     <Navigation />
-    <Searchlist world={$world}/>
+    <!-- <Searchlist world={$world}/> -->
   {/if}
 {/if}
 
