@@ -1,5 +1,4 @@
-import { Border , Node } from "./domain";
-
+import { Border, Node } from "./domain";
 
 const borders = new Map();
 
@@ -34,22 +33,22 @@ const createNodes = (borderData) => {
 };
 
 export const borderPathForAreas = (areas) => {
-  const areaBorders = bordersForAreas(areas);
+  const areaBorders = bordersForAreas(areas, 1);
   const nodes = createNodes(areaBorders);
   return borderPathForNodes(nodes);
 };
 
-const bordersForAreas = (areas) => {
+const bordersForAreas = (areas, value) => {
   const borderIdBag = new Map();
   const areaBorders = [];
   areas.forEach((area) => {
-    area.borders.forEach((borderId) => {
+    area.b.forEach((borderId) => {
       borderIdBag.set(borderId, (borderIdBag.get(borderId) ?? 0) + 1);
     });
   });
 
   borderIdBag.forEach((occurence, borderId) => {
-    if (occurence === 1) {
+    if (occurence === value) {
       areaBorders.push(borders.get(borderId));
     }
   });
@@ -63,8 +62,8 @@ const borderPathForNodes = (nodes) => {
 
   nodes.forEach((node, nodeId) => {
     if (leftOver.has(nodeId)) {
-      const array = []; 
-      node.initialFillPath(array , leftOver, nodes);
+      const array = [];
+      node.initialFillPath(array, leftOver, nodes);
       const path = new Path2D(array.join(" "));
       paths.push(path);
     }
@@ -79,4 +78,13 @@ const borderPathForNodes = (nodes) => {
     });
     return combinedPath;
   }
+};
+
+export const provinceBordersPathForAreas = (areas) => {
+
+  const provinceBorders = bordersForAreas(areas , 2);
+ 
+  return new Path2D(provinceBorders.map(border => border.d).join(" "));
+
+
 };

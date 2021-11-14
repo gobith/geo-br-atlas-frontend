@@ -76,24 +76,22 @@
 
     ctx.lineCap = "round";
 
-     drawSessionIslands(ctx);
+   
 
 
-   // if ($settings.showRealms) {
-   //    drawRealmBorders(ctx);
-   // }
 
-    // drawIslands(ctx);
-    // drawWoods(ctx);
-    // drawMountains(ctx);
+
+    drawIslands(ctx);
+    drawWoods(ctx);
+    drawMountains(ctx);
 
    // if ($settings.showRealms) {
    //   drawRealmBorders(ctx);
    // }
 
-   // if ($settings.showProvinces) {
-   //   drawProvinceBorders(ctx);
-   // }
+   if ($settings.showProvinces) {
+     drawProvinceBorders(ctx);
+   }
 
     // drawSelection(ctx);
 
@@ -101,7 +99,7 @@
   };
 
 
-  const drawSessionIslands = (ctx) => {
+  const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
     ctx.shadowBlur = 50 * shadowBlur();
     ctx.fillStyle = "#EEE8AA";
@@ -111,24 +109,18 @@
   };
 
 
-  const drawIslands = (ctx) => {
-    ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
-    ctx.shadowBlur = 50 * shadowBlur();
-    ctx.fillStyle = "#EEE8AA";
-    ctx.fill(map.islandsPath);
-    ctx.shadowBlur = 0;
-  };
+  
 
   const drawWoods = (ctx) => {
     ctx.globalAlpha = 0.8;
     ctx.shadowColor = "darkgreen";
     ctx.shadowBlur = 50 * shadowBlur();
-    ctx.clip(map.islandsPath);
+    ctx.clip($session.islandsPath);
     ctx.fillStyle = "#228B22";
     ctx.strokeStyle = "darkgreen";
     ctx.lineWidth = 2;
-    ctx.fill(map.woodsPath);
-    ctx.stroke(map.woodsPath);
+    ctx.fill($session.woodsPath);
+    ctx.stroke($session.woodsPath);
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
   };
@@ -140,7 +132,7 @@
     ctx.fillStyle = "#796342";
     ctx.strokeStyle = "#796342";
     ctx.lineWidth = 2;
-    ctx.fill(map.mountainsPath);
+    ctx.fill($session.mountainsPath);
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
   };
@@ -159,9 +151,8 @@
     ctx.strokeStyle = "#654321";
     ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
-    ctx.stroke(map.provinceBordersPath);
+    ctx.stroke($session.provinceBordersPath);
     ctx.setLineDash([0, 0]);
-    ctx.stroke(map.islandsPath);
     ctx.shadowBlur = 0;
   };
 

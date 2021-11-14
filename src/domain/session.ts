@@ -7,6 +7,7 @@ export class Session {
   holdings: any;
   provinceAreas: any;
   islandsPath: Path2D;
+  provinceBordersPath: Path2D;
   woodsPath: Path2D;
   mountainsPath: Path2D;
 
@@ -17,6 +18,7 @@ export class Session {
     this.provinces = data.provinces;
     this.holdings = data.holdings;
     this.islandsPath = data.islandsPath;
+    this.provinceBordersPath = data.provinceBordersPath;
     this.woodsPath = data.woodsPath;
     this.mountainsPath = data.mountainsPath;
   }
