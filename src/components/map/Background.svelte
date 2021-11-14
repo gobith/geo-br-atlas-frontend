@@ -11,7 +11,11 @@
     detachEvents,
   } from "../../stores/world-state";
 
+  import session from "../../stores/session-store";
+
   export let map;
+
+  console.log($session);
 
 
   const heightDelta = 0;
@@ -72,22 +76,40 @@
 
     ctx.lineCap = "round";
 
-    drawIslands(ctx);
-    drawWoods(ctx);
-    drawMountains(ctx);
+    drawSessionIslands(ctx);
 
-    if ($settings.showRealms) {
+
+   if ($settings.showRealms) {
       drawRealmBorders(ctx);
-    }
+   }
 
-    if ($settings.showProvinces) {
-      drawProvinceBorders(ctx);
-    }
+    // drawIslands(ctx);
+    // drawWoods(ctx);
+    // drawMountains(ctx);
 
-    drawSelection(ctx);
+   // if ($settings.showRealms) {
+   //   drawRealmBorders(ctx);
+   // }
+
+   // if ($settings.showProvinces) {
+   //   drawProvinceBorders(ctx);
+   // }
+
+    // drawSelection(ctx);
 
     ctx.restore();
   };
+
+
+  const drawSessionIslands = (ctx) => {
+    ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
+    ctx.shadowBlur = 50 * shadowBlur();
+    ctx.fillStyle = "#EEE8AA";
+    ctx.fill($session.islandsPath);
+    ctx.stroke($session.islandsPath);
+    ctx.shadowBlur = 0;
+  };
+
 
   const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";

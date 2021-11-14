@@ -26,6 +26,8 @@ world.subscribe((worldData) => {
 export default map;
 
 const mapFor = (mapData) => {
+
+
   const uuidToObjectMapping = get(world).uuidToObjectMapping;
 
   const borders = mapData.borders;

@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { Regent, Domain, Province, Holding, Border } from "../domain/domain";
 import { Session } from "../domain/session";
+import { storeBorders , borderPathForAreas } from "../domain/nodes"
 
 const session = writable(null);
 
@@ -16,8 +17,8 @@ Promise.all(urls.map((url) => fetch(url)))
 
 const createSession = (worldData, mapData) => {
 
-  console.log(mapData);
-
+  storeBorders(mapData.borders);
+  
   const data = {
     uuidToObjectMapping: {},
     namedEntities: [],
@@ -25,8 +26,7 @@ const createSession = (worldData, mapData) => {
     domains: [],
     provinces: [],
     holdings: [],
-    borders: mapData.borders.map(border => new Border(border)),
-    islandsPath: new Path2D(),
+    islandsPath: borderPathForAreas(mapData.provinceAreas),
     woodsPath: new Path2D(),
     mountainsPath: new Path2D(),
   };
@@ -104,8 +104,5 @@ const createSession = (worldData, mapData) => {
     data.mountainsPath.addPath(new Path2D(area.d));
   });
 
-  console.log(data.borders[0].path);
-  console.log(data.borders[0].reversePath);
-  console.log(data, new Session(data));
   return new Session(data);
 };

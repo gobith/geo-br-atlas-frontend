@@ -1,18 +1,60 @@
 import utils from "svg-path-reverse";
 
+export class Node {
+  id: number;
+  pathToNodeMapping: any;
+
+  constructor(id: number) {
+    this.id = id;
+    this.pathToNodeMapping = new Map();
+  }
+
+  borderA(border) {
+    this.pathToNodeMapping.set(border.b, border.d);
+  }
+
+  borderB(border) {
+    this.pathToNodeMapping.set(border.a, border.reverseD());
+  }
+
+  initialFillPath(path, leftOver, nodes) {
+    leftOver.delete(this.id);
+    const [nextNodeId] = this.pathToNodeMapping.keys();
+    path.addPath(new Path2D(this.pathToNodeMapping.get(nextNodeId)));
+    const nextNode = nodes.get(nextNodeId);
+    nextNode.fillPath(path, this.id, leftOver, this.id, nodes);
+  }
+
+  fillPath(path, prevNodeId, leftOver, beginNodeId, nodes) {
+    if (this.id === beginNodeId) {
+      return;
+    }
+    leftOver.delete(this.id);
+    this.pathToNodeMapping.forEach((d, nextNodeId) => {
+      if (nextNodeId !== prevNodeId) {
+        path.addPath(new Path2D(d));
+        const nextNode = nodes.get(nextNodeId);
+        nextNode.fillPath(path, this.id, leftOver, beginNodeId, nodes);
+      }
+    });
+  }
+}
+
 export class Border {
   id: number;
   a: any;
   b: any;
-  path: Path2D;
-  reversePath: Path2D;
+  d: string;
 
   constructor(data: any) {
     this.id = data.id;
     this.a = data.a;
     this.b = data.b;
-    this.path = new Path2D(data.d);
-    this.reversePath = new Path2D(utils.reverse(data.d));
+    this.d = data.d;
+  }
+
+  reverseD() {
+    return utils.reverse(this.d);
   }
 }
 
@@ -154,12 +196,13 @@ export class Province extends Entity {
   }
 
   areas() {
-    return this.provinceAreas
+    return this.provinceAreas;
   }
 
   addToAreas(areaCollection) {
     this.provinceAreas.forEach((area) => {
-      areaCollection.push(area)})
+      areaCollection.push(area);
+    });
   }
 
   regent() {
@@ -274,11 +317,9 @@ export class World {
   }
 
   provinceInfoForArea(area) {
-  
     if (area.provinceInfo) {
       return area.provinceInfo;
     }
-  
 
     if (!area.province) {
       area.provinceInfo = { stats: "XXX", name: "XXX" };
@@ -293,7 +334,6 @@ export class World {
   }
 
   provinceInfoForAreaTwo(area) {
- 
     let provinceInfo;
     if (!area.province) {
       provinceInfo = { stats: "XXX", name: "XXX" };
