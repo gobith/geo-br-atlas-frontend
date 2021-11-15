@@ -90,7 +90,6 @@ export class ProvinceArea {
 
   constructor(object: any) {
     this.borders = object.b;
-    this.labelPoint = {x: 100 , y: 100};
     this.center = {x: 100 , y: 100}
   }
 

@@ -1,7 +1,8 @@
 import { writable } from "svelte/store";
 import { Regent, Domain, Province, Holding, ProvinceArea} from "../domain/domain";
 import { Session } from "../domain/session";
-import { storeBorders , borderPathForAreas , provinceBordersPathForAreas} from "../domain/nodes"
+import { storeBorders , borderPathForAreas , provinceBordersPathForAreas , borderDForArea , polylabelForD} from "../domain/nodes"
+import map from "./map-store";
 
 const session = writable(null);
 
@@ -102,13 +103,23 @@ const createSession = (worldData, mapData) => {
     data.mountainsPath.addPath(new Path2D(area.d));
   });
 
+
   mapData.areas.forEach((area) => {
     const provinceArea = new ProvinceArea(area);
-    provinceArea.path = provinceBordersPathForAreas([area]);
-    provinceArea.province = data.uuidToObjectMapping[area.p];
+
+    const d = borderDForArea(area);
+    const labelPoint = polylabelForD(d);
+
+    provinceArea.path = new Path2D(d);
+    provinceArea.labelPoint = labelPoint;
+    const province = data.uuidToObjectMapping[area.p];
+    provinceArea.province = province;
+    if (province) {
+      province.provinceAreas.push(provinceArea);
+    }
     data.provinceAreas.push(provinceArea);
   })
 
-  console.log(new Session(data));
+
   return new Session(data);
 };

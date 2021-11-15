@@ -33,9 +33,17 @@ const createNodes = (borderData) => {
 };
 
 export const borderPathForAreas = (areas) => {
+  return new Path2D(borderDForAreas(areas));
+};
+
+export const borderDForArea = (area) => {
+  return borderDForAreas([area])
+}
+
+const borderDForAreas = (areas) => {
   const areaBorders = bordersForAreas(areas, 1);
   const nodes = createNodes(areaBorders);
-  return borderPathForNodes(nodes);
+  return borderDForNodes(nodes);
 };
 
 const bordersForAreas = (areas, value) => {
@@ -56,35 +64,27 @@ const bordersForAreas = (areas, value) => {
   return areaBorders;
 };
 
-const borderPathForNodes = (nodes) => {
+const borderDForNodes = (nodes) => {
   const paths = [];
   const leftOver = new Map(nodes);
-
   nodes.forEach((node, nodeId) => {
     if (leftOver.has(nodeId)) {
       const array = [];
       node.initialFillPath(array, leftOver, nodes);
-      const path = new Path2D(array.join(" "));
+      const path = array.join(" ");
       paths.push(path);
     }
   });
-
-  if (paths.length === 1) {
-    return paths[0];
-  } else {
-    const combinedPath = new Path2D();
-    paths.forEach((path) => {
-      combinedPath.addPath(path);
-    });
-    return combinedPath;
-  }
+  return paths.join(" ");
 };
 
 export const provinceBordersPathForAreas = (areas) => {
+  const provinceBorders = bordersForAreas(areas, 2);
 
-  const provinceBorders = bordersForAreas(areas , 2);
- 
-  return new Path2D(provinceBorders.map(border => border.d).join(" "));
-
-
+  return new Path2D(provinceBorders.map((border) => border.d).join(" "));
 };
+
+
+export const polylabelForD = (d) => {
+  return {x: 1000 , y: 300}
+}

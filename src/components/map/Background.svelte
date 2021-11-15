@@ -11,10 +11,7 @@
     detachEvents,
   } from "../../stores/world-state";
 
-
   export let session;
-
-  const heightDelta = 0;
 
   onMount(() => {
     const canvas = document.getElementById("canvas");
@@ -72,28 +69,36 @@
 
     ctx.lineCap = "round";
 
-   
-
-
-
+   // drawProvinceAreas(ctx);
 
     drawIslands(ctx);
     drawWoods(ctx);
     drawMountains(ctx);
 
-   // if ($settings.showRealms) {
-   //   drawRealmBorders(ctx);
-   // }
+    // if ($settings.showRealms) {
+    //   drawRealmBorders(ctx);
+    // }
 
-   if ($settings.showProvinces) {
-     drawProvinceBorders(ctx);
-   }
+    if ($settings.showProvinces) {
+      drawProvinceBorders(ctx);
+     }
 
-    // drawSelection(ctx);
+    drawSelection(ctx);
 
     ctx.restore();
   };
 
+
+  const drawProvinceAreas = (ctx) => {
+    ctx.fillStyle = "#EEE8AA";
+
+    session.provinceAreas.forEach((a) => {
+     ctx.fill(a.path);
+      ctx.stroke(a.path);
+    });
+
+    ctx.shadowBlur = 0;
+  };
   const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
     ctx.shadowBlur = 50 * shadowBlur();
@@ -159,14 +164,13 @@
     ctx.fillStyle = "rgba(151, 103, 56 , 0.8)";
     ctx.strokeStyle = "rgba(151, 103, 56 , 0.2)";
 
+    // ctx.fill($selection.path);
+    // ctx.stroke($selection.path);
 
-   // ctx.fill($selection.path);
-   // ctx.stroke($selection.path);
-
-     $selection.areas().forEach((area) => {
+    $selection.areas().forEach((area) => {
       ctx.fill(area.path);
       ctx.stroke(area.path);
-     });
+    });
   };
 
   const pointClicked = (point) => {
@@ -178,8 +182,11 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
+   
+
     session.provinceAreas.forEach((area) => {
-      if (ctx.isPointInPath(area.path, point.x, point.y - heightDelta)) {
+      if (ctx.isPointInPath(area.path, point.x, point.y)) {
+       
         selectedArea = area;
         navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
       }
