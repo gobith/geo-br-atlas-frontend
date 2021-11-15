@@ -1,3 +1,5 @@
+import { SVGPathData } from "svg-pathdata";
+import polylabel from "polylabel";
 import { Border, Node } from "./domain";
 
 const borders = new Map();
@@ -37,8 +39,8 @@ export const borderPathForAreas = (areas) => {
 };
 
 export const borderDForArea = (area) => {
-  return borderDForAreas([area])
-}
+  return borderDForAreas([area]);
+};
 
 const borderDForAreas = (areas) => {
   const areaBorders = bordersForAreas(areas, 1);
@@ -84,7 +86,20 @@ export const provinceBordersPathForAreas = (areas) => {
   return new Path2D(provinceBorders.map((border) => border.d).join(" "));
 };
 
-
 export const polylabelForD = (d) => {
-  return {x: 1000 , y: 300}
-}
+  const pathData = new SVGPathData(d);
+
+  const polygon = [];
+
+  pathData.commands.forEach((command) => {
+    if (command.type !== 1) {
+      const array = [];
+      array.push(command["x"]);
+      array.push(command["y"]);
+
+      polygon.push(array);
+    }
+  });
+  const labelPoint = polylabel([polygon], 1.0);
+  return { x: labelPoint[0], y: labelPoint[1] };
+};
