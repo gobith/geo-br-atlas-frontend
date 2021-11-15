@@ -10,8 +10,7 @@
   import Background from "./Background.svelte";
   import Descriptions from "./Descriptions.svelte";
 
-  export let map;
-  export let world;
+  export let session;
 
   onMount(() => {
     attachResizeEvent();
@@ -23,8 +22,8 @@
   });
 </script>
 
-<Background {map} />
-<Descriptions {map} {world} />
+<Background {session} />
+<Descriptions {session} />
 
 <style>
 </style>

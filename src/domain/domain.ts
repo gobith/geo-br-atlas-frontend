@@ -81,6 +81,28 @@ export class Border {
   }
 }
 
+export class ProvinceArea {
+  borders: [];
+  path: Path2D;
+  province: Province;
+  labelPoint: any;
+  center: any;
+
+  constructor(object: any) {
+    this.borders = object.b;
+    this.labelPoint = {x: 100 , y: 100};
+    this.center = {x: 100 , y: 100}
+  }
+
+  provinceInfo() {
+    if (this.province) {
+      return this.province.mapInfo();
+    } else {
+      return { stats: "XXX", name: "XXX" };
+    }
+  }
+}
+
 export class Entity {
   id: string;
 
@@ -238,6 +260,13 @@ export class Province extends Entity {
 
   domain() {
     return this.owner;
+  }
+
+  mapInfo() {
+    return {
+      stats: `${this.level}/${this.sourceRating}`,
+      name: this.name,
+    };
   }
 }
 export class Holding extends Entity {

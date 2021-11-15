@@ -17,6 +17,7 @@ export class Session {
     this.domains = data.domains;
     this.provinces = data.provinces;
     this.holdings = data.holdings;
+    this.provinceAreas = data.provinceAreas;
     this.islandsPath = data.islandsPath;
     this.provinceBordersPath = data.provinceBordersPath;
     this.woodsPath = data.woodsPath;

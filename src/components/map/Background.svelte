@@ -11,12 +11,8 @@
     detachEvents,
   } from "../../stores/world-state";
 
-  import session from "../../stores/session-store";
 
-  export let map;
-
-  console.log($session);
-
+  export let session;
 
   const heightDelta = 0;
 
@@ -98,29 +94,25 @@
     ctx.restore();
   };
 
-
   const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
     ctx.shadowBlur = 50 * shadowBlur();
     ctx.fillStyle = "#EEE8AA";
-    ctx.fill($session.islandsPath);
-    ctx.stroke($session.islandsPath);
+    ctx.fill(session.islandsPath);
+    ctx.stroke(session.islandsPath);
     ctx.shadowBlur = 0;
   };
-
-
-  
 
   const drawWoods = (ctx) => {
     ctx.globalAlpha = 0.8;
     ctx.shadowColor = "darkgreen";
     ctx.shadowBlur = 50 * shadowBlur();
-    ctx.clip($session.islandsPath);
+    ctx.clip(session.islandsPath);
     ctx.fillStyle = "#228B22";
     ctx.strokeStyle = "darkgreen";
     ctx.lineWidth = 2;
-    ctx.fill($session.woodsPath);
-    ctx.stroke($session.woodsPath);
+    ctx.fill(session.woodsPath);
+    ctx.stroke(session.woodsPath);
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
   };
@@ -132,7 +124,7 @@
     ctx.fillStyle = "#796342";
     ctx.strokeStyle = "#796342";
     ctx.lineWidth = 2;
-    ctx.fill($session.mountainsPath);
+    ctx.fill(session.mountainsPath);
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
   };
@@ -140,9 +132,9 @@
   const drawRealmBorders = (ctx) => {
     ctx.strokeStyle = "#654321";
     ctx.lineWidth = 2;
-    ctx.stroke(map.realmBordersPath);
+    ctx.stroke(session.realmBordersPath);
     ctx.lineWidth = 4;
-    ctx.stroke(map.islandsPath);
+    ctx.stroke(session.islandsPath);
     ctx.shadowBlur = 0;
   };
 
@@ -151,7 +143,7 @@
     ctx.strokeStyle = "#654321";
     ctx.setLineDash([10, 6]);
     ctx.lineWidth = 1;
-    ctx.stroke($session.provinceBordersPath);
+    ctx.stroke(session.provinceBordersPath);
     ctx.setLineDash([0, 0]);
     ctx.shadowBlur = 0;
   };
@@ -186,7 +178,7 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
-    map.provinceAreas.forEach((area) => {
+    session.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y - heightDelta)) {
         selectedArea = area;
         navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);

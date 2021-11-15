@@ -1,19 +1,18 @@
 <script lang="ts">
   import session from "./stores/session-store";
-  import world from "./stores/world-store";
-  import map from "./stores/map-store";
+
 
   import Map from "./components/map/Map.svelte";
   import Navigation from "./components/navigation/Navigation.svelte";
   import Searchlist from "./components/navigation/Searchlist.svelte";
 </script>
 
-{#if $map}
-  {#if $world}
-    <Map map={$map}  world={$world} />
+{#if $session}
+  
+    <Map session={$session} />
     <Navigation />
     <!-- <Searchlist world={$world}/> -->
-  {/if}
+ 
 {/if}
 
 <style>
