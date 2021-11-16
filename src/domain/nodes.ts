@@ -42,7 +42,7 @@ export const borderDForArea = (area) => {
   return borderDForAreas([area]);
 };
 
-const borderDForAreas = (areas) => {
+export const borderDForAreas = (areas) => {
   const areaBorders = bordersForAreas(areas, 1);
   const nodes = createNodes(areaBorders);
   return borderDForNodes(nodes);
@@ -52,7 +52,7 @@ const bordersForAreas = (areas, value) => {
   const borderIdBag = new Map();
   const areaBorders = [];
   areas.forEach((area) => {
-    area.b.forEach((borderId) => {
+    area.borders.forEach((borderId) => {
       borderIdBag.set(borderId, (borderIdBag.get(borderId) ?? 0) + 1);
     });
   });

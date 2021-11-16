@@ -5,6 +5,7 @@ import {
   Province,
   Holding,
   ProvinceArea,
+  RealmArea,
 } from "../domain/domain";
 import { Session } from "../domain/session";
 import {
@@ -13,6 +14,7 @@ import {
   provinceBordersPathForAreas,
   borderDForArea,
   polylabelForD,
+  borderDForAreas,
 } from "../domain/nodes";
 import map from "./map-store";
 
@@ -115,13 +117,10 @@ const createSession = (worldData, mapData) => {
   });
 
   mapData.areas.forEach((area) => {
-    const provinceArea = new ProvinceArea(area);
-
     const d = borderDForArea(area);
-    const labelPoint = polylabelForD(d);
-
+    const provinceArea = new ProvinceArea(area);
     provinceArea.path = new Path2D(d);
-    provinceArea.labelPoint = labelPoint;
+    provinceArea.labelPoint = polylabelForD(d);
     const province = data.uuidToObjectMapping[area.p];
     provinceArea.province = province;
     if (province) {
@@ -131,6 +130,18 @@ const createSession = (worldData, mapData) => {
       province.provinceAreas.push(provinceArea);
     }
     data.provinceAreas.push(provinceArea);
+  });
+
+  data.domains.forEach((domain) => {
+    const realmAreas = domain.areas();
+    if ((realmAreas.length === 0)) {
+      return;
+    }
+    const realmArea = new RealmArea(domain);
+    const d = borderDForAreas(realmAreas);
+    realmArea.path = new Path2D(d);
+    realmArea.labelPoint = polylabelForD(d);
+    domain.realmArea = realmArea
   });
 
   return new Session(data);

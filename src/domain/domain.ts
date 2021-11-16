@@ -89,8 +89,18 @@ export class ProvinceArea {
   center: any;
 
   constructor(object: any) {
-    this.borders = object.b;
+    this.borders = object.borders;
     this.center = { x: 100, y: 100 };
+  }
+}
+
+export class RealmArea {
+  path: Path2D;
+  domain: Domain;
+  labelPoint: any;
+
+  constructor(domainObject:Domain) {
+    this.domain = domainObject
   }
 }
 

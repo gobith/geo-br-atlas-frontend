@@ -24,8 +24,9 @@
 
     if ($settings.showProvinceInfo) {
       drawProvinceInfo(ctx);
+    } else {
+      drawRealmInfo(ctx);
     }
-
     ctx.restore();
   };
 
@@ -48,6 +49,23 @@
       drawDescriptions();
     });
   });
+
+  const drawRealmInfo = (ctx) => {
+    ctx.strokeStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    session.domains.forEach((domain) => {
+      if (domain.realmArea) {
+        ctx.font = "bold 30px calibri";
+        ctx.fillText(
+          domain.name,
+          domain.realmArea.labelPoint.x,
+          domain.realmArea.labelPoint.y
+        );
+      }
+    });
+  };
 
   const drawProvinceInfo = (ctx) => {
     ctx.strokeStyle = "black";

@@ -69,15 +69,15 @@
 
     ctx.lineCap = "round";
 
-   // drawProvinceAreas(ctx);
+
 
     drawIslands(ctx);
     drawWoods(ctx);
     drawMountains(ctx);
 
-    // if ($settings.showRealms) {
-    //   drawRealmBorders(ctx);
-    // }
+     if ($settings.showRealms) {
+       drawRealmBorders(ctx);
+     }
 
     if ($settings.showProvinces) {
       drawProvinceBorders(ctx);
@@ -89,16 +89,6 @@
   };
 
 
-  const drawProvinceAreas = (ctx) => {
-    ctx.fillStyle = "#EEE8AA";
-
-    session.provinceAreas.forEach((a) => {
-     ctx.fill(a.path);
-      ctx.stroke(a.path);
-    });
-
-    ctx.shadowBlur = 0;
-  };
   const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
     ctx.shadowBlur = 50 * shadowBlur();
@@ -136,11 +126,23 @@
 
   const drawRealmBorders = (ctx) => {
     ctx.strokeStyle = "#654321";
+    ctx.fillStyle = "black";
     ctx.lineWidth = 2;
-    ctx.stroke(session.realmBordersPath);
+
+    session.domains.forEach((domain) => {
+
+      if (domain.realmArea) {
+
+      //  ctx.fill(domain.realmArea.path);
+        ctx.stroke(domain.realmArea.path)
+      }
+
+    })
+
+    //ctx.stroke(session.realmBordersPath);
     ctx.lineWidth = 4;
     ctx.stroke(session.islandsPath);
-    ctx.shadowBlur = 0;
+    // ctx.shadowBlur = 0;
   };
 
   const drawProvinceBorders = (ctx) => {
@@ -160,9 +162,9 @@
 
     ctx.setLineDash([0, 0]);
     ctx.shadowBlur = 0;
-    ctx.lineWidth = 3;
-    ctx.fillStyle = "rgba(151, 103, 56 , 0.8)";
-    ctx.strokeStyle = "rgba(151, 103, 56 , 0.2)";
+    ctx.lineWidth = 5;
+    ctx.fillStyle = "rgba(220, 20, 60 , 0.6)";
+    ctx.strokeStyle = "rgba(220, 20, 60 , 0.8)";
 
     // ctx.fill($selection.path);
     // ctx.stroke($selection.path);
