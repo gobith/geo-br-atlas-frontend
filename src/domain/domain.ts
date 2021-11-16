@@ -90,15 +90,7 @@ export class ProvinceArea {
 
   constructor(object: any) {
     this.borders = object.b;
-    this.center = {x: 100 , y: 100}
-  }
-
-  provinceInfo() {
-    if (this.province) {
-      return this.province.mapInfo();
-    } else {
-      return { stats: "XXX", name: "XXX" };
-    }
+    this.center = { x: 100, y: 100 };
   }
 }
 
@@ -214,6 +206,7 @@ export class Province extends Entity {
   owner: any;
   holdings: any;
   provinceAreas: any;
+  descriptionArea: any;
 
   constructor(object: any) {
     super(object);
@@ -259,13 +252,6 @@ export class Province extends Entity {
 
   domain() {
     return this.owner;
-  }
-
-  mapInfo() {
-    return {
-      stats: `${this.level}/${this.sourceRating}`,
-      name: this.name,
-    };
   }
 }
 export class Holding extends Entity {

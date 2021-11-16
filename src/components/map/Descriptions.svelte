@@ -9,11 +9,9 @@
   } from "../../stores/world-state";
 
   export let session;
+  let canvas;
 
   const drawDescriptions = () => {
-    const canvas = document.getElementById(
-      "description-canvas"
-    ) as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
 
     canvas.height = $resize.height;
@@ -52,159 +50,118 @@
   });
 
   const drawProvinceInfo = (ctx) => {
+    ctx.strokeStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    const parameters = derivedZoomParameters();
+
+    session.provinces.forEach((province) => {
+      if (!province.descriptionArea) {
+        return;
+      }
+      if (parameters.showName) {
+        ctx.font = parameters.nameFont;
+        ctx.fillText(
+          province.name,
+          province.descriptionArea.labelPoint.x,
+          province.descriptionArea.labelPoint.y - 10
+        );
+      }
+
+      if (parameters.showStats) {
+        ctx.font = parameters.statsFont;
+        ctx.fillText(
+          province.stats(),
+          province.descriptionArea.labelPoint.x,
+          province.descriptionArea.labelPoint.y + 10
+        );
+      }
+    });
+  };
+
+  const derivedZoomParameters = () => {
+    const parameters = zoomParameters();
+
+    return {
+      showName: parameters.showName,
+      showStats: parameters.showStats,
+      nameFont: `bold ${parameters.nameFontSize}px calibri`,
+      statsFont: `bold ${parameters.statsFontSize}px calibri`,
+    };
+  };
+
+  const zoomParameters = () => {
     switch ($zoom) {
       case 1:
-        drawProvinceInfoZoom1(ctx);
+        return {
+          showName: false,
+          nameFontSize: 12,
+          showStats: true,
+          statsFontSize: 16,
+        };
         break;
       case 2:
-        drawProvinceInfoZoom2(ctx);
+        return {
+          showName: false,
+          nameFontSize: 12,
+          showStats: true,
+          statsFontSize: 16,
+        };
         break;
       case 3:
-        drawProvinceInfoZoom4(ctx);
+        return {
+          showName: false,
+          nameFontSize: 12,
+          showStats: true,
+          statsFontSize: 25,
+        };
         break;
       case 4:
-        drawProvinceInfoZoom4(ctx);
+        return {
+          showName: false,
+          nameFontSize: 12,
+          showStats: true,
+          statsFontSize: 25,
+        };
         break;
       case 5:
-        drawProvinceInfoZoom5(ctx);
+        return {
+          showName: true,
+          nameFontSize: 12,
+          showStats: true,
+          statesFontSize: 16,
+        };
         break;
       case 6:
-        drawProvinceInfoZoom6(ctx);
+        return {
+          showName: true,
+          nameFontSize: 8,
+          showStats: true,
+          statsFontSize: 8,
+        };
         break;
       case 7:
-        drawProvinceInfoZoom7(ctx);
+        return {
+          showName: true,
+          nameFontSize: 6,
+          showStats: true,
+          statsFontSize: 12,
+        };
         break;
       case 8:
-        drawProvinceInfoZoom8(ctx);
+        return {
+          showName: true,
+          nameFontSize: 6,
+          showStats: true,
+          statsFontSize: 12,
+        };
         break;
     }
   };
-
-  const drawProvinceInfoZoom1 = (ctx) => {};
-  const drawProvinceInfoZoom2 = (ctx) => {};
-
-  const drawProvinceInfoZoom3 = (ctx) => {
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = "bold 25px calibri";
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(area.id, area.labelPoint.x, area.labelPoint.y);
-    });
-  };
-
-  const drawProvinceInfoZoom4 = (ctx) => {
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = "bold 25px calibri";
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(provinceInfo.stats, area.labelPoint.x, area.labelPoint.y);
-    });
-  };
-
-  const drawProvinceInfoZoom5 = (ctx) => {
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = "bold 12px calibri";
-
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(
-        provinceInfo.name,
-        area.labelPoint.x,
-        area.labelPoint.y - 10
-      );
-    });
-
-    ctx.font = "bold 16px calibri";
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(
-        provinceInfo.stats,
-        area.labelPoint.x,
-        area.labelPoint.y + 10
-      );
-    });
-  };
-  const drawProvinceInfoZoom6 = (ctx) => {
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = "bold 8px calibri";
-
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(provinceInfo.name, area.labelPoint.x, area.labelPoint.y - 8);
-    });
-
-    ctx.font = "bold 8px calibri";
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(
-        `${area.center.x} @ ${area.center.y}`,
-        area.labelPoint.x,
-        area.labelPoint.y + 8
-      );
-    });
-  };
-  const drawProvinceInfoZoom7 = (ctx) => {
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = "bold 6px calibri";
-
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-      ctx.fillText(provinceInfo.name, area.labelPoint.x, area.labelPoint.y - 8);
-    });
-
-    ctx.font = "bold 12px calibri";
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(
-        provinceInfo.stats,
-        area.labelPoint.x,
-        area.labelPoint.y + 8
-      );
-    });
-  };
-  const drawProvinceInfoZoom8 = (ctx) => {
-    ctx.strokeStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.font = "bold 6px calibri";
-
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(provinceInfo.name, area.labelPoint.x, area.labelPoint.y - 8);
-    });
-
-    ctx.font = "bold 12px calibri";
-    session.provinceAreas.forEach((area) => {
-      let provinceInfo = area.provinceInfo();
-
-      ctx.fillText(
-        provinceInfo.stats,
-        area.labelPoint.x,
-        area.labelPoint.y + 8
-      );
-    });
-  };
 </script>
 
-<canvas id="description-canvas" />
+<canvas bind:this={canvas} />
 
 <style>
   canvas {

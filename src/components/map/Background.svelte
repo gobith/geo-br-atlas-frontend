@@ -12,9 +12,10 @@
   } from "../../stores/world-state";
 
   export let session;
+  let canvas;
 
   onMount(() => {
-    const canvas = document.getElementById("canvas");
+   
     attachEvents(canvas);
 
     resize.subscribe((resize) => {
@@ -43,7 +44,7 @@
   });
 
   onDestroy(() => {
-    const canvas = document.getElementById("canvas");
+    
     detachEvents(canvas);
   });
 
@@ -56,7 +57,6 @@
   };
 
   const drawBackground = () => {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
 
     canvas.height = $resize.height;
@@ -175,7 +175,6 @@
 
   const pointClicked = (point) => {
     let selectedArea;
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
 
     ctx.save();
@@ -201,7 +200,7 @@
   };
 </script>
 
-<canvas id="canvas" />
+<canvas bind:this={canvas}/>
 
 <style>
   canvas {

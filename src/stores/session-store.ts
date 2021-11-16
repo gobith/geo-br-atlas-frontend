@@ -1,7 +1,19 @@
 import { writable } from "svelte/store";
-import { Regent, Domain, Province, Holding, ProvinceArea} from "../domain/domain";
+import {
+  Regent,
+  Domain,
+  Province,
+  Holding,
+  ProvinceArea,
+} from "../domain/domain";
 import { Session } from "../domain/session";
-import { storeBorders , borderPathForAreas , provinceBordersPathForAreas , borderDForArea , polylabelForD} from "../domain/nodes"
+import {
+  storeBorders,
+  borderPathForAreas,
+  provinceBordersPathForAreas,
+  borderDForArea,
+  polylabelForD,
+} from "../domain/nodes";
 import map from "./map-store";
 
 const session = writable(null);
@@ -17,9 +29,8 @@ Promise.all(urls.map((url) => fetch(url)))
   });
 
 const createSession = (worldData, mapData) => {
-
   storeBorders(mapData.borders);
-  
+
   const data = {
     uuidToObjectMapping: {},
     namedEntities: [],
@@ -103,7 +114,6 @@ const createSession = (worldData, mapData) => {
     data.mountainsPath.addPath(new Path2D(area.d));
   });
 
-
   mapData.areas.forEach((area) => {
     const provinceArea = new ProvinceArea(area);
 
@@ -115,11 +125,13 @@ const createSession = (worldData, mapData) => {
     const province = data.uuidToObjectMapping[area.p];
     provinceArea.province = province;
     if (province) {
+      if (!province.descriptionArea) {
+        province.descriptionArea = provinceArea;
+      }
       province.provinceAreas.push(provinceArea);
     }
     data.provinceAreas.push(provinceArea);
-  })
-
+  });
 
   return new Session(data);
 };
