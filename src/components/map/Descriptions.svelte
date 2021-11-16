@@ -61,8 +61,12 @@
         ctx.fillText(
           domain.name,
           domain.realmArea.labelPoint.x,
-          domain.realmArea.labelPoint.y
+          domain.realmArea.labelPoint.y - 15
         );
+        ctx.fillText(
+          domain.stats(),
+          domain.realmArea.labelPoint.x,
+          domain.realmArea.labelPoint.y + 15);
       }
     });
   };

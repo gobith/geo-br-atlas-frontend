@@ -99,8 +99,8 @@ export class RealmArea {
   domain: Domain;
   labelPoint: any;
 
-  constructor(domainObject:Domain) {
-    this.domain = domainObject
+  constructor(domainObject: Domain) {
+    this.domain = domainObject;
   }
 }
 
@@ -203,6 +203,18 @@ export class Domain extends Entity {
 
   hasProvinces() {
     return this.provinces.length > 0;
+  }
+
+  stats() {
+    return `${this.level()}/${this.sourceRating()}`;
+  }
+
+  level() {
+    return this.provinces.map(province => province.level).reduce((a, b) => {return a + b})
+  }
+
+  sourceRating() {
+    return this.provinces.map(province => province.sourceRating).reduce((a, b) => {return a + b})
   }
 }
 
