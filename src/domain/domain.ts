@@ -104,6 +104,57 @@ export class RealmArea {
   }
 }
 
+export class Loyalty {
+  constructor() {}
+}
+
+export class LoyaltyAverage extends Loyalty {
+  constructor() {
+    super();
+  }
+
+  smiley() {
+    return "😐";
+  }
+}
+
+export class LoyaltyHigh extends Loyalty {
+  constructor() {
+    super();
+  }
+
+  smiley() {
+    return "🙂";
+  }
+}
+
+export class LoyaltyPoor extends Loyalty {
+  constructor() {
+    super();
+  }
+
+  smiley() {
+    return "🙁";
+  }
+}
+
+export class LoyaltyRebellious extends Loyalty {
+  constructor() {
+    super();
+  }
+
+  smiley() {
+    return "😠";
+  }
+}
+
+const loyaltyClasses = {
+  High: LoyaltyHigh,
+  Average: LoyaltyAverage,
+  Poor: LoyaltyPoor,
+  Rebellious: LoyaltyRebellious,
+};
+
 export class Entity {
   id: string;
 
@@ -210,11 +261,19 @@ export class Domain extends Entity {
   }
 
   level() {
-    return this.provinces.map(province => province.level).reduce((a, b) => {return a + b})
+    return this.provinces
+      .map((province) => province.level)
+      .reduce((a, b) => {
+        return a + b;
+      });
   }
 
   sourceRating() {
-    return this.provinces.map(province => province.sourceRating).reduce((a, b) => {return a + b})
+    return this.provinces
+      .map((province) => province.sourceRating)
+      .reduce((a, b) => {
+        return a + b;
+      });
   }
 }
 
@@ -235,7 +294,7 @@ export class Province extends Entity {
     this.areaId = object.areaId;
     this.name = object.name;
     this.level = object.level;
-    this.loyalty = object.loyalty;
+    this.loyalty = new loyaltyClasses[object.loyalty]();
     this.sourceRating = object.sourceRating;
     this.terrain = object.terrain;
     this.holdings = [];
@@ -294,120 +353,5 @@ export class Holding extends Entity {
 
   isHolding() {
     return true;
-  }
-}
-
-export class World {
-  uuidToObjectMapping: any;
-  namedEntities: any;
-  regents: any;
-  domains: any;
-  provinces: any;
-  holdings: any;
-
-  constructor(worldData: any) {
-    this.uuidToObjectMapping = {};
-    this.namedEntities = [];
-    this.regents = [];
-    this.domains = [];
-    this.provinces = [];
-    this.holdings = [];
-
-    worldData.regents.forEach((data) => {
-      const object = new Regent(data);
-      this.uuidToObjectMapping[object.id] = object;
-      this.namedEntities.push(object);
-      this.regents.push(object);
-    });
-
-    worldData.domains.forEach((data) => {
-      const object = new Domain(data);
-      this.uuidToObjectMapping[object.id] = object;
-      this.namedEntities.push(object);
-      this.domains.push(object);
-    });
-
-    worldData.provinces.forEach((data) => {
-      const object = new Province(data);
-      this.uuidToObjectMapping[object.id] = object;
-      this.namedEntities.push(object);
-      this.provinces.push(object);
-    });
-
-    worldData.holdings.forEach((data) => {
-      const object = new Holding(data);
-      this.uuidToObjectMapping[object.id] = object;
-      this.holdings.push(object);
-    });
-
-    worldData.domains.forEach((data) => {
-      const object = this.uuidToObjectMapping[data.id];
-      object.owner = this.uuidToObjectMapping[data.owner];
-      if (object.owner) {
-        object.owner.domains.push(object);
-      }
-    });
-
-    worldData.provinces.forEach((data) => {
-      const object = this.uuidToObjectMapping[data.id];
-      object.owner = this.uuidToObjectMapping[data.owner];
-      object.owner.provinces.push(object);
-    });
-
-    worldData.holdings.forEach((data) => {
-      const object = this.uuidToObjectMapping[data.id];
-      object.owner = this.uuidToObjectMapping[data.owner];
-      object.owner.holdings.push(object);
-      object.province = this.uuidToObjectMapping[data.province];
-      object.province.holdings.push(object);
-    });
-
-    this.namedEntities.sort(function (a, b) {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  provinceInfoForArea(area) {
-    if (area.provinceInfo) {
-      return area.provinceInfo;
-    }
-
-    if (!area.province) {
-      area.provinceInfo = { stats: "XXX", name: "XXX" };
-    } else {
-      area.provinceInfo = {
-        stats: `${area.province.level}/${area.province.sourceRating}`,
-        name: area.province.name,
-      };
-    }
-
-    return area.provinceInfo;
-  }
-
-  provinceInfoForAreaTwo(area) {
-    let provinceInfo;
-    if (!area.province) {
-      provinceInfo = { stats: "XXX", name: "XXX" };
-    } else {
-      provinceInfo = {
-        stats: `${area.province.level}/${area.province.sourceRating}`,
-        name: area.province.name,
-      };
-
-      provinceInfo = {
-        stats: "",
-        name: "",
-      };
-    }
-
-    return provinceInfo;
   }
 }

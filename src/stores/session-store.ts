@@ -16,7 +16,7 @@ import {
   polylabelForD,
   borderDForAreas,
 } from "../domain/nodes";
-import map from "./map-store";
+
 
 const session = writable(null);
 
@@ -144,5 +144,6 @@ const createSession = (worldData, mapData) => {
     domain.realmArea = realmArea
   });
 
+  console.log(new Session(data));
   return new Session(data);
 };
