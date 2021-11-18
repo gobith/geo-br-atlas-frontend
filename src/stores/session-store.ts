@@ -16,7 +16,8 @@ import {
   polylabelForD,
   borderDForAreas,
 } from "../domain/nodes";
-import { Polygon } from "../domain/polygon";
+import Polygon  from "../domain/polygon";
+import AreaQuadTree from "../domain/quadtree";
 
 
 const session = writable(null);
@@ -46,6 +47,7 @@ const createSession = (worldData, mapData) => {
     provinceBordersPath: provinceBordersPathForAreas(mapData.areas),
     woodsPath: new Path2D(),
     mountainsPath: new Path2D(),
+    tree: null
   };
 
   worldData.regents.forEach((objectData) => {
@@ -135,6 +137,8 @@ const createSession = (worldData, mapData) => {
     data.provinceAreas.push(provinceArea);
   });
 
+  data.tree = new AreaQuadTree(data.provinceAreas);
+
   data.domains.forEach((domain) => {
     const realmAreas = domain.areas();
     if ((realmAreas.length === 0)) {
@@ -146,6 +150,8 @@ const createSession = (worldData, mapData) => {
     realmArea.labelPoint = polylabelForD(d);
     domain.realmArea = realmArea
   });
+
+  console.log(data.tree.tree.retrieve({x: 1000 , y: 1000 , width: 2 , height: 2}).map((a) => {return a.area.province.name}))
 
   console.log(new Session(data));
   return new Session(data);

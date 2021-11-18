@@ -1,8 +1,8 @@
 import { SVGPathData } from "svg-pathdata";
 import polylabel from "polylabel";
 
-export class Polygon {
-  vertices: [];
+export default class Polygon {
+  vertices: any;
   labelPoint: { x: number; y: number };
   bounds: { x: number; y: number; width: number; height: number };
   center: { x: number; y: number };

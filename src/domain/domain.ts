@@ -1,5 +1,5 @@
 import utils from "svg-path-reverse";
-import type { Polygon } from "./polygon";
+import type Polygon  from "./polygon";
 
 export class Node {
   id: number;

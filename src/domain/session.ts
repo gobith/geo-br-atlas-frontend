@@ -1,3 +1,5 @@
+import type AreaQuadTree from "./quadtree";
+
 export class Session {
   uuidToObjectMapping: any;
   namedEntities: any;
@@ -10,6 +12,7 @@ export class Session {
   provinceBordersPath: Path2D;
   woodsPath: Path2D;
   mountainsPath: Path2D;
+  tree: AreaQuadTree;
 
   constructor(data: any) {
     this.uuidToObjectMapping = data.uuidToObjectMapping;
@@ -22,5 +25,6 @@ export class Session {
     this.provinceBordersPath = data.provinceBordersPath;
     this.woodsPath = data.woodsPath;
     this.mountainsPath = data.mountainsPath;
+    this.tree = data.tree
   }
 }
