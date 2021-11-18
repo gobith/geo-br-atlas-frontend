@@ -1,4 +1,5 @@
 import utils from "svg-path-reverse";
+import type { Polygon } from "./polygon";
 
 export class Node {
   id: number;
@@ -86,11 +87,11 @@ export class ProvinceArea {
   path: Path2D;
   province: Province;
   labelPoint: any;
-  center: any;
+  polygon: Polygon;
 
   constructor(object: any) {
     this.borders = object.borders;
-    this.center = { x: 100, y: 100 };
+   
   }
 }
 

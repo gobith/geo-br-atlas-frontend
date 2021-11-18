@@ -15,7 +15,6 @@
   let canvas;
 
   onMount(() => {
-   
     attachEvents(canvas);
 
     resize.subscribe((resize) => {
@@ -44,7 +43,6 @@
   });
 
   onDestroy(() => {
-    
     detachEvents(canvas);
   });
 
@@ -70,24 +68,35 @@
     ctx.lineCap = "round";
 
 
-
     drawIslands(ctx);
     drawWoods(ctx);
     drawMountains(ctx);
 
-     if ($settings.showRealms) {
-       drawRealmBorders(ctx);
-     }
+    if ($settings.showRealms) {
+      drawRealmBorders(ctx);
+    }
 
     if ($settings.showProvinces) {
       drawProvinceBorders(ctx);
-     }
+    }
 
+    drawProvinceCenter(ctx);
     drawSelection(ctx);
 
     ctx.restore();
   };
 
+  const drawProvinceCenter = (ctx) => {
+    session.provinceAreas.forEach((area) => {
+      if (area.province && area.province.name === "Tenarien") {
+      const center = area.polygon.center;
+      const bounds = area.polygon.bounds;
+      ctx.beginPath();
+      ctx.arc(center.x, center.y, 10, 10, 0, 2 * Math.PI);
+      ctx.rect(bounds.x , bounds.y , bounds.width , bounds.height);
+      ctx.stroke();}
+    });
+  };
 
   const drawIslands = (ctx) => {
     ctx.shadowColor = "rgba(255 , 255, 255 , 0.4)";
@@ -130,14 +139,11 @@
     ctx.lineWidth = 2;
 
     session.domains.forEach((domain) => {
-
       if (domain.realmArea) {
-
-      //  ctx.fill(domain.realmArea.path);
-        ctx.stroke(domain.realmArea.path)
+        //  ctx.fill(domain.realmArea.path);
+        ctx.stroke(domain.realmArea.path);
       }
-
-    })
+    });
 
     //ctx.stroke(session.realmBordersPath);
     ctx.lineWidth = 4;
@@ -183,13 +189,10 @@
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
-   
-
     session.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y)) {
-       
         selectedArea = area;
-        navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
+       // navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
       }
     });
     ctx.restore();
@@ -202,7 +205,7 @@
   };
 </script>
 
-<canvas bind:this={canvas}/>
+<canvas bind:this={canvas} />
 
 <style>
   canvas {

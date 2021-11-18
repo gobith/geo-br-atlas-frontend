@@ -16,6 +16,7 @@ import {
   polylabelForD,
   borderDForAreas,
 } from "../domain/nodes";
+import { Polygon } from "../domain/polygon";
 
 
 const session = writable(null);
@@ -119,6 +120,8 @@ const createSession = (worldData, mapData) => {
   mapData.areas.forEach((area) => {
     const d = borderDForArea(area);
     const provinceArea = new ProvinceArea(area);
+    const polygon = new Polygon(d);
+    provinceArea.polygon = polygon;
     provinceArea.path = new Path2D(d);
     provinceArea.labelPoint = polylabelForD(d);
     const province = data.uuidToObjectMapping[area.p];
