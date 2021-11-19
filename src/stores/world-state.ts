@@ -138,15 +138,15 @@ const pointerup_handler = (event) => {
 };
 
 export const attachResizeEvent = () => {
-  window.addEventListener("resize", handleResizeEvent);
+  window.onresize = handleResizeEvent;
 };
 
 export const detachResizeEvent = () => {
-  window.removeEventListener("resize", handleResizeEvent);
+ 
 };
 
 export const attachEvents = (canvas) => {
-  canvas.addEventListener("wheel", handleWheelEvent);
+  canvas.onwheel = handleWheelEvent;
   canvas.onpointerdown = pointerdown_handler;
   canvas.onpointermove = pointermove_handler;
   canvas.onpointerup = pointerup_handler;
@@ -154,7 +154,5 @@ export const attachEvents = (canvas) => {
 };
 
 export const detachEvents = (canvas) => {
-  canvas.removeEventListener("wheel", handleWheelEvent);
-  canvas.removeEventListener("resize", handleResizeEvent);
-
+  
 };
