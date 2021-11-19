@@ -11,6 +11,8 @@ export const zoom = writable(3);
 
 export const offset = writable({ x: 0, y: 0 });
 
+export const cursor = writable({ x: 0, y: 0 });
+
 export const clicked = writable({ x: 0, y: 0 });
 
 export const settings = writable({
@@ -111,6 +113,9 @@ const handleMouseupEvent = (event) => {
 };
 
 const handleMousemoveEvent = (event) => {
+
+  cursor.update((point) => {return {x: event.x , y: event.y}});
+
   if (isMouseDown) {
     isMouseDownMove = true;
     offset.update((offsetPoint) => {

@@ -1,5 +1,14 @@
 <script lang="ts">
-  import { settings, zoomIn, zoomOut , scale , zoom} from "../../stores/world-state";
+  import {
+    settings,
+    zoomIn,
+    zoomOut,
+    scale,
+    zoom,
+    offset,
+    cursor,
+    selection,
+  } from "../../stores/world-state";
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -55,6 +64,18 @@
       };
     });
   };
+
+  $: worldCursor = { x: $cursor.x - $offset.x, y: $cursor.y - $offset.y };
+
+  $: selName = selectionName();
+  
+  $: selectionName = () => {
+    if ($selection) {
+      return $selection.name;
+    } else {
+      return "none";
+    }
+  };
 </script>
 
 <div class="navigation">
@@ -66,7 +87,10 @@
   <button on:click={toggleRealms}>Realms</button>
   <button on:click={toggleRealmInfo}>Realm info</button>
   <button on:click={toggleShadowBlur}>Shadow Blur</button>
-  <div>{$zoom} - {$scale}</div>
+  <div>
+    {$zoom} - {$scale} - offset: {$offset.x}@{$offset.y} - cursor: {$cursor.x}@{$cursor.y}
+    world cursor: {worldCursor.x}@{worldCursor.y} selection: {selName}
+  </div>
 </div>
 
 <style>

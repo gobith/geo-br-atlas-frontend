@@ -67,7 +67,6 @@
 
     ctx.lineCap = "round";
 
-
     drawIslands(ctx);
     drawWoods(ctx);
     drawMountains(ctx);
@@ -89,12 +88,13 @@
   const drawProvinceCenter = (ctx) => {
     session.provinceAreas.forEach((area) => {
       if (area.province && area.province.name === "Tenarien") {
-      const center = area.polygon.center;
-      const bounds = area.polygon.bounds;
-      ctx.beginPath();
-      ctx.arc(center.x, center.y, 10, 10, 0, 2 * Math.PI);
-      ctx.rect(bounds.x , bounds.y , bounds.width , bounds.height);
-      ctx.stroke();}
+        const center = area.polygon.center;
+        const bounds = area.polygon.bounds;
+        ctx.beginPath();
+        ctx.arc(center.x, center.y, 10, 10, 0, 2 * Math.PI);
+        ctx.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+        ctx.stroke();
+      }
     });
   };
 
@@ -185,6 +185,23 @@
     let selectedArea;
     const ctx = canvas.getContext("2d");
 
+    const areas =  session.tree.tree
+        .retrieve({
+          x: point.x - $offset.x,
+          y: point.y - $offset.y,
+          width: 2,
+          height: 2,
+        });
+
+    console.log(areas.map((a) => {
+          if (a.area.province) {
+            return a.area.province.name;
+          } else {
+            return "none";
+          }
+        })
+    );
+
     ctx.save();
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
@@ -192,7 +209,7 @@
     session.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y)) {
         selectedArea = area;
-       // navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
+        // navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
       }
     });
     ctx.restore();

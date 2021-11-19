@@ -151,8 +151,6 @@ const createSession = (worldData, mapData) => {
     domain.realmArea = realmArea
   });
 
-  console.log(data.tree.tree.retrieve({x: 1000 , y: 1000 , width: 2 , height: 2}).map((a) => {return a.area.province.name}))
-
   console.log(new Session(data));
   return new Session(data);
 };
