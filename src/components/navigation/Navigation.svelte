@@ -68,7 +68,7 @@
   $: worldCursor = { x: $cursor.x - $offset.x, y: $cursor.y - $offset.y };
 
   $: selName = selectionName();
-  
+
   $: selectionName = () => {
     if ($selection) {
       return $selection.name;
@@ -79,14 +79,16 @@
 </script>
 
 <div class="navigation">
-  <button on:click={zoomIn}>+</button>
-  <button on:click={zoomOut}>-</button>
-  <button on:click={toggleFullScreen}>#</button>
-  <button on:click={toggleProvinces}>Provinces</button>
-  <button on:click={toggleProvinceInfo}>Province info</button>
-  <button on:click={toggleRealms}>Realms</button>
-  <button on:click={toggleRealmInfo}>Realm info</button>
-  <button on:click={toggleShadowBlur}>Shadow Blur</button>
+  <div>
+    <button on:click={zoomIn}>+</button>
+    <button on:click={zoomOut}>-</button>
+    <button on:click={toggleFullScreen}>#</button>
+    <button on:click={toggleProvinces}>Provinces</button>
+    <button on:click={toggleProvinceInfo}>Province info</button>
+    <button on:click={toggleRealms}>Realms</button>
+    <button on:click={toggleRealmInfo}>Realm info</button>
+    <button on:click={toggleShadowBlur}>Shadow Blur</button>
+  </div>
   <div>
     {$zoom} - {$scale} - offset: {$offset.x}@{$offset.y} - cursor: {$cursor.x}@{$cursor.y}
     world cursor: {worldCursor.x}@{worldCursor.y} selection: {selName}
@@ -95,8 +97,9 @@
 
 <style>
   .navigation {
+    /* width: 700px; */
     position: absolute;
-    top: 10px;
+    left: 10px;
     right: 10px;
   }
 </style>

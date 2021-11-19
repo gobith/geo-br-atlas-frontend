@@ -113,8 +113,9 @@ const handleMouseupEvent = (event) => {
 };
 
 const handleMousemoveEvent = (event) => {
-
-  cursor.update((point) => {return {x: event.x , y: event.y}});
+  cursor.update((point) => {
+    return { x: event.x, y: event.y };
+  });
 
   if (isMouseDown) {
     isMouseDownMove = true;
@@ -147,6 +148,18 @@ const handleTouchcancelEvent = (event) => {
   console.log("cancel", event);
 };
 
+const pointerdown_handler = (event) => {
+  //console.log("pointerdown", event.pointerId);
+};
+
+const pointermove_handler = (event) => {
+ // console.log("pointermove", event.pointerId);
+};
+
+const pointerup_handler = (event) => {
+ // console.log("pointerup", event.pointerId);
+};
+
 export const attachResizeEvent = () => {
   window.addEventListener("resize", handleResizeEvent);
 };
@@ -166,6 +179,13 @@ export const attachEvents = (canvas) => {
   canvas.addEventListener("touchmove", handleTouchmoveEvent, true);
   canvas.addEventListener("touchend", handleTouchendEvent, true);
   canvas.addEventListener("touchcancel", handleTouchcancelEvent, true);
+
+  canvas.onpointerdown = pointerdown_handler;
+  canvas.onpointermove = pointermove_handler;
+  canvas.onpointerup = pointerup_handler;
+  canvas.onpointercancel = pointerup_handler;
+  canvas.onpointerout = pointerup_handler;
+  canvas.onpointerleave = pointerup_handler;
 };
 
 export const detachEvents = (canvas) => {

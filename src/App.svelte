@@ -17,23 +17,13 @@
 
 <style>
   :global(body) {
-    height: 100vh;
-    margin: 0px;
-    padding: 0px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     background-color: #006994;
     position: relative;
     font-family: "calibri";
   }
 
-  :global(table) {
-    border-collapse: collapse;
-    position: relative;
-  }
-
-  :global(table, th, td) {
-    border: 1px solid #63666a;
-    font-weight: normal;
-    padding: 10px;
-  }
 </style>
