@@ -29,9 +29,6 @@ export const resetResize = () => {
   resize.set({ height: window.innerHeight, width: window.innerWidth });
 };
 
-let isMouseDown = false;
-let isMouseDownMove = false;
-
 export const zoomIn = () => {
   privateZoomIn(window.innerWidth / 2, window.innerHeight / 2);
 };
@@ -41,8 +38,6 @@ export const zoomOut = () => {
 };
 
 const events = new Map();
-
-
 
 const handleWheelEvent = (event) => {
   if (event.wheelDelta > 0) {
@@ -102,57 +97,59 @@ const handleResizeEvent = (event) => {
   resetResize();
 };
 
-
-
 const pointerdown_handler = (event) => {
-  events.set(event.pointerId , event);
-  isMouseDown = true;
+  event.stopPropagation()
+  events.set(event.pointerId, event);
 };
 
 const pointermove_handler = (event) => {
-  console.log("isMouseDown" , isMouseDown);
+  event.stopPropagation()
+  // console.log("pointer move" , event);
   cursor.update((point) => {
     return { x: event.pageX, y: event.pageY };
   });
+  const prevEvent = events.get(event.pointerId);
 
-  if (isMouseDown) {
-    isMouseDownMove = true;
+  console.log(prevEvent);
+  if (prevEvent) {
+    const movementX = event.pageX - prevEvent.pageX;
+    const movementY = event.pageY - prevEvent.pageY;
+
+    console.log(movementX , movementY);
+
     offset.update((offsetPoint) => {
       return {
-        x: offsetPoint.x + event.movementX,
-        y: offsetPoint.y + event.movementY,
+        x: offsetPoint.x + movementX,
+        y: offsetPoint.y + movementY,
       };
     });
+    events.set(event.pointerId, event);
   }
 };
 
 const pointerup_handler = (event) => {
+  event.stopPropagation()
+  const prevEvent = events.get(event.pointerId);
   events.delete(event.pointerId);
-  if (!isMouseDownMove) {
+
+  if (prevEvent.type === "pointerdown") {
     clicked.update((point) => {
       return { x: event.pageX, y: event.pageY };
     });
   }
-  isMouseDown = false;
-  isMouseDownMove = false;
 };
 
 export const attachResizeEvent = () => {
   window.onresize = handleResizeEvent;
 };
 
-export const detachResizeEvent = () => {
- 
-};
+export const detachResizeEvent = () => {};
 
 export const attachEvents = (canvas) => {
   canvas.onwheel = handleWheelEvent;
   canvas.onpointerdown = pointerdown_handler;
   canvas.onpointermove = pointermove_handler;
   canvas.onpointerup = pointerup_handler;
-
 };
 
-export const detachEvents = (canvas) => {
-  
-};
+export const detachEvents = (canvas) => {};

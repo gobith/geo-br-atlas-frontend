@@ -59,6 +59,7 @@
 
     canvas.height = $resize.height;
     canvas.width = window.innerWidth;
+    document.body.height = $resize.height;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
