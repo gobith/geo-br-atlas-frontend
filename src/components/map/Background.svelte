@@ -59,7 +59,7 @@
 
     canvas.height = $resize.height;
     canvas.width = window.innerWidth;
-    document.body.height = $resize.height;
+
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
@@ -193,15 +193,6 @@
           width: 2,
           height: 2,
         });
-
-    console.log(areas.map((a) => {
-          if (a.area.province) {
-            return a.area.province.name;
-          } else {
-            return "none";
-          }
-        })
-    );
 
     ctx.save();
     ctx.translate($offset.x, $offset.y);

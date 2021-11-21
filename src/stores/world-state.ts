@@ -104,18 +104,18 @@ const pointerdown_handler = (event) => {
 
 const pointermove_handler = (event) => {
   event.stopPropagation()
-  // console.log("pointer move" , event);
+
   cursor.update((point) => {
     return { x: event.pageX, y: event.pageY };
   });
   const prevEvent = events.get(event.pointerId);
 
-  console.log(prevEvent);
+
   if (prevEvent) {
     const movementX = event.pageX - prevEvent.pageX;
     const movementY = event.pageY - prevEvent.pageY;
 
-    console.log(movementX , movementY);
+
 
     offset.update((offsetPoint) => {
       return {
