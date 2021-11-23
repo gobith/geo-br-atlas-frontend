@@ -216,6 +216,7 @@ export class Domain extends Entity {
   owner: any;
   provinces: any;
   holdings: any;
+  abbr: string;
 
   constructor(object: any) {
     super(object);
@@ -223,6 +224,7 @@ export class Domain extends Entity {
     this.gold = object.gold;
     this.provinces = [];
     this.holdings = [];
+    this.abbr = object.abbr;
   }
 
   typeString() {

@@ -188,15 +188,23 @@
 
     const areas =  session.tree.tree
         .retrieve({
-          x: point.x - $offset.x,
-          y: point.y - $offset.y,
+          x: $offset.x + (point.x / $scale),
+          y: $offset.y + (point.y / $scale),
           width: 2,
           height: 2,
         });
 
+     
+
     ctx.save();
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
+
+    areas.forEach((area) => {
+          if (ctx.isPointInPath(area.area.path, point.x, point.y)) {
+       console.log("selected Area" , area.area.province.name , area)
+      }
+        })
 
     session.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y)) {

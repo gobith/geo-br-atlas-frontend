@@ -9,6 +9,7 @@
 
   import Background from "./Background.svelte";
   import Descriptions from "./Descriptions.svelte";
+  import Provinces from "./Provinces.svelte";
 
   export let session;
 
@@ -24,6 +25,7 @@
 
 <Background {session} />
 <Descriptions {session} />
+<!-- <Provinces {session} /> -->
 
 <style>
 </style>
