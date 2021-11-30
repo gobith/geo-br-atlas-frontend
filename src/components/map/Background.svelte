@@ -13,9 +13,11 @@
 
   export let session;
   let canvas;
+  let ctx;
 
   onMount(() => {
     attachEvents(canvas);
+    ctx = canvas.getContext("2d");
 
     resize.subscribe((resize) => {
       drawBackground();
@@ -37,9 +39,10 @@
       drawBackground();
     });
 
-    settings.subscribe((sel) => {
+    settings.subscribe((set) => {
       drawBackground();
     });
+
   });
 
   onDestroy(() => {
@@ -55,11 +58,8 @@
   };
 
   const drawBackground = () => {
-    const ctx = canvas.getContext("2d");
-
     canvas.height = $resize.height;
     canvas.width = window.innerWidth;
-
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
@@ -184,27 +184,23 @@
 
   const pointClicked = (point) => {
     let selectedArea;
-    const ctx = canvas.getContext("2d");
 
-    const areas =  session.tree.tree
-        .retrieve({
-          x: $offset.x + (point.x / $scale),
-          y: $offset.y + (point.y / $scale),
-          width: 2,
-          height: 2,
-        });
-
-     
+    // const areas = session.tree.tree.retrieve({
+    //   x: $offset.x + point.x / $scale,
+    //   y: $offset.y + point.y / $scale,
+    //   width: 2,
+    //   height: 2,
+    // });
 
     ctx.save();
     ctx.translate($offset.x, $offset.y);
     ctx.scale($scale, $scale);
 
-    areas.forEach((area) => {
-          if (ctx.isPointInPath(area.area.path, point.x, point.y)) {
-       console.log("selected Area" , area.area.province.name , area)
-      }
-        })
+    // areas.forEach((area) => {
+    //   if (ctx.isPointInPath(area.area.path, point.x, point.y)) {
+    //     console.log("selected Area", area.area.province.name, area);
+    //   }
+    // });
 
     session.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y)) {
@@ -220,6 +216,8 @@
       selection.set(selectedArea);
     }
   };
+
+ 
 </script>
 
 <canvas bind:this={canvas} />

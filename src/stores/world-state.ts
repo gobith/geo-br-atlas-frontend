@@ -25,6 +25,8 @@ export const settings = writable({
 
 export const selection = writable(null);
 
+export const hoverSelection = writable(null);
+
 export const resetResize = () => {
   resize.set({ height: window.innerHeight, width: window.innerWidth });
 };

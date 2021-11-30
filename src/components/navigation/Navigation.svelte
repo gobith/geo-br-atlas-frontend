@@ -8,6 +8,7 @@
     offset,
     cursor,
     selection,
+    hoverSelection
   } from "../../stores/world-state";
 
   const toggleFullScreen = () => {
@@ -76,6 +77,17 @@
       return "none";
     }
   };
+
+  $: hoverNameStr = hoverName()
+
+  $: hoverName = () => {
+    if ($hoverSelection) {
+      return $hoverSelection.name;
+    } else {
+      return "none";
+    }
+  };
+
 </script>
 
 <div class="navigation">
@@ -91,7 +103,7 @@
   </div>
   <div>
     {$zoom} - {$scale} - offset: {$offset.x}@{$offset.y} - cursor: {$cursor.x}@{$cursor.y}
-    world cursor: {worldCursor.x}@{worldCursor.y} selection: {selName}
+    world cursor: {worldCursor.x}@{worldCursor.y} selection: {selName} hover: {hoverNameStr}
   </div>
 </div>
 
