@@ -10,7 +10,7 @@
   import Background from "./Background.svelte";
   import Descriptions from "./Descriptions.svelte";
   import Hover from "./Hover.svelte";
-  import Provinces from "./Provinces.svelte";
+  import Province from "./Province.svelte";
 
   export let session;
 
@@ -27,7 +27,7 @@
 <Background {session} />
 <Descriptions {session} />
 <Hover {session} />
-<!-- <Provinces {session} /> -->
+<Province/>
 
 <style>
 </style>

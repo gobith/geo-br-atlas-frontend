@@ -1,28 +1,40 @@
 <script lang="ts">
-  import { scale, offset } from "../../stores/world-state";
-  export let province;
-  export let session;
+  import { hoverSelection, cursor } from "../../stores/world-state";
+  import ProvinceInfo from "./ProvinceInfo.svelte";
+  import provinceInfo from "./ProvinceInfo.svelte";
 
-  const labelPoint = province.descriptionArea.labelPoint;
-  $: top = $offset.y + labelPoint.y * $scale;
-  $: left = $offset.x + labelPoint.x * $scale;
+  let top = 0;
+  let left = 0;
+  let province;
+
+  hoverSelection.subscribe((provinceOrNull) => {
+    province = provinceOrNull;
+
+    top = $cursor.y;
+    left = $cursor.x;
+  });
 </script>
 
-<div style="--top:{top};--left:{left}">{province.name}</div>
+<div class:active={province} style="--top:{top};--left:{left}">
+  {#if province}
+    <ProvinceInfo {province} />
+  {/if}
+</div>
 
 <style>
   div {
     position: absolute;
+    display: none;
     top: calc(var(--top) * 1px);
     left: calc(var(--left) * 1px);
-    color: black;
-    background-color: transparent;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
     text-align: center;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 
-  div:hover {
-    color: red;
-    font-weight: bold;
+  .active {
+    display: block;
   }
 </style>

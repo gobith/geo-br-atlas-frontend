@@ -1,5 +1,5 @@
 import utils from "svg-path-reverse";
-import type Polygon  from "./polygon";
+import type Polygon from "./polygon";
 
 export class Node {
   id: number;
@@ -91,7 +91,6 @@ export class ProvinceArea {
 
   constructor(object: any) {
     this.borders = object.borders;
-   
   }
 }
 
@@ -337,6 +336,30 @@ export class Province extends Entity {
   domain() {
     return this.owner;
   }
+
+  domainHoldings() {
+    const domainHoldings = new Map();
+
+    this.holdings.forEach((holding) => {
+     
+      let domainHolding;
+      if (domainHoldings.has(holding.owner)) {
+        domainHolding = domainHoldings.get(holding.owner);
+      } else {
+        domainHolding = {
+          owner: holding.owner,
+          law: "",
+          temple: "",
+          guild: "",
+          source: "",
+        };
+        domainHoldings.set(holding.owner, domainHolding);
+      };
+      domainHolding[holding.type] = holding.level
+    });
+    return Array.from(domainHoldings.values());
+  };
+ 
 }
 export class Holding extends Entity {
   province: any;

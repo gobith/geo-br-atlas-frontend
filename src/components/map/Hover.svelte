@@ -39,7 +39,11 @@
     ctx.scale($scale, $scale);
 
     session.provinceAreas.forEach((area) => {
-      if (ctx.isPointInPath(area.path, current.x, current.y)) {
+
+      const path = new Path2D();
+      const center = area.labelPoint;
+      path.arc(center.x, center.y, 15, 15, 0, 2 * Math.PI);
+      if (ctx.isPointInPath(path, current.x, current.y)) {
         selectedArea = area;
       }
     });

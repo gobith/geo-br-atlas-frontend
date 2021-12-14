@@ -89,10 +89,10 @@
   const drawProvinceCenter = (ctx) => {
     session.provinceAreas.forEach((area) => {
       if (area.province && area.province.name === "Tenarien") {
-        const center = area.polygon.center;
+        const center = area.labelPoint;
         const bounds = area.polygon.bounds;
         ctx.beginPath();
-        ctx.arc(center.x, center.y, 10, 10, 0, 2 * Math.PI);
+        ctx.arc(center.x, center.y, 15, 15, 0, 2 * Math.PI);
         ctx.rect(bounds.x, bounds.y, bounds.width, bounds.height);
         ctx.stroke();
       }
