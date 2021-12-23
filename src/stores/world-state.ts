@@ -100,24 +100,21 @@ const handleResizeEvent = (event) => {
 };
 
 const pointerdown_handler = (event) => {
-  event.stopPropagation()
+  event.stopPropagation();
   events.set(event.pointerId, event);
 };
 
 const pointermove_handler = (event) => {
-  event.stopPropagation()
+  event.stopPropagation();
 
   cursor.update((point) => {
     return { x: event.pageX, y: event.pageY };
   });
   const prevEvent = events.get(event.pointerId);
 
-
   if (prevEvent) {
     const movementX = event.pageX - prevEvent.pageX;
     const movementY = event.pageY - prevEvent.pageY;
-
-
 
     offset.update((offsetPoint) => {
       return {
@@ -130,7 +127,7 @@ const pointermove_handler = (event) => {
 };
 
 const pointerup_handler = (event) => {
-  event.stopPropagation()
+  event.stopPropagation();
   const prevEvent = events.get(event.pointerId);
   events.delete(event.pointerId);
 

@@ -1,18 +1,32 @@
 <script lang="ts">
-  import { hoverSelection, cursor } from "../../stores/world-state";
+  import { hoverSelection, selection , cursor } from "../../stores/world-state";
   import ProvinceInfo from "./ProvinceInfo.svelte";
-  import provinceInfo from "./ProvinceInfo.svelte";
 
   let top = 0;
   let left = 0;
   let province;
 
   hoverSelection.subscribe((provinceOrNull) => {
+
+    if ($selection) {return};
     province = provinceOrNull;
 
-    top = $cursor.y;
-    left = $cursor.x;
+    // top = $cursor.y;
+    // left = $cursor.x;
+    top = 70;
+    left = 10
   });
+
+
+  selection.subscribe((selectedProvince) => {
+    province = selectedProvince;
+
+    // top = $cursor.y;
+    // left = $cursor.x;
+    top = 70;
+    left = 10
+  });
+
 </script>
 
 <div class:active={province} style="--top:{top};--left:{left}">

@@ -4,19 +4,30 @@
 </script>
 
 <div class="container">
-  <h1>{province.name}</h1>
+  <!-- <h1>{province.name}</h1>
   <span>level: {province.level}</span>
   <span>source: {province.sourceRating}</span>
   <span>Domain: {province.owner.name}</span>
-  <span>Regent: {province.regent().name}</span>
+  <span>Regent: {province.regent().name}</span> -->
 
   <table>
     <tr>
-      <th>Domain</th>
-      <th>Law</th>
-      <th>Temple</th>
-      <th>Guild</th>
-      <th>Source</th>
+      <th rowspan="4" />
+      <th colspan="4">{province.owner.name}</th>
+    </tr>
+    <tr>
+      <th colspan="4">{province.name}</th>
+    </tr>
+    <tr>
+      <th colspan="2">{province.level}</th>
+      <th colspan="2">{province.sourceRating}</th>
+    </tr>
+
+    <tr>
+      <th>L</th>
+      <th>T</th>
+      <th>G</th>
+      <th>S</th>
     </tr>
 
     {#each province.domainHoldings() as domainHolding}

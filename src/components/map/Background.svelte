@@ -42,7 +42,6 @@
     settings.subscribe((set) => {
       drawBackground();
     });
-
   });
 
   onDestroy(() => {
@@ -204,7 +203,12 @@
 
     session.provinceAreas.forEach((area) => {
       if (ctx.isPointInPath(area.path, point.x, point.y)) {
-        selectedArea = area;
+       
+        if ($selection === area.province) {
+          selectedArea = null;
+        } else {
+          selectedArea = area;
+        }
         // navigator.clipboard.writeText(`${area.center.x} @ ${area.center.y}`);
       }
     });
@@ -216,8 +220,6 @@
       selection.set(selectedArea);
     }
   };
-
- 
 </script>
 
 <canvas bind:this={canvas} />
